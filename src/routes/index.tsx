@@ -222,8 +222,9 @@ function Hero() {
           </div>
 
           <h1 className="mt-5 font-bold leading-[1.05] tracking-tight text-4xl sm:text-5xl lg:text-6xl">
-            <span className="block">
-              Dịch Vụ Cấp Cứu <span className="text-gradient-sky whitespace-nowrap">Hồng Hải</span>
+            <span className="block">Dịch Vụ</span>
+            <span className="block text-gradient-sky">
+              Cấp Cứu <span className="whitespace-nowrap">Hồng Hải</span>
             </span>
             <span className="block">
               nhanh chóng, an toàn
