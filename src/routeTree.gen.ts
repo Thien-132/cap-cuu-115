@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DieuDuongTaiNhaRouteImport } from './routes/dieu-duong-tai-nha'
 import { Route as IndexRouteImport } from './routes/index'
 
+const DieuDuongTaiNhaRoute = DieuDuongTaiNhaRouteImport.update({
+  id: '/dieu-duong-tai-nha',
+  path: '/dieu-duong-tai-nha',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dieu-duong-tai-nha': typeof DieuDuongTaiNhaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dieu-duong-tai-nha': typeof DieuDuongTaiNhaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dieu-duong-tai-nha': typeof DieuDuongTaiNhaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/dieu-duong-tai-nha'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/dieu-duong-tai-nha'
+  id: '__root__' | '/' | '/dieu-duong-tai-nha'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DieuDuongTaiNhaRoute: typeof DieuDuongTaiNhaRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/dieu-duong-tai-nha': {
+      id: '/dieu-duong-tai-nha'
+      path: '/dieu-duong-tai-nha'
+      fullPath: '/dieu-duong-tai-nha'
+      preLoaderRoute: typeof DieuDuongTaiNhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DieuDuongTaiNhaRoute: DieuDuongTaiNhaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

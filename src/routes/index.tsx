@@ -49,6 +49,7 @@ export const Route = createFileRoute("/")({
 const NAV = [
   { label: "Trang chủ", href: "#home" },
   { label: "Dịch vụ", href: "#services" },
+  { label: "Điều dưỡng tại nhà", href: "/dieu-duong-tai-nha" },
   { label: "Đánh giá", href: "#reviews" },
   { label: "Liên hệ", href: "#contact" },
 ];
@@ -118,7 +119,7 @@ function Navbar() {
               <Ambulance className="h-5 w-5" />
             </div>
             <div className="leading-tight">
-              <div className="font-display text-lg font-bold">Cấp cứu - 115 -<span className="text-primary">Hồng Hải</span></div>
+              <div className="font-display text-lg font-bold">Cấp cứu - 115 -<span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
               <div className="text-[10px] text-muted-foreground -mt-0.5">Dịch vụ xe cấp cứu</div>
             </div>
           </a>
@@ -141,13 +142,13 @@ function Navbar() {
               className="inline-flex items-center gap-2 rounded-full bg-emergency px-4 py-2 text-sm font-semibold text-emergency-foreground shadow-soft hover:opacity-90 transition"
             >
               <PhoneCall className="h-4 w-4 animate-pulse" />
-              Gọi 115
+              0915205115
             </a>
             <a
               href="#contact"
               className="inline-flex items-center gap-2 rounded-full gradient-sky px-4 py-2 text-sm font-semibold text-primary-foreground shadow-soft hover:opacity-95 transition"
             >
-              Đặt xe cấp cứu
+              Đặt lịch ngay
             </a>
           </div>
 
@@ -178,14 +179,14 @@ function Navbar() {
               href="tel:0915205115"
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-emergency px-4 py-3 text-sm font-semibold text-emergency-foreground"
             >
-              <PhoneCall className="h-4 w-4" /> Gọi 115
+              <PhoneCall className="h-4 w-4" /> 0915205115
             </a>
             <a
               href="#contact"
               onClick={() => setOpen(false)}
               className="inline-flex items-center justify-center gap-2 rounded-full gradient-sky px-4 py-3 text-sm font-semibold text-primary-foreground"
             >
-              Đặt xe cấp cứu
+              Đặt lịch ngay
             </a>
           </div>
         </div>
@@ -220,10 +221,24 @@ function Hero() {
             🚑 Điều phối xe cấp cứu 24/7 • Thời gian phản hồi trung bình 8 phút
           </div>
 
-          <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight">
-            Dịch vụ <span className="text-gradient-sky">xe cấp cứu</span>{" "}
-            nhanh chóng, an toàn và chuyên nghiệp
-          </h1>
+          <h1 className="mt-5 font-bold leading-[1.05] tracking-tight text-4xl sm:text-5xl lg:text-6xl">
+
+  <span className="block whitespace-nowrap">
+    Dịch vụ
+    <span className="text-gradient-sky">
+      {" "}cấp cứu Hồng Hải
+    </span>
+  </span>
+
+  <span className="block">
+    nhanh chóng, an toàn
+  </span>
+
+  <span className="block">
+    và chuyên nghiệp
+  </span>
+
+</h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl">
             Hoạt động 24/7, sẵn sàng phục vụ mọi lúc.
 
@@ -396,7 +411,7 @@ function HowItWorks() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Quy trình làm việc"
-          title="Bốn bước để vận chuyển an toàn"
+          title="4 bước để vận chuyển an toàn"
           subtitle="Quy trình đơn giản, minh bạch được thiết kế cho cả trường hợp khẩn cấp và theo lịch trình."
         />
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 relative">
@@ -567,11 +582,27 @@ function Reviews() {
 /* ---------- Contact ---------- */
 function Contact() {
   const [sent, setSent] = useState(false);
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
-    (e.target as HTMLFormElement).reset();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/Hoangphihai1984bp@gmail.com", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (response.ok) {
+        setSent(true);
+        setTimeout(() => setSent(false), 4000);
+        form.reset();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <section id="contact" className="py-20 sm:py-24">
@@ -698,10 +729,10 @@ function Footer() {
               <div className="grid h-10 w-10 place-items-center rounded-xl gradient-sky text-primary-foreground shadow-soft">
                 <Ambulance className="h-5 w-5" />
               </div>
-              <div className="font-display text-lg font-bold">Cấp cứu 115 <span className="text-primary">Hồng Hải</span></div>
+              <div className="font-display text-lg font-bold">Cấp cứu 115 <span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
-              Dịch vụ xe cấp cứu Hồng Hải khẩn cấp nhanh chóng, an toàn và chuyên nghiệp, hoạt động 24/7 trên toàn thành phố.
+              Dịch vụ xe cấp cứu Hồng&nbsp;Hải khẩn cấp nhanh chóng, an toàn và chuyên nghiệp, hoạt động 24/7 trên toàn thành phố.
             </p>
             <div className="mt-4 flex gap-2">
               <a href="#" aria-label="Facebook" className="grid h-9 w-9 place-items-center rounded-lg border border-border hover:bg-primary hover:text-primary-foreground transition">
