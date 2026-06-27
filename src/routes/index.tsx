@@ -37,20 +37,20 @@ import sIntercity from "@/assets/service-intercity.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Emergency Ambulance Service 115 — Fast, Safe & Professional" },
-      { name: "description", content: "24/7 ambulance service with quick response, professional medical staff and modern fleet. Call 115 or book online." },
-      { property: "og:title", content: "Emergency Ambulance Service 115" },
-      { property: "og:description", content: "Available 24/7. Quick response. Professional medical staff." },
+      { title: "Dịch vụ Xe cấp cứu Hồng Hải 115 — Nhanh chóng, An toàn & Chuyên nghiệp" },
+      { name: "description", content: "Dịch vụ xe cấp cứu 24/7 phản hồi nhanh, đội ngũ y tế chuyên nghiệp và xe đời mới. Gọi 115 hoặc đặt trực tuyến." },
+      { property: "og:title", content: "Dịch vụ Xe cấp cứu 115" },
+      { property: "og:description", content: "Hoạt động 24/7. Phản hồi nhanh. Đội ngũ y tế chuyên nghiệp." },
     ],
   }),
   component: Index,
 });
 
 const NAV = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Contact", href: "#contact" },
+  { label: "Trang chủ", href: "#home" },
+  { label: "Dịch vụ", href: "#services" },
+  { label: "Đánh giá", href: "#reviews" },
+  { label: "Liên hệ", href: "#contact" },
 ];
 
 function Index() {
@@ -89,7 +89,7 @@ function Loader() {
           <div className="h-14 w-14 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
           <Ambulance className="absolute inset-0 m-auto h-6 w-6 text-primary" />
         </div>
-        <p className="text-sm font-medium text-muted-foreground">Loading...</p>
+        <p className="text-sm font-medium text-muted-foreground">Đang tải...</p>
       </div>
     </div>
   );
@@ -118,8 +118,8 @@ function Navbar() {
               <Ambulance className="h-5 w-5" />
             </div>
             <div className="leading-tight">
-              <div className="font-display text-lg font-bold">Rescue<span className="text-primary">115</span></div>
-              <div className="text-[10px] text-muted-foreground -mt-0.5">Emergency Ambulance</div>
+              <div className="font-display text-lg font-bold">Cấp cứu - 115 -<span className="text-primary">Hồng Hải</span></div>
+              <div className="text-[10px] text-muted-foreground -mt-0.5">Dịch vụ xe cấp cứu</div>
             </div>
           </a>
 
@@ -137,17 +137,17 @@ function Navbar() {
 
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="tel:115"
+              href="tel:0915205115"
               className="inline-flex items-center gap-2 rounded-full bg-emergency px-4 py-2 text-sm font-semibold text-emergency-foreground shadow-soft hover:opacity-90 transition"
             >
               <PhoneCall className="h-4 w-4 animate-pulse" />
-              Call 115
+              Gọi 115
             </a>
             <a
               href="#contact"
               className="inline-flex items-center gap-2 rounded-full gradient-sky px-4 py-2 text-sm font-semibold text-primary-foreground shadow-soft hover:opacity-95 transition"
             >
-              Book Ambulance
+              Đặt xe cấp cứu
             </a>
           </div>
 
@@ -175,17 +175,17 @@ function Navbar() {
               </a>
             ))}
             <a
-              href="tel:115"
+              href="tel:0915205115"
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-emergency px-4 py-3 text-sm font-semibold text-emergency-foreground"
             >
-              <PhoneCall className="h-4 w-4" /> Call 115
+              <PhoneCall className="h-4 w-4" /> Gọi 115
             </a>
             <a
               href="#contact"
               onClick={() => setOpen(false)}
               className="inline-flex items-center justify-center gap-2 rounded-full gradient-sky px-4 py-3 text-sm font-semibold text-primary-foreground"
             >
-              Book Ambulance
+              Đặt xe cấp cứu
             </a>
           </div>
         </div>
@@ -201,7 +201,7 @@ function Hero() {
       <div className="absolute inset-0 -z-10">
         <img
           src={heroImg}
-          alt="Modern ambulance with professional medical staff on standby"
+          alt="Xe cấp cứu đời mới cùng đội ngũ y tế chuyên nghiệp luôn sẵn sàng"
           className="h-full w-full object-cover"
           width={1920}
           height={1280}
@@ -217,40 +217,41 @@ function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emergency opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emergency" />
             </span>
-            24/7 Live Dispatch — Average response 8 minutes
+            🚑 Điều phối xe cấp cứu 24/7 • Thời gian phản hồi trung bình 8 phút
           </div>
 
           <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight">
-            Fast, Safe & Professional{" "}
-            <span className="text-gradient-sky">Emergency Ambulance</span> Service
+            Dịch vụ <span className="text-gradient-sky">xe cấp cứu</span>{" "}
+            nhanh chóng, an toàn và chuyên nghiệp
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl">
-            Available 24/7. Quick response. Professional medical staff. Serving hospitals,
-            clinics, and patients across the city.
+            Hoạt động 24/7, sẵn sàng phục vụ mọi lúc.
+
+Đội ngũ bác sĩ, điều dưỡng và nhân viên cấp cứu chuyên nghiệp, đáp ứng nhanh mọi nhu cầu vận chuyển cấp cứu và chuyển viện.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <a
-              href="tel:115"
+              href="tel:0915205115"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-emergency px-6 py-3.5 text-base font-semibold text-emergency-foreground shadow-soft hover:scale-[1.02] transition-transform"
             >
               <Ambulance className="h-5 w-5" />
-              Call Ambulance Now
+              Gọi xe cấp cứu ngay
             </a>
             <a
               href="#contact"
               className="inline-flex items-center justify-center gap-2 rounded-full gradient-sky px-6 py-3.5 text-base font-semibold text-primary-foreground shadow-soft hover:scale-[1.02] transition-transform"
             >
               <CalendarDays className="h-5 w-5" />
-              Book an Ambulance
+              Đặt xe cấp cứu
             </a>
           </div>
 
           <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
             {[
-              { v: "10K+", l: "Patients" },
-              { v: "50+", l: "Ambulances" },
-              { v: "8 min", l: "Avg. response" },
+              { v: "10K+", l: "Khách hàng" },
+              { v: "50+", l: "Xe cấp cứu" },
+              { v: "8 min", l: "Phản hồi TB" },
             ].map((s) => (
               <div key={s.l}>
                 <div className="text-2xl font-bold text-foreground">{s.v}</div>
@@ -266,21 +267,45 @@ function Hero() {
 
 /* ---------- Why Choose Us ---------- */
 function WhyUs() {
-  const items = [
-    { icon: Clock, title: "24/7 Emergency Support", desc: "Round-the-clock dispatch ready to respond instantly." },
-    { icon: Stethoscope, title: "Experienced Medical Team", desc: "Certified paramedics and emergency physicians." },
-    { icon: Truck, title: "Modern Ambulance Fleet", desc: "Fully equipped vehicles maintained to top standards." },
-    { icon: MapPin, title: "GPS Real-Time Tracking", desc: "Track your ambulance live from dispatch to arrival." },
-    { icon: Zap, title: "Fast Response Time", desc: "City-wide average response of under 10 minutes." },
-    { icon: ShieldCheck, title: "Safe Patient Transport", desc: "Strict safety protocols on every single trip." },
-  ];
+const items = [
+  {
+    icon: Clock,
+    title: "Trực cấp cứu 24/7",
+    desc: "Tiếp nhận cuộc gọi và điều phối xe cấp cứu nhanh chóng mọi lúc, mọi nơi."
+  },
+  {
+    icon: Stethoscope,
+    title: "Đội ngũ bác sĩ & điều dưỡng",
+    desc: "Nhân viên y tế nhiều kinh nghiệm, hỗ trợ sơ cứu và chăm sóc bệnh nhân trên xe."
+  },
+  {
+    icon: Truck,
+    title: "Xe cấp cứu đời mới",
+    desc: "Trang bị đầy đủ máy thở, monitor, bình oxy và các thiết bị cấp cứu cần thiết."
+  },
+  {
+    icon: MapPin,
+    title: "Điều phối thông minh",
+    desc: "Lựa chọn xe gần nhất để rút ngắn thời gian tiếp cận bệnh nhân."
+  },
+  {
+    icon: Zap,
+    title: "Có mặt nhanh",
+    desc: "Ưu tiên điều xe ngay sau khi tiếp nhận yêu cầu cấp cứu."
+  },
+  {
+    icon: ShieldCheck,
+    title: "An toàn - Uy tín",
+    desc: "Đảm bảo an toàn tuyệt đối trong suốt quá trình vận chuyển bệnh nhân."
+  },
+];
   return (
     <section className="py-20 sm:py-24 bg-secondary/40">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Why choose us"
-          title="Care you can count on, every minute"
-          subtitle="Six reasons families, hospitals and clinics across the city trust us with critical transport."
+          eyebrow="Vì sao chọn chúng tôi"
+          title="Chăm sóc tận tâm, đáng tin cậy từng phút giây"
+          subtitle="Sáu lý do các gia đình, bệnh viện và phòng khám trên toàn thành phố tin tưởng giao phó việc vận chuyển cấp cứu cho chúng tôi."
         />
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {items.map((it) => (
@@ -304,22 +329,22 @@ function WhyUs() {
 /* ---------- Services ---------- */
 function Services() {
   const services = [
-    { img: sEmergency, icon: Ambulance, title: "Emergency Ambulance (115)", desc: "Immediate dispatch for life-threatening emergencies, 24/7." },
-    { img: sHospital, icon: Building2, title: "Hospital Transfer", desc: "Safe transfer between healthcare facilities with full monitoring." },
-    { img: sHospital, icon: Home, title: "Home-to-Hospital Transport", desc: "Door-to-door pickup with trained crew and stretcher service." },
-    { img: sIcu, icon: HeartPulse, title: "ICU Ambulance", desc: "Advanced life support with ventilator and monitoring equipment." },
-    { img: sIntercity, icon: RouteIcon, title: "Intercity Ambulance", desc: "Long-distance city-to-city transfers with onboard medical care." },
-    { img: sEmergency, icon: CalendarCheck, title: "Medical Event Standby", desc: "On-site coverage for events, concerts and sports gatherings." },
-    { img: sHospital, icon: Users, title: "Patient Transfer Between Hospitals", desc: "Coordinated handovers with patient records and care continuity." },
-    { img: sIntercity, icon: RouteIcon, title: "Long Distance Rental", desc: "Scheduled long-distance rentals with experienced medical crew." },
+    { img: sEmergency, icon: Ambulance, title: "Xe cấp cứu khẩn cấp 115", desc: "Điều phối xe ngay lập tức cho các trường hợp khẩn cấp, 24/7." },
+    { img: sHospital, icon: Building2, title: "Chuyển viện", desc: "Vận chuyển an toàn giữa các cơ sở y tế với hệ thống theo dõi đầy đủ." },
+    { img: sHospital, icon: Home, title: "Vận chuyển từ nhà đến bệnh viện", desc: "Đón tận nhà với đội ngũ y tế chuyên nghiệp và dịch vụ cáng cứu thương." },
+    { img: sIcu, icon: HeartPulse, title: "Xe ICU", desc: "Hỗ trợ sự sống nâng cao với máy thở và thiết bị theo dõi chuyên sâu." },
+    { img: sIntercity, icon: RouteIcon, title: "Xe liên tỉnh", desc: "Vận chuyển đường dài giữa các tỉnh thành kèm chăm sóc y tế trên xe." },
+    { img: sEmergency, icon: CalendarCheck, title: "Trực y tế sự kiện", desc: "Trực y tế tại chỗ cho các sự kiện, buổi hòa nhạc và hội thao." },
+    { img: sHospital, icon: Users, title: "Vận chuyển giữa các bệnh viện", desc: "Bàn giao phối hợp với hồ sơ bệnh án, đảm bảo quá trình chăm sóc liên tục." },
+    { img: sIntercity, icon: RouteIcon, title: "Thuê xe đường dài", desc: "Thuê xe đường dài theo lịch trình với đội ngũ y tế giàu kinh nghiệm." },
   ];
   return (
     <section id="services" className="py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Our services"
-          title="Complete emergency and medical transport"
-          subtitle="From critical emergencies to scheduled transfers — one trusted team, fully equipped fleet."
+          eyebrow="Dịch vụ của chúng tôi"
+          title="Vận chuyển y tế và cấp cứu toàn diện"
+          subtitle="Từ các ca cấp cứu khẩn cấp đến vận chuyển theo lịch trình — một đội ngũ đáng tin cậy cùng đội xe hiện đại."
         />
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {services.map((s, i) => (
@@ -347,7 +372,7 @@ function Services() {
                   href="#contact"
                   className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-2.5 transition-all"
                 >
-                  Book Now <ArrowRight className="h-4 w-4" />
+                  Đặt ngay <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
             </article>
@@ -361,18 +386,18 @@ function Services() {
 /* ---------- How it works ---------- */
 function HowItWorks() {
   const steps = [
-    { icon: PhoneCall, title: "Contact Us", desc: "Call 115 or book through our online form anytime, day or night." },
-    { icon: CheckCircle2, title: "Confirm Patient Info", desc: "Share patient details, condition and pickup location with our dispatcher." },
-    { icon: Ambulance, title: "Ambulance Dispatched", desc: "Nearest available ambulance is dispatched within seconds." },
-    { icon: ShieldCheck, title: "Safe Transportation", desc: "Trained medical crew transports the patient safely to the destination." },
+    { icon: PhoneCall, title: "Liên hệ", desc: "Gọi 115 hoặc đặt xe qua biểu mẫu trực tuyến của chúng tôi bất cứ lúc nào." },
+    { icon: CheckCircle2, title: "Xác nhận thông tin", desc: "Cung cấp thông tin bệnh nhân, tình trạng và địa điểm đón cho tổng đài viên." },
+    { icon: Ambulance, title: "Điều phối xe", desc: "Xe cấp cứu gần nhất sẽ được điều động trong vài giây." },
+    { icon: ShieldCheck, title: "Vận chuyển an toàn", desc: "Đội ngũ y tế chuyên nghiệp đưa bệnh nhân đến nơi an toàn." },
   ];
   return (
     <section className="py-20 sm:py-24 bg-gradient-to-b from-secondary/40 to-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="How it works"
-          title="Four steps to safe transport"
-          subtitle="A simple, transparent process designed for emergencies and scheduled care alike."
+          eyebrow="Quy trình làm việc"
+          title="Bốn bước để vận chuyển an toàn"
+          subtitle="Quy trình đơn giản, minh bạch được thiết kế cho cả trường hợp khẩn cấp và theo lịch trình."
         />
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 relative">
           {steps.map((s, i) => (
@@ -399,10 +424,10 @@ function HowItWorks() {
 /* ---------- Stats ---------- */
 function Stats() {
   const stats = [
-    { v: 10000, suffix: "+", label: "Patients Served" },
-    { v: 50, suffix: "+", label: "Ambulances" },
-    { v: 200, suffix: "+", label: "Medical Staff" },
-    { v: 24, suffix: "/7", label: "Service Available" },
+    { v: 10000, suffix: "+", label: "Bệnh nhân đã phục vụ" },
+    { v: 50, suffix: "+", label: "Xe cấp cứu" },
+    { v: 200, suffix: "+", label: "Nhân viên y tế" },
+    { v: 24, suffix: "/7", label: "Phục vụ" },
   ];
   return (
     <section className="py-20 sm:py-24">
@@ -461,39 +486,39 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
 function Reviews() {
   const reviews = [
     {
-      name: "Linda Martinez",
-      role: "Patient's daughter",
-      text: "Excellent service. The ambulance arrived within 10 minutes and the medical staff were very professional and reassuring.",
+      name: "Nguyễn Thị Hoa",
+      role: "Người nhà bệnh nhân",
+      text: "Dịch vụ tuyệt vời. Xe đến trong vòng 10 phút và đội y tế rất chuyên nghiệp, giúp chúng tôi an tâm hơn nhiều.",
       avatar: "https://i.pravatar.cc/120?img=47",
     },
     {
-      name: "Dr. Samuel Chen",
-      role: "Hospital coordinator",
-      text: "We rely on Rescue115 for inter-hospital transfers. Punctual, well-equipped and the crew is consistently outstanding.",
+      name: "BS. Trần Văn Hùng",
+      role: "Điều phối viên bệnh viện",
+      text: "Chúng tôi luôn tin tưởng dịch vụ chuyển viện của 115. Đúng giờ, trang thiết bị đầy đủ và nhân viên rất xuất sắc.",
       avatar: "https://i.pravatar.cc/120?img=12",
     },
     {
-      name: "Aisha Rahman",
-      role: "Family member",
-      text: "Calm, fast and caring. They handled my mother with such respect during a very stressful night. Forever grateful.",
+      name: "Lê Văn Tùng",
+      role: "Người nhà bệnh nhân",
+      text: "Nhanh nhẹn và chu đáo. Các bác sĩ đã chăm sóc mẹ tôi rất cẩn thận trong một đêm vô cùng căng thẳng.",
       avatar: "https://i.pravatar.cc/120?img=32",
     },
     {
-      name: "Marco Bellini",
-      role: "Event organizer",
-      text: "Booked their standby team for a marathon. Professional setup, smart triage, and excellent communication throughout.",
+      name: "Phạm Minh Đức",
+      role: "Ban tổ chức sự kiện",
+      text: "Chúng tôi đã đặt dịch vụ trực y tế cho giải marathon. Tác phong chuyên nghiệp, phân loại y tế thông minh và liên lạc rất tốt.",
       avatar: "https://i.pravatar.cc/120?img=15",
     },
     {
-      name: "Priya Nair",
-      role: "Clinic manager",
-      text: "Our go-to for ICU transfers. Their ICU ambulance is genuinely a mobile critical-care unit.",
+      name: "Hoàng Thanh Mai",
+      role: "Quản lý phòng khám",
+      text: "Lựa chọn hàng đầu của chúng tôi cho chuyển viện ICU. Xe ICU của họ thực sự là một phòng chăm sóc tích cực di động.",
       avatar: "https://i.pravatar.cc/120?img=45",
     },
     {
-      name: "Daniel Okafor",
-      role: "Patient",
-      text: "After my accident the crew was at my side in minutes. Their calm professionalism made all the difference.",
+      name: "Vũ Đình Trường",
+      role: "Bệnh nhân",
+      text: "Sau khi tôi gặp tai nạn, đội ngũ y tế đã có mặt trong vài phút. Sự bình tĩnh và chuyên nghiệp của họ đã cứu sống tôi.",
       avatar: "https://i.pravatar.cc/120?img=68",
     },
   ];
@@ -501,9 +526,9 @@ function Reviews() {
     <section id="reviews" className="py-20 sm:py-24 bg-secondary/40">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Customer reviews"
-          title="Trusted by families and healthcare teams"
-          subtitle="Real stories from people who counted on us when it mattered most."
+          eyebrow="Đánh giá từ khách hàng"
+          title="Được tin tưởng bởi các gia đình và đội ngũ y tế"
+          subtitle="Những câu chuyện chân thực từ những người đã tin cậy chúng tôi vào những lúc quan trọng nhất."
         />
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {reviews.map((r) => (
@@ -552,9 +577,9 @@ function Contact() {
     <section id="contact" className="py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Contact"
-          title="Request an ambulance"
-          subtitle="Fill the form and our dispatcher will call you back in minutes. For immediate emergencies, please call 115."
+          eyebrow="Liên hệ"
+          title="Yêu cầu xe cấp cứu"
+          subtitle="Điền vào biểu mẫu và tổng đài viên của chúng tôi sẽ gọi lại cho bạn sau vài phút. Trong trường hợp khẩn cấp, vui lòng gọi 115."
         />
         <div className="mt-12 grid lg:grid-cols-5 gap-6">
           <form
@@ -562,19 +587,19 @@ function Contact() {
             className="lg:col-span-3 rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-card"
           >
             <div className="grid sm:grid-cols-2 gap-4">
-              <Field label="Full Name" name="name" placeholder="Jane Doe" required />
-              <Field label="Phone Number" name="phone" type="tel" placeholder="+1 555 0100" required />
-              <Field label="Email" name="email" type="email" placeholder="jane@example.com" />
-              <Field label="Pickup Address" name="pickup" placeholder="123 Main St" required />
+              <Field label="Họ và Tên" name="name" placeholder="Nguyễn Văn A" required />
+              <Field label="Số điện thoại" name="phone" type="tel" placeholder="090 123 4567" required />
+              <Field label="Email" name="email" type="email" placeholder="nguyenvana@example.com" />
+              <Field label="Địa chỉ đón" name="pickup" placeholder="123 Đường Lê Lợi" required />
               <div className="sm:col-span-2">
-                <Field label="Destination Hospital" name="destination" placeholder="City General Hospital" />
+                <Field label="Bệnh viện đến" name="destination" placeholder="Bệnh viện Chợ Rẫy" />
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-sm font-medium mb-1.5">Message</label>
+                <label className="block text-sm font-medium mb-1.5">Tin nhắn</label>
                 <textarea
                   name="message"
                   rows={4}
-                  placeholder="Patient condition or any special needs..."
+                  placeholder="Tình trạng bệnh nhân hoặc bất kỳ yêu cầu đặc biệt nào..."
                   className="w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
                 />
               </div>
@@ -584,30 +609,30 @@ function Contact() {
                 type="submit"
                 className="inline-flex items-center justify-center gap-2 rounded-full gradient-sky px-6 py-3 text-sm font-semibold text-primary-foreground shadow-soft hover:scale-[1.02] transition-transform"
               >
-                Send Request <ArrowRight className="h-4 w-4" />
+                Gửi yêu cầu <ArrowRight className="h-4 w-4" />
               </button>
               <a
-                href="tel:115"
+                href="tel:0915205115"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-emergency px-6 py-3 text-sm font-semibold text-emergency-foreground shadow-soft hover:scale-[1.02] transition-transform"
               >
-                <PhoneCall className="h-4 w-4" /> Emergency Call
+                <PhoneCall className="h-4 w-4" /> Gọi khẩn cấp
               </a>
             </div>
             {sent && (
               <div className="mt-4 flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-3 text-sm text-primary animate-fade-in">
-                <CheckCircle2 className="h-4 w-4" /> Request sent. Our dispatcher will call you shortly.
+                <CheckCircle2 className="h-4 w-4" /> Đã gửi yêu cầu. Tổng đài viên của chúng tôi sẽ sớm liên hệ với bạn.
               </div>
             )}
           </form>
 
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <InfoCard icon={PhoneCall} title="Hotline" lines={["115 (Emergency)", "+1 (555) 010-2050"]} />
+            <InfoCard icon={PhoneCall} title="Đường dây nóng" lines={["115 (Khẩn cấp)", "090 123 4567"]} />
             <InfoCard icon={Mail} title="Email" lines={["dispatch@rescue115.com", "info@rescue115.com"]} />
-            <InfoCard icon={MapPin} title="Address" lines={["88 Medical Plaza", "Central District, City"]} />
+            <InfoCard icon={MapPin}title="Địa chỉ"lines={["11 Hẻm 922", "Đồng Xoài", "Đồng Nai"]}/>
             <div className="rounded-2xl overflow-hidden border border-border shadow-card aspect-[4/3] bg-secondary">
               <iframe
                 title="map"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=-74.02%2C40.70%2C-73.96%2C40.74&amp;layer=mapnik"
+                src="https://maps.google.com/maps?q=11%20h%E1%BA%BBm%20922%20ph%C6%B0%E1%BB%9Dng%20%C4%91%E1%BB%93ng%20xo%C3%A0i%20%C4%91%E1%BB%93ng%20nai&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 className="h-full w-full"
                 loading="lazy"
               />
@@ -673,10 +698,10 @@ function Footer() {
               <div className="grid h-10 w-10 place-items-center rounded-xl gradient-sky text-primary-foreground shadow-soft">
                 <Ambulance className="h-5 w-5" />
               </div>
-              <div className="font-display text-lg font-bold">Rescue<span className="text-primary">115</span></div>
+              <div className="font-display text-lg font-bold">Cấp cứu 115 <span className="text-primary">Hồng Hải</span></div>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
-              Fast, safe and professional emergency ambulance services, available 24/7 across the city.
+              Dịch vụ xe cấp cứu Hồng Hải khẩn cấp nhanh chóng, an toàn và chuyên nghiệp, hoạt động 24/7 trên toàn thành phố.
             </p>
             <div className="mt-4 flex gap-2">
               <a href="#" aria-label="Facebook" className="grid h-9 w-9 place-items-center rounded-lg border border-border hover:bg-primary hover:text-primary-foreground transition">
@@ -689,7 +714,7 @@ function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold">Quick Links</h4>
+            <h4 className="text-sm font-semibold">Liên kết nhanh</h4>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               {NAV.map((n) => (
                 <li key={n.href}><a href={n.href} className="hover:text-primary transition">{n.label}</a></li>
@@ -698,31 +723,31 @@ function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold">Services</h4>
+            <h4 className="text-sm font-semibold">Dịch vụ</h4>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li>Emergency Ambulance</li>
-              <li>Hospital Transfer</li>
-              <li>ICU Ambulance</li>
-              <li>Intercity Ambulance</li>
-              <li>Event Standby</li>
+              <li>Xe cấp cứu 115</li>
+              <li>Chuyển viện</li>
+              <li>Xe Cứu Thương chuyên dụng</li>
+              <li>Vận chuyển liên tỉnh</li>
+              <li>Trực y tế sự kiện</li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold">Contact</h4>
+            <h4 className="text-sm font-semibold">Liên hệ</h4>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-center gap-2"><PhoneCall className="h-4 w-4 text-primary" /> 115 — Emergency</li>
-              <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> dispatch@rescue115.com</li>
-              <li className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" /> 88 Medical Plaza, City</li>
+              <li className="flex items-center gap-2"><PhoneCall className="h-4 w-4 text-primary" /> 0915205115</li>
+              <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> Hoangphihai1984bp@gmail.com </li>
+              <li className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" /> 11 Hẻm 922 Phường, Đồng Xoài, Tp.Đồng Nai</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row gap-3 items-center justify-between text-xs text-muted-foreground">
-          <div>© {new Date().getFullYear()} Rescue115 Emergency Services. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} Dịch vụ Cấp cứu 115 Hồng Hải. Đã đăng ký bản quyền.</div>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-primary">Privacy</a>
-            <a href="#" className="hover:text-primary">Terms</a>
+            <a href="#" className="hover:text-primary">Bảo mật</a>
+            <a href="#" className="hover:text-primary">Điều khoản</a>
           </div>
         </div>
       </div>
@@ -734,8 +759,8 @@ function Footer() {
 function FloatingCall() {
   return (
     <a
-      href="tel:115"
-      aria-label="Call emergency 115"
+      href="tel:0915205115"
+      aria-label="Gọi cấp cứu 115"
       className="fixed bottom-6 right-6 z-40 group"
     >
       <span className="absolute inset-0 rounded-full bg-emergency animate-ping opacity-60" />
@@ -757,7 +782,7 @@ function BackToTop() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      aria-label="Back to top"
+      aria-label="Trở lên đầu trang"
       className="fixed bottom-24 right-6 z-40 grid h-11 w-11 place-items-center rounded-full bg-card border border-border shadow-card hover:bg-primary hover:text-primary-foreground transition animate-fade-in"
     >
       <ArrowUp className="h-5 w-5" />
