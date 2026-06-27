@@ -82,7 +82,7 @@ function Navbar() {
               <HeartPulse className="h-5 w-5" />
             </div>
             <div className="leading-tight">
-              <div className="font-display text-lg font-bold">Cấp cứu 115 <span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
+              <div className="font-display text-base sm:text-lg font-bold">Cấp cứu 115 <span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
               <div className="text-[10px] text-muted-foreground -mt-0.5">Điều dưỡng tại nhà</div>
             </div>
           </a>

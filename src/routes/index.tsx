@@ -119,7 +119,7 @@ function Navbar() {
               <Ambulance className="h-5 w-5" />
             </div>
             <div className="leading-tight">
-              <div className="font-display text-lg font-bold">Cấp cứu - 115 -<span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
+              <div className="font-display text-base sm:text-lg font-bold">Cấp cứu 115 <span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
               <div className="text-[10px] text-muted-foreground -mt-0.5">Dịch vụ xe cấp cứu</div>
             </div>
           </a>
@@ -222,23 +222,16 @@ function Hero() {
           </div>
 
           <h1 className="mt-5 font-bold leading-[1.05] tracking-tight text-4xl sm:text-5xl lg:text-6xl">
-
-  <span className="block whitespace-nowrap">
-    Dịch vụ
-    <span className="text-gradient-sky">
-      {" "}cấp cứu Hồng Hải
-    </span>
-  </span>
-
-  <span className="block">
-    nhanh chóng, an toàn
-  </span>
-
-  <span className="block">
-    và chuyên nghiệp
-  </span>
-
-</h1>
+            <span className="block">
+              Dịch Vụ Cấp Cứu <span className="text-gradient-sky whitespace-nowrap">Hồng Hải</span>
+            </span>
+            <span className="block">
+              nhanh chóng, an toàn
+            </span>
+            <span className="block">
+              và chuyên nghiệp
+            </span>
+          </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl">
             Hoạt động 24/7, sẵn sàng phục vụ mọi lúc.
 
