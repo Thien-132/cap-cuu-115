@@ -9,12 +9,65 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VeChungToiRouteImport } from './routes/ve-chung-toi'
+import { Route as VanChuyenYTeRouteImport } from './routes/van-chuyen-y-te'
+import { Route as TinTucRouteImport } from './routes/tin-tuc'
+import { Route as LienHeRouteImport } from './routes/lien-he'
+import { Route as IcuHoiSucRouteImport } from './routes/icu-hoi-suc'
 import { Route as DieuDuongTaiNhaRouteImport } from './routes/dieu-duong-tai-nha'
+import { Route as CapCuuKhanCapRouteImport } from './routes/cap-cuu-khan-cap'
+import { Route as BangGiaRouteImport } from './routes/bang-gia'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminYeuCauRouteImport } from './routes/admin/yeu-cau'
+import { Route as AdminQuanLyXeRouteImport } from './routes/admin/quan-ly-xe'
+import { Route as AdminDoanhThuRouteImport } from './routes/admin/doanh-thu'
+import { Route as AdminDieuDuongRouteImport } from './routes/admin/dieu-duong'
 
+const VeChungToiRoute = VeChungToiRouteImport.update({
+  id: '/ve-chung-toi',
+  path: '/ve-chung-toi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VanChuyenYTeRoute = VanChuyenYTeRouteImport.update({
+  id: '/van-chuyen-y-te',
+  path: '/van-chuyen-y-te',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TinTucRoute = TinTucRouteImport.update({
+  id: '/tin-tuc',
+  path: '/tin-tuc',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LienHeRoute = LienHeRouteImport.update({
+  id: '/lien-he',
+  path: '/lien-he',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IcuHoiSucRoute = IcuHoiSucRouteImport.update({
+  id: '/icu-hoi-suc',
+  path: '/icu-hoi-suc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DieuDuongTaiNhaRoute = DieuDuongTaiNhaRouteImport.update({
   id: '/dieu-duong-tai-nha',
   path: '/dieu-duong-tai-nha',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CapCuuKhanCapRoute = CapCuuKhanCapRouteImport.update({
+  id: '/cap-cuu-khan-cap',
+  path: '/cap-cuu-khan-cap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BangGiaRoute = BangGiaRouteImport.update({
+  id: '/bang-gia',
+  path: '/bang-gia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,40 +75,212 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminYeuCauRoute = AdminYeuCauRouteImport.update({
+  id: '/yeu-cau',
+  path: '/yeu-cau',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminQuanLyXeRoute = AdminQuanLyXeRouteImport.update({
+  id: '/quan-ly-xe',
+  path: '/quan-ly-xe',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDoanhThuRoute = AdminDoanhThuRouteImport.update({
+  id: '/doanh-thu',
+  path: '/doanh-thu',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDieuDuongRoute = AdminDieuDuongRouteImport.update({
+  id: '/dieu-duong',
+  path: '/dieu-duong',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/bang-gia': typeof BangGiaRoute
+  '/cap-cuu-khan-cap': typeof CapCuuKhanCapRoute
   '/dieu-duong-tai-nha': typeof DieuDuongTaiNhaRoute
+  '/icu-hoi-suc': typeof IcuHoiSucRoute
+  '/lien-he': typeof LienHeRoute
+  '/tin-tuc': typeof TinTucRoute
+  '/van-chuyen-y-te': typeof VanChuyenYTeRoute
+  '/ve-chung-toi': typeof VeChungToiRoute
+  '/admin/dieu-duong': typeof AdminDieuDuongRoute
+  '/admin/doanh-thu': typeof AdminDoanhThuRoute
+  '/admin/quan-ly-xe': typeof AdminQuanLyXeRoute
+  '/admin/yeu-cau': typeof AdminYeuCauRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
+  '/cap-cuu-khan-cap': typeof CapCuuKhanCapRoute
   '/dieu-duong-tai-nha': typeof DieuDuongTaiNhaRoute
+  '/icu-hoi-suc': typeof IcuHoiSucRoute
+  '/lien-he': typeof LienHeRoute
+  '/tin-tuc': typeof TinTucRoute
+  '/van-chuyen-y-te': typeof VanChuyenYTeRoute
+  '/ve-chung-toi': typeof VeChungToiRoute
+  '/admin/dieu-duong': typeof AdminDieuDuongRoute
+  '/admin/doanh-thu': typeof AdminDoanhThuRoute
+  '/admin/quan-ly-xe': typeof AdminQuanLyXeRoute
+  '/admin/yeu-cau': typeof AdminYeuCauRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/bang-gia': typeof BangGiaRoute
+  '/cap-cuu-khan-cap': typeof CapCuuKhanCapRoute
   '/dieu-duong-tai-nha': typeof DieuDuongTaiNhaRoute
+  '/icu-hoi-suc': typeof IcuHoiSucRoute
+  '/lien-he': typeof LienHeRoute
+  '/tin-tuc': typeof TinTucRoute
+  '/van-chuyen-y-te': typeof VanChuyenYTeRoute
+  '/ve-chung-toi': typeof VeChungToiRoute
+  '/admin/dieu-duong': typeof AdminDieuDuongRoute
+  '/admin/doanh-thu': typeof AdminDoanhThuRoute
+  '/admin/quan-ly-xe': typeof AdminQuanLyXeRoute
+  '/admin/yeu-cau': typeof AdminYeuCauRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dieu-duong-tai-nha'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/bang-gia'
+    | '/cap-cuu-khan-cap'
+    | '/dieu-duong-tai-nha'
+    | '/icu-hoi-suc'
+    | '/lien-he'
+    | '/tin-tuc'
+    | '/van-chuyen-y-te'
+    | '/ve-chung-toi'
+    | '/admin/dieu-duong'
+    | '/admin/doanh-thu'
+    | '/admin/quan-ly-xe'
+    | '/admin/yeu-cau'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dieu-duong-tai-nha'
-  id: '__root__' | '/' | '/dieu-duong-tai-nha'
+  to:
+    | '/'
+    | '/bang-gia'
+    | '/cap-cuu-khan-cap'
+    | '/dieu-duong-tai-nha'
+    | '/icu-hoi-suc'
+    | '/lien-he'
+    | '/tin-tuc'
+    | '/van-chuyen-y-te'
+    | '/ve-chung-toi'
+    | '/admin/dieu-duong'
+    | '/admin/doanh-thu'
+    | '/admin/quan-ly-xe'
+    | '/admin/yeu-cau'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/bang-gia'
+    | '/cap-cuu-khan-cap'
+    | '/dieu-duong-tai-nha'
+    | '/icu-hoi-suc'
+    | '/lien-he'
+    | '/tin-tuc'
+    | '/van-chuyen-y-te'
+    | '/ve-chung-toi'
+    | '/admin/dieu-duong'
+    | '/admin/doanh-thu'
+    | '/admin/quan-ly-xe'
+    | '/admin/yeu-cau'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  BangGiaRoute: typeof BangGiaRoute
+  CapCuuKhanCapRoute: typeof CapCuuKhanCapRoute
   DieuDuongTaiNhaRoute: typeof DieuDuongTaiNhaRoute
+  IcuHoiSucRoute: typeof IcuHoiSucRoute
+  LienHeRoute: typeof LienHeRoute
+  TinTucRoute: typeof TinTucRoute
+  VanChuyenYTeRoute: typeof VanChuyenYTeRoute
+  VeChungToiRoute: typeof VeChungToiRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/ve-chung-toi': {
+      id: '/ve-chung-toi'
+      path: '/ve-chung-toi'
+      fullPath: '/ve-chung-toi'
+      preLoaderRoute: typeof VeChungToiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/van-chuyen-y-te': {
+      id: '/van-chuyen-y-te'
+      path: '/van-chuyen-y-te'
+      fullPath: '/van-chuyen-y-te'
+      preLoaderRoute: typeof VanChuyenYTeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tin-tuc': {
+      id: '/tin-tuc'
+      path: '/tin-tuc'
+      fullPath: '/tin-tuc'
+      preLoaderRoute: typeof TinTucRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lien-he': {
+      id: '/lien-he'
+      path: '/lien-he'
+      fullPath: '/lien-he'
+      preLoaderRoute: typeof LienHeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/icu-hoi-suc': {
+      id: '/icu-hoi-suc'
+      path: '/icu-hoi-suc'
+      fullPath: '/icu-hoi-suc'
+      preLoaderRoute: typeof IcuHoiSucRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dieu-duong-tai-nha': {
       id: '/dieu-duong-tai-nha'
       path: '/dieu-duong-tai-nha'
       fullPath: '/dieu-duong-tai-nha'
       preLoaderRoute: typeof DieuDuongTaiNhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cap-cuu-khan-cap': {
+      id: '/cap-cuu-khan-cap'
+      path: '/cap-cuu-khan-cap'
+      fullPath: '/cap-cuu-khan-cap'
+      preLoaderRoute: typeof CapCuuKhanCapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bang-gia': {
+      id: '/bang-gia'
+      path: '/bang-gia'
+      fullPath: '/bang-gia'
+      preLoaderRoute: typeof BangGiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -65,12 +290,73 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/yeu-cau': {
+      id: '/admin/yeu-cau'
+      path: '/yeu-cau'
+      fullPath: '/admin/yeu-cau'
+      preLoaderRoute: typeof AdminYeuCauRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/quan-ly-xe': {
+      id: '/admin/quan-ly-xe'
+      path: '/quan-ly-xe'
+      fullPath: '/admin/quan-ly-xe'
+      preLoaderRoute: typeof AdminQuanLyXeRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/doanh-thu': {
+      id: '/admin/doanh-thu'
+      path: '/doanh-thu'
+      fullPath: '/admin/doanh-thu'
+      preLoaderRoute: typeof AdminDoanhThuRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/dieu-duong': {
+      id: '/admin/dieu-duong'
+      path: '/dieu-duong'
+      fullPath: '/admin/dieu-duong'
+      preLoaderRoute: typeof AdminDieuDuongRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminDieuDuongRoute: typeof AdminDieuDuongRoute
+  AdminDoanhThuRoute: typeof AdminDoanhThuRoute
+  AdminQuanLyXeRoute: typeof AdminQuanLyXeRoute
+  AdminYeuCauRoute: typeof AdminYeuCauRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminDieuDuongRoute: AdminDieuDuongRoute,
+  AdminDoanhThuRoute: AdminDoanhThuRoute,
+  AdminQuanLyXeRoute: AdminQuanLyXeRoute,
+  AdminYeuCauRoute: AdminYeuCauRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  BangGiaRoute: BangGiaRoute,
+  CapCuuKhanCapRoute: CapCuuKhanCapRoute,
   DieuDuongTaiNhaRoute: DieuDuongTaiNhaRoute,
+  IcuHoiSucRoute: IcuHoiSucRoute,
+  LienHeRoute: LienHeRoute,
+  TinTucRoute: TinTucRoute,
+  VanChuyenYTeRoute: VanChuyenYTeRoute,
+  VeChungToiRoute: VeChungToiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

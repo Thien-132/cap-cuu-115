@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { sendEmailAction } from "@/lib/actions";
 import {
   Phone,
   CalendarDays,
@@ -30,6 +31,17 @@ import {
   ChevronDown,
   Loader2,
 } from "lucide-react";
+
+import { Navbar } from '@/components/common/Navbar';
+import { Footer } from '@/components/common/Footer';
+import { BookingModal } from '@/components/common/BookingModal';
+import { FloatingActions } from '@/components/common/FloatingActions';
+import { BackToTop } from '@/components/common/BackToTop';
+import { SectionHeading } from '@/components/common/SectionHeading';
+import { Field } from '@/components/common/Field';
+import { InfoCard } from '@/components/common/InfoCard';
+
+import { getAmbulances, getNurses } from "@/lib/adminStore";
 
 import heroImg from "@/assets/hero-ambulance.jpg";
 import sEmergency from "@/assets/service-emergency.jpg";
@@ -70,7 +82,7 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Loader />
-      <Navbar onOpenBooking={() => openBooking()} />
+      <Navbar navItems={NAV} onOpenBooking={() => openBooking()} />
       <main>
         <Hero onOpenBooking={() => openBooking("emergency")} />
         <WhyUs />
@@ -80,7 +92,7 @@ function Index() {
         <Reviews />
         <Contact />
       </main>
-      <Footer />
+      <Footer navItems={NAV} />
       <FloatingActions />
       <BackToTop />
       <BookingModal
@@ -113,115 +125,30 @@ function Loader() {
   );
 }
 
-/* ---------- Navbar ---------- */
-function Navbar({ onOpenBooking }: { onOpenBooking?: () => void }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-slate-950/90 backdrop-blur-xl border-b border-white/10 shadow-2xl" : "bg-transparent"
-        }`}
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 sm:h-20 items-center justify-between">
-          <a href="#home" className="flex items-center gap-3 group">
-            <div className="grid h-11 w-11 place-items-center rounded-xl gradient-sky text-white shadow-soft transition-transform group-hover:scale-105">
-              <Ambulance className="h-6 w-6" />
-            </div>
-            <div className="leading-tight">
-              <div className="font-display text-lg sm:text-xl font-bold text-white">Cấp cứu 115 <span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
-              <div className="text-[11px] sm:text-xs text-white/60 -mt-0.5">Dịch vụ cấp cứu chuyên nghiệp 24/7</div>
-            </div>
-          </a>
-
-          <nav className="hidden lg:flex items-center gap-1">
-            {NAV.map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                className="px-4 py-2 text-sm font-semibold text-white/80 hover:text-white rounded-lg transition-colors relative group"
-              >
-                {n.label}
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-4/5" />
-              </a>
-            ))}
-          </nav>
-
-          <div className="hidden lg:flex items-center gap-4">
-            <a
-              href="tel:0915205115"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-bold text-white shadow-soft hover:bg-white/10 transition-colors"
-            >
-              <PhoneCall className="h-4 w-4 text-primary animate-pulse" />
-              0915 205 115
-            </a>
-            <button
-              onClick={onOpenBooking}
-              className="inline-flex items-center gap-2 rounded-full gradient-sky px-6 py-2.5 text-sm font-bold text-white shadow-soft hover:opacity-90 transition-all hover:-translate-y-0.5"
-            >
-              <CalendarDays className="h-4 w-4" />
-              Đặt lịch ngay
-            </button>
-          </div>
-
-          <button
-            onClick={() => setOpen(!open)}
-            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white"
-            aria-label="Toggle menu"
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-      </div>
-
-      {open && (
-        <div className="lg:hidden border-t border-white/10 bg-slate-950/95 backdrop-blur-xl animate-fade-in shadow-2xl">
-          <div className="px-4 py-6 flex flex-col gap-3">
-            {NAV.map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                onClick={() => setOpen(false)}
-                className="px-4 py-3 rounded-xl text-base font-semibold text-white/90 hover:bg-white/10 transition-colors"
-              >
-                {n.label}
-              </a>
-            ))}
-            <a
-              href="tel:0915205115"
-              className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/20 px-4 py-4 text-base font-bold text-white"
-            >
-              <PhoneCall className="h-5 w-5 text-primary" /> 0915 205 115
-            </a>
-            <button
-              onClick={() => {
-                setOpen(false);
-                onOpenBooking?.();
-              }}
-              className="inline-flex items-center justify-center gap-2 rounded-xl gradient-sky px-4 py-4 text-base font-bold text-white shadow-lg"
-            >
-              <CalendarDays className="h-5 w-5" /> Đặt lịch ngay
-            </button>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
-
 /* ---------- Hero ---------- */
 function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
-  const stats = [
+  const [stats, setStats] = useState([
     { v: 10000, suffix: "+", label: "Khách hàng tin tưởng" },
     { v: 50, suffix: "+", label: "Xe cấp cứu hiện đại" },
     { v: 8, suffix: " phút", label: "Thời gian phản hồi TB" },
-  ];
+  ]);
+
+  useEffect(() => {
+    const updateStats = () => {
+      const ambulancesCount = getAmbulances().length;
+      const nursesCount = getNurses().length;
+
+      setStats([
+        { v: 10000, suffix: "+", label: "Khách hàng tin tưởng" },
+        { v: ambulancesCount || 50, suffix: "+", label: "Xe cấp cứu hiện đại" },
+        { v: nursesCount || 20, suffix: "+", label: "Điều dưỡng & Y bác sĩ" },
+      ]);
+    };
+
+    updateStats();
+    window.addEventListener('admin_store_update', updateStats);
+    return () => window.removeEventListener('admin_store_update', updateStats);
+  }, []);
 
   return (
     <section id="home" className="relative isolate overflow-hidden pt-32 pb-8 sm:pt-40 sm:pb-12 bg-slate-950">
@@ -830,25 +757,19 @@ function ReviewModal({
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/Hoangphihai1984bp@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          "Loại form": "Đánh giá dịch vụ",
-          "Họ và tên": formData.get("Ho_Ten"),
-          "Số điện thoại": formData.get("So_Dien_Thoai"),
-          "Số sao": rating + " Sao",
-          "Bình luận": formData.get("Binh_Luan"),
-          _subject: "⭐ Khách hàng vừa gửi đánh giá mới",
-          _captcha: "false",
-          _template: "table",
-        }),
+      const response: any = await sendEmailAction({
+        data: {
+          name: (formData.get("Ho_Ten") as string) || "Khách hàng",
+          phone: (formData.get("So_Dien_Thoai") as string) || "",
+          address: "",
+          note: formData.get("Binh_Luan") as string,
+          rating: String(rating),
+          type: "review",
+        }
       });
 
-      if (!response.ok) throw new Error("Gửi thất bại");
+
+
 
       const newReview = {
         name: formData.get("Ho_Ten") as string,
@@ -923,8 +844,8 @@ function ReviewModal({
                     >
                       <Star
                         className={`h-10 w-10 transition-colors duration-200 ${star <= (hoverRating || rating)
-                            ? "text-yellow-500 fill-current"
-                            : "text-muted-foreground/30"
+                          ? "text-yellow-500 fill-current"
+                          : "text-muted-foreground/30"
                           }`}
                       />
                     </button>
@@ -972,29 +893,19 @@ function Contact() {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/Hoangphihai1984bp@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          "Loại form": "Liên hệ",
-          "Họ và tên": formData.get("Ho_Ten"),
-          "Số điện thoại": formData.get("So_Dien_Thoai"),
-          "Email": formData.get("Email"),
-          "Địa chỉ đón": formData.get("Dia_Chi_Don"),
-          "Bệnh viện đến": formData.get("Benh_Vien_Den"),
-          "Ghi chú": formData.get("Ghi_Chu"),
-          _subject: "🚑 Yêu cầu liên hệ mới từ website Hồng Hải",
-          _captcha: "false",
-          _template: "table",
-        }),
+      const response: any = await sendEmailAction({
+        data: {
+          name: (formData.get("Ho_Ten") as string) || "",
+          phone: (formData.get("So_Dien_Thoai") as string) || "",
+          address: (formData.get("Dia_Chi_Don") as string) || "",
+          hospital: (formData.get("Benh_Vien_Den") as string) || "",
+          note: formData.get("Ghi_Chu") as string,
+          type: "contact",
+        }
       });
 
-      if (!response.ok) {
-        throw new Error("Gửi thất bại");
-      }
+
+
 
       setSent(true);
       setTimeout(() => setSent(false), 4000);
@@ -1075,390 +986,9 @@ function Contact() {
   );
 }
 
-function Field({
-  label,
-  name,
-  type = "text",
-  placeholder,
-  required,
-  enableLocation,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  placeholder?: string;
-  required?: boolean;
-  enableLocation?: boolean;
-}) {
-  const [loadingLoc, setLoadingLoc] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleGetLocation = () => {
-    if (!navigator.geolocation) {
-      alert("Trình duyệt không hỗ trợ định vị.");
-      return;
-    }
-    setLoadingLoc(true);
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        try {
-          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&zoom=18&addressdetails=1`);
-          const data = await res.json();
-          if (data && data.display_name && inputRef.current) {
-            inputRef.current.value = data.display_name;
-          } else if (inputRef.current) {
-            inputRef.current.value = `${pos.coords.latitude}, ${pos.coords.longitude}`;
-          }
-        } catch (e) {
-          if (inputRef.current) {
-            inputRef.current.value = `${pos.coords.latitude}, ${pos.coords.longitude}`;
-          }
-        } finally {
-          setLoadingLoc(false);
-        }
-      },
-      (err) => {
-        setLoadingLoc(false);
-        alert("Không thể lấy vị trí. Vui lòng cho phép quyền truy cập vị trí.");
-      }
-    );
-  };
-
-  return (
-    <div>
-      <label className="block text-sm font-medium mb-1.5">{label}</label>
-      <div className="relative">
-        <input
-          ref={inputRef}
-          name={name}
-          type={type}
-          placeholder={placeholder}
-          required={required}
-          className={`w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition ${enableLocation ? 'pr-12' : ''}`}
-        />
-        {enableLocation && (
-          <button
-            type="button"
-            onClick={handleGetLocation}
-            disabled={loadingLoc}
-            title="Lấy vị trí hiện tại của tôi"
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-primary hover:bg-primary/10 rounded-lg transition-colors disabled:opacity-50"
-          >
-            {loadingLoc ? <Loader2 className="h-5 w-5 animate-spin" /> : <MapPin className="h-5 w-5" />}
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function InfoCard({ icon: Icon, title, lines }: { icon: typeof Mail; title: string; lines: string[] }) {
-  return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-card flex gap-4 items-start">
-      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl gradient-sky text-primary-foreground shadow-soft">
-        <Icon className="h-5 w-5" />
-      </div>
-      <div className="min-w-0">
-        <div className="font-semibold">{title}</div>
-        {lines.map((l) => (
-          <div key={l} className="text-sm text-muted-foreground">{l}</div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ---------- Footer ---------- */
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-secondary/30">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid md:grid-cols-4 gap-10">
-          <div>
-            <div className="flex items-center gap-2">
-              <div className="grid h-10 w-10 place-items-center rounded-xl gradient-sky text-primary-foreground shadow-soft">
-                <Ambulance className="h-5 w-5" />
-              </div>
-              <div className="font-display text-lg font-bold">Cấp cứu 115 <span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
-            </div>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Dịch vụ xe cấp cứu Hồng&nbsp;Hải khẩn cấp nhanh chóng, an toàn và chuyên nghiệp, hoạt động 24/7 trên toàn thành phố.
-            </p>
-            <div className="mt-4 flex gap-2">
-              <a href="#" aria-label="Facebook" className="grid h-9 w-9 place-items-center rounded-lg border border-border hover:bg-primary hover:text-primary-foreground transition">
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a href="https://zalo.me/0915205115" target="_blank" rel="noopener noreferrer" aria-label="Zalo" className="grid h-9 w-9 place-items-center rounded-lg border border-border hover:bg-primary hover:text-primary-foreground transition">
-                <MessageCircle className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-semibold">Liên kết nhanh</h4>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              {NAV.map((n) => (
-                <li key={n.href}><a href={n.href} className="hover:text-primary transition">{n.label}</a></li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-semibold">Dịch vụ</h4>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li>Xe cấp cứu 115</li>
-              <li>Chuyển viện</li>
-              <li>Xe Cứu Thương chuyên dụng</li>
-              <li>Vận chuyển liên tỉnh</li>
-              <li>Trực y tế sự kiện</li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-semibold">Liên hệ</h4>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-center gap-2"><PhoneCall className="h-4 w-4 text-primary" /> 0915205115</li>
-              <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> Hoangphihai1984bp@gmail.com </li>
-              <li className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" /> 11 Hẻm 922 Phường, Đồng Xoài, Tp.Đồng Nai</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row gap-3 items-center justify-between text-xs text-muted-foreground">
-          <div>© {new Date().getFullYear()} Dịch vụ Cấp cứu 115 Hồng Hải. Đã đăng ký bản quyền.</div>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-primary">Bảo mật</a>
-            <a href="#" className="hover:text-primary">Điều khoản</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 /* ---------- Floating actions ---------- */
-function FloatingActions() {
-  return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
-      <a
-        href="tel:0915205115"
-        aria-label="Gọi ngay"
-        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-emergency text-emergency-foreground shadow-[0_4px_20px_rgba(239,68,68,0.4)] hover:opacity-90 transition-all hover:scale-110"
-      >
-        <span className="absolute inset-0 rounded-full bg-emergency animate-ping opacity-60" />
-        <Phone className="h-6 w-6 relative z-10" />
-        <span className="absolute right-full mr-3 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none">
-          Gọi ngay
-        </span>
-      </a>
-
-      <a
-        href="https://zalo.me/0915205115"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Nhắn tin Zalo"
-        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#0068FF] text-white shadow-[0_4px_20px_rgba(0,104,255,0.3)] hover:bg-[#0055D4] transition-all hover:scale-110"
-      >
-        <MessageCircle className="h-6 w-6 relative z-10" />
-        <span className="absolute right-full mr-3 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none">
-          Zalo
-        </span>
-      </a>
-
-      <a
-        href="https://maps.google.com/?q=11+Hẻm+922+Phường+Đồng+Xoài+Tp.Đồng+Nai"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chỉ đường"
-        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-slate-800 text-white shadow-lg hover:bg-slate-700 transition-all hover:scale-110"
-      >
-        <MapPin className="h-6 w-6 relative z-10" />
-        <span className="absolute right-full mr-3 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none">
-          Chỉ đường
-        </span>
-      </a>
-    </div>
-  );
-}
-
-function BackToTop() {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setShow(window.scrollY > 400);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-
-  return (
-    <button
-      onClick={scrollToTop}
-      aria-label="Lên đầu trang"
-      className={`fixed bottom-6 left-6 z-40 grid h-12 w-12 place-items-center rounded-full bg-secondary text-foreground shadow-card hover:bg-primary hover:text-primary-foreground transition-all duration-300 ${show ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none"
-        }`}
-    >
-      <ArrowUp className="h-5 w-5" />
-    </button>
-  );
-}
-
 /* ---------- Booking Modal ---------- */
-function BookingModal({
-  isOpen,
-  onClose,
-  initialService,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  initialService?: string;
-}) {
-  const [sent, setSent] = useState(false);
-
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, [onClose]);
-
-  if (!isOpen) return null;
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/Hoangphihai1984bp@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          "Loại form": "Yêu cầu dịch vụ",
-          "Họ và tên": formData.get("Ho_Ten"),
-          "Số điện thoại": formData.get("So_Dien_Thoai"),
-          "Địa chỉ": formData.get("Dia_Chi"),
-          "Tình trạng bệnh": formData.get("Tinh_Trang_Benh"),
-          "Loại dịch vụ": formData.get("Loai_Dich_Vu"),
-
-          _subject: "🚑 Yêu cầu dịch vụ mới từ website Hồng Hải",
-          _captcha: "false",
-          _template: "table",
-        }),
-      });
-
-      if (!response.ok) throw new Error("Gửi thất bại");
-
-      setSent(true);
-      setTimeout(() => {
-        setSent(false);
-        onClose();
-      }, 3000);
-    } catch (error) {
-      console.error(error);
-      alert("Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại sau hoặc gọi trực tiếp Hotline.");
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div
-        className="absolute inset-0 bg-background/80 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
-        onClick={onClose}
-      />
-
-      <div className="relative w-full max-w-lg rounded-3xl bg-card border border-border shadow-card overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-secondary/30">
-          <h2 className="text-xl font-bold flex items-center gap-2">
-            <Ambulance className="h-5 w-5 text-primary" />
-            Yêu cầu dịch vụ
-          </h2>
-          <button
-            onClick={onClose}
-            className="grid h-8 w-8 place-items-center rounded-full bg-background border border-border hover:bg-secondary transition-colors"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-
-        <div className="p-6">
-          {sent ? (
-            <div className="flex flex-col items-center justify-center py-10 text-center animate-in fade-in">
-              <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <CheckCircle2 className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold">Gửi thành công!</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Chúng tôi đã nhận được yêu cầu. Tổng đài viên sẽ gọi lại cho bạn ngay lập tức.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={onSubmit} className="space-y-4">
-              <Field label="Họ và Tên" name="Ho_Ten" placeholder="Nguyễn Văn A" required />
-              <Field label="Số điện thoại" name="So_Dien_Thoai" type="tel" placeholder="090 123 4567" required />
-              <Field label="Địa chỉ" name="Dia_Chi" placeholder="123 Đường ABC, Quận X" required enableLocation />
-              <Field label="Tình trạng bệnh" name="Tinh_Trang_Benh" placeholder="Mô tả ngắn gọn tình trạng bệnh nhân..." />
-
-              <div className="pt-2">
-                <label className="block text-sm font-medium mb-3">Loại dịch vụ</label>
-                <div className="grid grid-cols-3 gap-3">
-                  {["Khẩn cấp", "Chuyển viện", "Điều dưỡng"].map((type) => (
-                    <label
-                      key={type}
-                      className="flex cursor-pointer items-center justify-center text-center rounded-xl border border-border bg-secondary/50 px-2 py-2.5 text-sm font-medium hover:bg-secondary transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:text-primary"
-                    >
-                      <input
-                        type="radio"
-                        name="Loai_Dich_Vu"
-                        value={type}
-                        className="sr-only"
-                        defaultChecked={
-                          (!initialService && type === "Khẩn cấp") ||
-                          (initialService === "emergency" && type === "Khẩn cấp") ||
-                          (initialService === "transport" && type === "Chuyển viện") ||
-                          (initialService === "homecare" && type === "Điều dưỡng") ||
-                          (initialService === "icu" && type === "Khẩn cấp")
-                        }
-                      />
-                      {type}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <button
-                  type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl gradient-sky px-6 py-3.5 text-base font-bold text-primary-foreground shadow-soft hover:opacity-95 transition-all duration-300"
-                >
-                  Gửi yêu cầu <ArrowRight className="h-5 w-5" />
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
 /* ---------- shared ---------- */
-function SectionHeading({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle?: string }) {
-  return (
-    <div className="max-w-2xl">
-      <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary uppercase tracking-wider">
-        {eyebrow}
-      </div>
-      <h2 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">{title}</h2>
-      {subtitle && <p className="mt-3 text-muted-foreground">{subtitle}</p>}
-    </div>
-  );
-}
-
 /* ---------- Home Care Section ---------- */
 function HomeCare() {
   return (

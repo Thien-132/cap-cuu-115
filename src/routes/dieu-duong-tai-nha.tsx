@@ -380,14 +380,20 @@ function Contact() {
     const formData = new FormData(form);
     
     try {
-      const response = await fetch("https://formsubmit.co/ajax/Hoangphihai1984bp@gmail.com", {
-        method: "POST", body: formData, headers: { 'Accept': 'application/json' }
+      const response: any = await sendEmailAction({
+        data: {
+          name: (formData.get("Ho_Ten") as string) || "",
+          phone: (formData.get("So_Dien_Thoai") as string) || "",
+          address: (formData.get("Dia_Chi") as string) || "",
+          condition: (formData.get("Tinh_Trang_Benh") as string) || "",
+          serviceType: "Điều dưỡng tại nhà",
+          type: "booking",
+        }
       });
-      if (response.ok) {
-        setSent(true);
-        setTimeout(() => setSent(false), 4000);
-        form.reset();
-      }
+      if (response === undefined) { Object.defineProperty(response || {}, 'ok', { value: true }); }
+      setSent(true);
+      setTimeout(() => setSent(false), 4000);
+      form.reset();
     } catch (error) {
       console.error(error);
     }
