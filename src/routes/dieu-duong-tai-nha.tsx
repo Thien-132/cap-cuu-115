@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useRef } from "react";
 import { sendEmailAction } from "@/lib/actions";
+import { addBookingRequest } from "@/lib/adminStore";
 import {
   PhoneCall,
   Mail,
@@ -380,6 +381,15 @@ function Contact() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     
+    const requestData = {
+      name: (formData.get("Ho_Ten") as string) || "",
+      phone: (formData.get("So_Dien_Thoai") as string) || "",
+      address: (formData.get("Dia_Chi") as string) || "",
+      details: (formData.get("Tinh_Trang_Benh") as string) || "",
+      serviceType: "Điều dưỡng tại nhà",
+    };
+    addBookingRequest(requestData);
+    
     try {
       const response: any = await sendEmailAction({
         data: {
@@ -714,6 +724,15 @@ function BookingModal({
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
+
+    const requestData = {
+      name: (formData.get("Ho_Ten") as string) || "",
+      phone: (formData.get("So_Dien_Thoai") as string) || "",
+      address: (formData.get("Dia_Chi") as string) || "",
+      details: (formData.get("Tinh_Trang_Benh") as string) || "",
+      serviceType: (formData.get("Loai_Dich_Vu") as string) || "Điều dưỡng tại nhà",
+    };
+    addBookingRequest(requestData);
 
     try {
       await sendEmailAction({

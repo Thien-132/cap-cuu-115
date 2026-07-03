@@ -1,0 +1,21 @@
+{
+  "name": "Cấp Cứu 115 Hồng Hải",
+  "short_name": "Cấp Cứu 115",
+  "description": "Dịch vụ cấp cứu, xe cứu thương, chuyển viện và chăm sóc y tế 24/7.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0284c7",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
