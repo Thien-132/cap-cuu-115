@@ -1001,7 +1001,7 @@ function HomeCare() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-          <div className="order-2 lg:order-1 relative rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 group">
+          <div className="hidden lg:block order-2 lg:order-1 relative rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 group">
             <img
               src={sHomeCare}
               alt="Điều dưỡng tại nhà"
@@ -1023,6 +1023,22 @@ function HomeCare() {
               title="Điều dưỡng tại nhà chuyên nghiệp"
               subtitle="Mang dịch vụ y tế chuẩn bệnh viện đến tận ngôi nhà của bạn. Giải pháp hoàn hảo giúp tiết kiệm thời gian, công sức đi lại mà vẫn đảm bảo an toàn tuyệt đối cho người thân."
             />
+
+            <div className="mt-8 lg:hidden relative rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 group">
+              <img
+                src={sHomeCare}
+                alt="Điều dưỡng tại nhà"
+                loading="lazy"
+                className="w-full aspect-[4/3] object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <div className="inline-flex items-center gap-2 rounded-2xl bg-white/20 backdrop-blur-md px-4 py-3 border border-white/30 shadow-lg">
+                  <HeartPulse className="h-5 w-5 text-white animate-pulse" />
+                  <span className="text-white font-semibold text-sm">Chăm sóc tận tâm 24/7</span>
+                </div>
+              </div>
+            </div>
 
             <div className="mt-8 space-y-6">
               {[
