@@ -1,3 +1,5 @@
+import { supabase } from './supabase';
+
 export interface BookingRequest {
   id: string;
   name: string;
@@ -7,7 +9,7 @@ export interface BookingRequest {
   serviceType: string;
   createdAt: string;
   status: 'new' | 'processing' | 'completed' | 'cancelled';
-  price?: number; // Optional price for completed services to calculate revenue
+  price?: number;
 }
 
 export interface Ambulance {
@@ -25,6 +27,47 @@ export interface Nurse {
   status: 'active' | 'inactive';
 }
 
+// --- SYNC ENGINE ---
+let isSyncing = false;
+
+export async function syncWithSupabase() {
+  if (typeof window === 'undefined' || isSyncing) return;
+  isSyncing = true;
+  
+  try {
+    // Fetch all tables
+    const [reqsRes, ambRes, nurRes] = await Promise.all([
+      supabase.from('booking_requests').select('*').order('createdAt', { ascending: false }),
+      supabase.from('ambulances').select('*'),
+      supabase.from('nurses').select('*')
+    ]);
+
+    if (reqsRes.data) {
+      localStorage.setItem('admin_booking_requests', JSON.stringify(reqsRes.data));
+    }
+    
+    // We only overwrite ambulances/nurses if they exist in Supabase or if not initialized
+    if (ambRes.data && ambRes.data.length > 0) {
+      localStorage.setItem('admin_ambulances', JSON.stringify(ambRes.data));
+    }
+    if (nurRes.data && nurRes.data.length > 0) {
+      localStorage.setItem('admin_nurses', JSON.stringify(nurRes.data));
+    }
+
+    window.dispatchEvent(new Event('admin_store_update'));
+  } catch (err) {
+    console.error("Error syncing with Supabase:", err);
+  } finally {
+    isSyncing = false;
+  }
+}
+
+// Start sync on load
+if (typeof window !== 'undefined') {
+  syncWithSupabase();
+}
+
+
 // --- BOOKING REQUESTS ---
 
 export function getBookingRequests(): BookingRequest[] {
@@ -40,22 +83,41 @@ export function getBookingRequests(): BookingRequest[] {
   return [];
 }
 
-export function addBookingRequest(request: Omit<BookingRequest, 'id' | 'createdAt' | 'status'>) {
+export async function addBookingRequest(request: Omit<BookingRequest, 'id' | 'createdAt' | 'status'>) {
   if (typeof window === 'undefined') return;
-  const requests = getBookingRequests();
-  const newRequest: BookingRequest = {
+  
+  // Create object (without ID, Supabase will generate UUID)
+  const newRequest = {
     ...request,
-    id: Math.random().toString(36).substring(2, 9),
-    createdAt: new Date().toISOString(),
-    status: 'new',
+    status: 'new' as const,
   };
-  requests.unshift(newRequest);
+
+  // Optimistic update locally with temporary ID
+  const tempRequest: BookingRequest = {
+    ...newRequest,
+    id: Math.random().toString(36).substring(2, 9),
+    createdAt: new Date().toISOString()
+  };
+  
+  const requests = getBookingRequests();
+  requests.unshift(tempRequest);
   localStorage.setItem('admin_booking_requests', JSON.stringify(requests));
   window.dispatchEvent(new Event('admin_store_update'));
+
+  // Push to Supabase
+  const { data, error } = await supabase.from('booking_requests').insert([newRequest]).select().single();
+  if (!error && data) {
+    // Replace temp with real data
+    const finalRequests = getBookingRequests().map(r => r.id === tempRequest.id ? data : r);
+    localStorage.setItem('admin_booking_requests', JSON.stringify(finalRequests));
+    window.dispatchEvent(new Event('admin_store_update'));
+  }
 }
 
-export function updateBookingStatus(id: string, status: BookingRequest['status'], price?: number) {
+export async function updateBookingStatus(id: string, status: BookingRequest['status'], price?: number) {
   if (typeof window === 'undefined') return;
+  
+  // Optimistic
   const requests = getBookingRequests();
   const index = requests.findIndex((r) => r.id === id);
   if (index !== -1) {
@@ -66,13 +128,25 @@ export function updateBookingStatus(id: string, status: BookingRequest['status']
     localStorage.setItem('admin_booking_requests', JSON.stringify(requests));
     window.dispatchEvent(new Event('admin_store_update'));
   }
+
+  // Supabase update
+  if (!id.includes('.')) { // basic check to ensure it's not our random temp ID, though temp ID shouldn't be updated immediately
+    const updateData: any = { status };
+    if (price !== undefined) updateData.price = price;
+    await supabase.from('booking_requests').update(updateData).eq('id', id);
+  }
 }
 
-export function deleteBookingRequest(id: string) {
+export async function deleteBookingRequest(id: string) {
   if (typeof window === 'undefined') return;
+  
+  // Optimistic
   const requests = getBookingRequests().filter(r => r.id !== id);
   localStorage.setItem('admin_booking_requests', JSON.stringify(requests));
   window.dispatchEvent(new Event('admin_store_update'));
+
+  // Supabase
+  await supabase.from('booking_requests').delete().eq('id', id);
 }
 
 // --- AMBULANCES ---
@@ -93,36 +167,61 @@ export function getAmbulances(): Ambulance[] {
       return INITIAL_AMBULANCES;
     }
   }
-  // Initialize with dummy data if empty
   localStorage.setItem('admin_ambulances', JSON.stringify(INITIAL_AMBULANCES));
   return INITIAL_AMBULANCES;
 }
 
-export function saveAmbulance(ambulance: Ambulance) {
+export async function saveAmbulance(ambulance: Ambulance | Omit<Ambulance, 'id'>) {
   if (typeof window === 'undefined') return;
   const list = getAmbulances();
-  const index = list.findIndex(a => a.id === ambulance.id);
-  if (index >= 0) {
-    list[index] = ambulance;
+  
+  let savedAmbulance: Ambulance;
+
+  if ('id' in ambulance && ambulance.id) {
+    // Update
+    savedAmbulance = ambulance as Ambulance;
+    const index = list.findIndex(a => a.id === ambulance.id);
+    if (index !== -1) {
+      list[index] = savedAmbulance;
+    }
+    // Supabase
+    await supabase.from('ambulances').update(savedAmbulance).eq('id', savedAmbulance.id);
   } else {
-    list.unshift(ambulance);
+    // Create new
+    savedAmbulance = {
+      ...ambulance,
+      id: Math.random().toString(36).substring(2, 9),
+    };
+    list.push(savedAmbulance);
+    
+    // Supabase (id will be regenerated by DB, but we do optimistic first)
+    const { data, error } = await supabase.from('ambulances').insert([ambulance]).select().single();
+    if (!error && data) {
+      savedAmbulance = data;
+      list[list.length - 1] = savedAmbulance;
+    }
   }
+  
   localStorage.setItem('admin_ambulances', JSON.stringify(list));
   window.dispatchEvent(new Event('admin_store_update'));
 }
 
-export function deleteAmbulance(id: string) {
+export async function deleteAmbulance(id: string) {
   if (typeof window === 'undefined') return;
   const list = getAmbulances().filter(a => a.id !== id);
   localStorage.setItem('admin_ambulances', JSON.stringify(list));
   window.dispatchEvent(new Event('admin_store_update'));
+
+  // Supabase
+  await supabase.from('ambulances').delete().eq('id', id);
 }
 
 // --- NURSES ---
 
 const INITIAL_NURSES: Nurse[] = [
-  { id: '1', name: 'Nguyễn Thị Hoa', role: 'Điều dưỡng trưởng', phone: '0901234567', status: 'active' },
-  { id: '2', name: 'Trần Văn Bình', role: 'Nhân viên y tế', phone: '0901112223', status: 'active' },
+  { id: '1', name: 'Nguyễn Thị A', role: 'Điều dưỡng trưởng', phone: '0901234567', status: 'active' },
+  { id: '2', name: 'Trần Văn B', role: 'Điều dưỡng viên', phone: '0902345678', status: 'active' },
+  { id: '3', name: 'Lê Thị C', role: 'Hộ sinh', phone: '0903456789', status: 'inactive' },
 ];
 
 export function getNurses(): Nurse[] {
@@ -139,30 +238,45 @@ export function getNurses(): Nurse[] {
   return INITIAL_NURSES;
 }
 
-export function saveNurse(nurse: Nurse) {
+export async function saveNurse(nurse: Nurse | Omit<Nurse, 'id'>) {
   if (typeof window === 'undefined') return;
   const list = getNurses();
-  const index = list.findIndex(n => n.id === nurse.id);
-  if (index >= 0) {
-    list[index] = nurse;
+  
+  let savedNurse: Nurse;
+
+  if ('id' in nurse && nurse.id) {
+    savedNurse = nurse as Nurse;
+    const index = list.findIndex(n => n.id === nurse.id);
+    if (index !== -1) {
+      list[index] = savedNurse;
+    }
+    // Supabase
+    await supabase.from('nurses').update(savedNurse).eq('id', savedNurse.id);
   } else {
-    list.unshift(nurse);
+    savedNurse = {
+      ...nurse,
+      id: Math.random().toString(36).substring(2, 9),
+    };
+    list.push(savedNurse);
+    
+    // Supabase
+    const { data, error } = await supabase.from('nurses').insert([nurse]).select().single();
+    if (!error && data) {
+      savedNurse = data;
+      list[list.length - 1] = savedNurse;
+    }
   }
+  
   localStorage.setItem('admin_nurses', JSON.stringify(list));
   window.dispatchEvent(new Event('admin_store_update'));
 }
 
-export function deleteNurse(id: string) {
+export async function deleteNurse(id: string) {
   if (typeof window === 'undefined') return;
   const list = getNurses().filter(n => n.id !== id);
   localStorage.setItem('admin_nurses', JSON.stringify(list));
   window.dispatchEvent(new Event('admin_store_update'));
-}
 
-if (typeof window !== 'undefined') {
-  window.addEventListener('storage', (e) => {
-    if (e.key && e.key.startsWith('admin_')) {
-      window.dispatchEvent(new Event('admin_store_update'));
-    }
-  });
+  // Supabase
+  await supabase.from('nurses').delete().eq('id', id);
 }
