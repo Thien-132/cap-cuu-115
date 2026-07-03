@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, PhoneCall, CalendarDays, Ambulance } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
+import { InstallAppButton } from './InstallAppButton';
 
 export function Navbar({ alwaysDark = false, onOpenBooking, subtitle, navItems }: { alwaysDark?: boolean; onOpenBooking?: () => void; subtitle?: string; navItems: { label: string, href: string }[] }) {
   const [scrolled, setScrolled] = useState(alwaysDark || false);
@@ -44,6 +45,10 @@ export function Navbar({ alwaysDark = false, onOpenBooking, subtitle, navItems }
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
+            <InstallAppButton 
+              className="border border-white/20 bg-white/5 px-5 py-2.5 hover:bg-white/10 text-white !rounded-full" 
+              textClassName="text-sm font-bold"
+            />
             <a
               href="tel:0915205115"
               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-bold text-white shadow-soft hover:bg-white/10 transition-colors"
@@ -89,6 +94,10 @@ export function Navbar({ alwaysDark = false, onOpenBooking, subtitle, navItems }
             >
               <PhoneCall className="h-5 w-5 text-primary" /> 0915 205 115
             </a>
+            <InstallAppButton 
+              className="bg-white/10 border border-white/20 px-4 py-4 hover:bg-white/20 text-white" 
+              textClassName="font-bold"
+            />
             <button
               onClick={() => {
                 setOpen(false);
