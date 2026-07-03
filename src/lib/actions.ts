@@ -132,7 +132,7 @@ export const sendEmailAction = createServerFn({ method: 'POST' })
         },
         body: JSON.stringify({
           from: 'Cấp Cứu 115 Hồng Hải <onboarding@resend.dev>',
-          to: process.env.RESEND_TO_EMAIL || 'Hoangphihai1984bp@gmail.com',
+          to: process.env.RESEND_TO_EMAIL || 'hoangphihai1984bp@gmail.com',
           subject: type === 'booking' ? '🚑 YÊU CẦU DỊCH VỤ MỚI - Cấp cứu 115' : type === 'review' ? '⭐ ĐÁNH GIÁ MỚI - Cấp cứu 115' : '📧 YÊU CẦU LIÊN HỆ - Cấp cứu 115',
           html: htmlContent
         })

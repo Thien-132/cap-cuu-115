@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useRef } from "react";
+import { sendEmailAction } from "@/lib/actions";
 import {
   PhoneCall,
   Mail,
@@ -715,27 +716,16 @@ function BookingModal({
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/Hoangphihai1984bp@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          "Loại form": "Yêu cầu dịch vụ",
-          "Họ và tên": formData.get("Ho_Ten"),
-          "Số điện thoại": formData.get("So_Dien_Thoai"),
-          "Địa chỉ": formData.get("Dia_Chi"),
-          "Tình trạng bệnh": formData.get("Tinh_Trang_Benh"),
-          "Loại dịch vụ": formData.get("Loai_Dich_Vu"),
-
-          _subject: "🚑 Yêu cầu dịch vụ mới từ website Hồng Hải",
-          _captcha: "false",
-          _template: "table",
-        }),
+      await sendEmailAction({
+        data: {
+          name: (formData.get("Ho_Ten") as string) || "",
+          phone: (formData.get("So_Dien_Thoai") as string) || "",
+          address: (formData.get("Dia_Chi") as string) || "",
+          condition: (formData.get("Tinh_Trang_Benh") as string) || "",
+          serviceType: (formData.get("Loai_Dich_Vu") as string) || "Điều dưỡng tại nhà",
+          type: "booking",
+        }
       });
-
-      if (!response.ok) throw new Error("Gửi thất bại");
 
       setSent(true);
       setTimeout(() => {
