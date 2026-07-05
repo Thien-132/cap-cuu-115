@@ -15,6 +15,7 @@ import { Route as TinTucRouteImport } from './routes/tin-tuc'
 import { Route as LienHeRouteImport } from './routes/lien-he'
 import { Route as IcuHoiSucRouteImport } from './routes/icu-hoi-suc'
 import { Route as DieuDuongTaiNhaRouteImport } from './routes/dieu-duong-tai-nha'
+import { Route as DichVuOxyRouteImport } from './routes/dich-vu-oxy'
 import { Route as CapCuuKhanCapRouteImport } from './routes/cap-cuu-khan-cap'
 import { Route as BangGiaRouteImport } from './routes/bang-gia'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -53,6 +54,11 @@ const IcuHoiSucRoute = IcuHoiSucRouteImport.update({
 const DieuDuongTaiNhaRoute = DieuDuongTaiNhaRouteImport.update({
   id: '/dieu-duong-tai-nha',
   path: '/dieu-duong-tai-nha',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DichVuOxyRoute = DichVuOxyRouteImport.update({
+  id: '/dich-vu-oxy',
+  path: '/dich-vu-oxy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CapCuuKhanCapRoute = CapCuuKhanCapRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/bang-gia': typeof BangGiaRoute
   '/cap-cuu-khan-cap': typeof CapCuuKhanCapRoute
+  '/dich-vu-oxy': typeof DichVuOxyRoute
   '/dieu-duong-tai-nha': typeof DieuDuongTaiNhaRoute
   '/icu-hoi-suc': typeof IcuHoiSucRoute
   '/lien-he': typeof LienHeRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bang-gia': typeof BangGiaRoute
   '/cap-cuu-khan-cap': typeof CapCuuKhanCapRoute
+  '/dich-vu-oxy': typeof DichVuOxyRoute
   '/dieu-duong-tai-nha': typeof DieuDuongTaiNhaRoute
   '/icu-hoi-suc': typeof IcuHoiSucRoute
   '/lien-he': typeof LienHeRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/bang-gia': typeof BangGiaRoute
   '/cap-cuu-khan-cap': typeof CapCuuKhanCapRoute
+  '/dich-vu-oxy': typeof DichVuOxyRoute
   '/dieu-duong-tai-nha': typeof DieuDuongTaiNhaRoute
   '/icu-hoi-suc': typeof IcuHoiSucRoute
   '/lien-he': typeof LienHeRoute
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/bang-gia'
     | '/cap-cuu-khan-cap'
+    | '/dich-vu-oxy'
     | '/dieu-duong-tai-nha'
     | '/icu-hoi-suc'
     | '/lien-he'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/'
     | '/bang-gia'
     | '/cap-cuu-khan-cap'
+    | '/dich-vu-oxy'
     | '/dieu-duong-tai-nha'
     | '/icu-hoi-suc'
     | '/lien-he'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/bang-gia'
     | '/cap-cuu-khan-cap'
+    | '/dich-vu-oxy'
     | '/dieu-duong-tai-nha'
     | '/icu-hoi-suc'
     | '/lien-he'
@@ -210,6 +222,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   BangGiaRoute: typeof BangGiaRoute
   CapCuuKhanCapRoute: typeof CapCuuKhanCapRoute
+  DichVuOxyRoute: typeof DichVuOxyRoute
   DieuDuongTaiNhaRoute: typeof DieuDuongTaiNhaRoute
   IcuHoiSucRoute: typeof IcuHoiSucRoute
   LienHeRoute: typeof LienHeRoute
@@ -260,6 +273,13 @@ declare module '@tanstack/react-router' {
       path: '/dieu-duong-tai-nha'
       fullPath: '/dieu-duong-tai-nha'
       preLoaderRoute: typeof DieuDuongTaiNhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dich-vu-oxy': {
+      id: '/dich-vu-oxy'
+      path: '/dich-vu-oxy'
+      fullPath: '/dich-vu-oxy'
+      preLoaderRoute: typeof DichVuOxyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cap-cuu-khan-cap': {
@@ -351,6 +371,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   BangGiaRoute: BangGiaRoute,
   CapCuuKhanCapRoute: CapCuuKhanCapRoute,
+  DichVuOxyRoute: DichVuOxyRoute,
   DieuDuongTaiNhaRoute: DieuDuongTaiNhaRoute,
   IcuHoiSucRoute: IcuHoiSucRoute,
   LienHeRoute: LienHeRoute,

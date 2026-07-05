@@ -1,4 +1,5 @@
 import { createServerFn } from '@tanstack/react-start';
+import { sendZaloMessage } from './zalo';
 
 export const sendEmailAction = createServerFn({ method: 'POST' })
   .validator((data: {
@@ -143,6 +144,9 @@ export const sendEmailAction = createServerFn({ method: 'POST' })
         console.error('Failed to send email via Resend:', errorData);
         throw new Error('API Resend trả về lỗi');
       }
+
+      // Gửi thông báo Zalo song song
+      sendZaloMessage(data).catch(err => console.error("Lỗi gửi Zalo background:", err));
 
       return { success: true };
     } catch (error) {

@@ -30,6 +30,7 @@ import {
   Trash2,
   ChevronDown,
   Loader2,
+  Wind,
 } from "lucide-react";
 
 import { Navbar } from '@/components/common/Navbar';
@@ -88,6 +89,7 @@ function Index() {
         <WhyUs />
         <Services onOpenBooking={openBooking} />
         <HomeCare />
+        <OxygenService />
         <HowItWorks />
         <Reviews />
         <Contact />
@@ -352,6 +354,7 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
   const serviceGroups = [
     {
       id: "emergency",
+      href: "/cap-cuu-khan-cap",
       img: sEmergency,
       icon: Ambulance,
       title: "Cấp cứu khẩn cấp",
@@ -366,6 +369,7 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
     },
     {
       id: "transport",
+      href: "/van-chuyen-y-te",
       img: sIntercity,
       icon: Truck,
       title: "Vận chuyển y tế",
@@ -380,6 +384,7 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
     },
     {
       id: "homecare",
+      href: "/dieu-duong-tai-nha",
       img: sHospital,
       icon: Home,
       title: "Chăm sóc tại nhà",
@@ -394,6 +399,7 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
     },
     {
       id: "icu",
+      href: "/icu-hoi-suc",
       img: sIcu,
       icon: HeartPulse,
       title: "ICU - Hồi sức",
@@ -407,6 +413,21 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
         "Bác sĩ hồi sức",
       ],
     },
+    {
+      id: "oxygen",
+      href: "/dich-vu-oxy",
+      img: sHospital,
+      icon: Wind,
+      title: "Dịch vụ oxy tận nhà",
+      desc: "Cung cấp, cho thuê bình oxy, máy tạo oxy tận nhà nhanh chóng và an toàn.",
+      features: [
+        "Bình oxy sạch, an toàn",
+        "Máy tạo oxy hiện đại",
+        "Giao hàng 24/7",
+        "Lắp đặt tận nơi",
+        "Hỗ trợ kỹ thuật 24/7",
+      ],
+    },
   ];
 
   return (
@@ -417,13 +438,13 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
           title="Vận chuyển y tế và cấp cứu toàn diện"
           subtitle="Các dịch vụ được thiết kế chuyên biệt để đáp ứng tốt nhất mọi nhu cầu chăm sóc y tế của bạn."
         />
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="mt-12 flex flex-wrap justify-center -mx-3 lg:-mx-4 gap-y-6 lg:gap-y-8">
           {serviceGroups.map((s, i) => (
-            <article
-              key={i}
-              className="group relative flex flex-col rounded-[2rem] overflow-hidden border border-border/60 bg-card shadow-lg hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-500"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden shrink-0">
+            <div key={i} className="w-full sm:w-1/2 lg:w-1/3 px-3 lg:px-4 flex">
+              <article
+                className="w-full group relative flex flex-col rounded-[2rem] overflow-hidden border border-border/60 bg-card shadow-lg hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-500"
+              >
+              <a href={s.href} className="block relative aspect-[4/3] overflow-hidden shrink-0">
                 <img
                   src={s.img}
                   alt={s.title}
@@ -444,7 +465,7 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
                   </h3>
                   <div className="mt-3 h-1 w-12 rounded-full bg-primary transition-all duration-500 group-hover:w-20" />
                 </div>
-              </div>
+              </a>
 
               <div className="flex flex-col flex-1 p-6 sm:p-8">
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -466,18 +487,27 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
                   </ul>
                 </div>
 
-                <button
-                  onClick={() => onOpenBooking?.(s.id)}
-                  className="mt-8 relative inline-flex w-full items-center justify-center gap-2 rounded-2xl overflow-hidden bg-primary/5 border border-primary/10 px-4 py-4 text-sm font-bold text-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:border-transparent group/btn"
-                >
-                  <span className="absolute inset-0 gradient-sky opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                  <span className="relative z-10 flex items-center gap-2 group-hover/btn:text-primary-foreground transition-colors duration-300">
-                    Yêu cầu dịch vụ
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
-                  </span>
-                </button>
+                <div className="mt-8 flex gap-3">
+                  <a
+                    href={s.href}
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary/50 px-2 py-4 text-sm font-bold text-foreground hover:bg-secondary transition-colors"
+                  >
+                    Chi tiết
+                  </a>
+                  <button
+                    onClick={() => onOpenBooking?.(s.id)}
+                    className="flex-[2] relative inline-flex items-center justify-center gap-2 rounded-2xl overflow-hidden bg-primary/10 border border-primary/20 px-4 py-4 text-sm font-bold text-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:border-transparent group/btn"
+                  >
+                    <span className="absolute inset-0 gradient-sky opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                    <span className="relative z-10 flex items-center gap-2 group-hover/btn:text-primary-foreground transition-colors duration-300">
+                      Yêu cầu ngay
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                    </span>
+                  </button>
+                </div>
               </div>
-            </article>
+              </article>
+            </div>
           ))}
         </div>
       </div>
@@ -1062,6 +1092,82 @@ function HomeCare() {
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <a
                 href="/dieu-duong-tai-nha"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl gradient-sky px-8 py-4 text-sm font-bold text-primary-foreground shadow-lg hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300"
+              >
+                Tìm hiểu thêm <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href="tel:0915205115"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-primary/20 bg-background px-8 py-4 text-sm font-bold text-primary hover:bg-primary/5 hover:border-primary/40 transition-all duration-300"
+              >
+                <PhoneCall className="h-4 w-4" />
+                Tư vấn miễn phí
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Oxygen Service Section ---------- */
+function OxygenService() {
+  return (
+    <section id="oxygen-service" className="py-20 sm:py-24 relative overflow-hidden bg-background">
+      <div className="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[10%] right-[-5%] w-96 h-96 rounded-full bg-sky-500/5 blur-3xl" />
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          <div className="order-2 lg:order-1 relative rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 group">
+            <img
+              src={sHospital}
+              alt="Dịch vụ oxy tận nhà"
+              loading="lazy"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-1000 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <div className="inline-flex items-center gap-2 rounded-2xl bg-white/20 backdrop-blur-md px-4 py-3 border border-white/30 shadow-lg">
+                <Wind className="h-5 w-5 text-white animate-pulse" />
+                <span className="text-white font-semibold text-sm">Giao hàng siêu tốc 24/7</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="order-1 lg:order-2">
+            <SectionHeading
+              eyebrow="Dịch vụ chuyên biệt"
+              title="Dịch vụ oxy tận nhà nhanh chóng"
+              subtitle="Cung cấp, cho thuê bình oxy và máy tạo oxy tận nơi. Đảm bảo nguồn oxy sạch, an toàn 24/7 giúp tiết kiệm thời gian và mang lại sự an tâm tuyệt đối."
+            />
+
+            <div className="mt-8 space-y-6">
+              {[
+                { title: "Bình oxy tiêu chuẩn y tế", desc: "Đầy đủ các loại bình từ nhỏ đến lớn, được kiểm định an toàn nghiêm ngặt." },
+                { title: "Máy tạo oxy hiện đại", desc: "Cung cấp các dòng máy tạo oxy tiên tiến, hoạt động êm ái và ổn định." },
+                { title: "Giao hàng và lắp đặt tận nơi", desc: "Phục vụ 24/7, có mặt nhanh chóng để lắp đặt và hướng dẫn sử dụng chi tiết." },
+                { title: "Hỗ trợ kỹ thuật 24/24", desc: "Đội ngũ chuyên môn luôn sẵn sàng giải đáp và xử lý mọi vấn đề ngay lập tức." },
+              ].map((item, idx) => (
+                <div key={idx} className="flex gap-4 group/item">
+                  <div className="mt-1 grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors duration-300 shadow-sm">
+                    <CheckCircle2 className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-foreground text-lg group-hover/item:text-primary transition-colors">{item.title}</h4>
+                    <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+              <a
+                href="/dich-vu-oxy"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl gradient-sky px-8 py-4 text-sm font-bold text-primary-foreground shadow-lg hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300"
               >
                 Tìm hiểu thêm <ArrowRight className="h-4 w-4" />

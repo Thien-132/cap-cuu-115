@@ -42,6 +42,7 @@ export function Footer({ navItems }: { navItems: { label: string, href: string }
               <li><Link to="/van-chuyen-y-te" className="hover:text-primary transition">Chuyển viện & vận chuyển</Link></li>
               <li><Link to="/icu-hoi-suc" className="hover:text-primary transition">Xe Cứu Thương ICU</Link></li>
               <li><Link to="/dieu-duong-tai-nha" className="hover:text-primary transition">Điều dưỡng tại nhà</Link></li>
+              <li><Link to="/dich-vu-oxy" className="hover:text-primary transition">Dịch vụ oxy tận nhà</Link></li>
               <li><Link to="/tin-tuc" className="hover:text-primary transition">Tin tức y khoa</Link></li>
             </ul>
           </div>
