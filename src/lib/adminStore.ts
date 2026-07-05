@@ -8,8 +8,17 @@ export interface BookingRequest {
   details: string;
   serviceType: string;
   createdAt: string;
-  status: 'new' | 'processing' | 'completed' | 'cancelled';
+  status: 'new' | 'processing' | 'completed' | 'cancelled' | 'fake';
   price?: number;
+}
+
+export interface PhoneHistory {
+  phone: string;
+  totalBookings: number;
+  cancellations: number;
+  fakeReports: number;
+  isBlocked: boolean;
+  lastUpdated?: string;
 }
 
 export interface Ambulance {
@@ -36,22 +45,26 @@ export async function syncWithSupabase() {
   
   try {
     // Fetch all tables
-    const [reqsRes, ambRes, nurRes] = await Promise.all([
+    const [reqsRes, ambRes, nurRes, phoneRes] = await Promise.all([
       supabase.from('booking_requests').select('*').order('createdAt', { ascending: false }),
       supabase.from('ambulances').select('*'),
-      supabase.from('nurses').select('*')
+      supabase.from('nurses').select('*'),
+      supabase.from('phone_history').select('*')
     ]);
 
     if (reqsRes.data) {
       localStorage.setItem('admin_booking_requests', JSON.stringify(reqsRes.data));
     }
     
-    // We only overwrite ambulances/nurses if they exist in Supabase or if not initialized
+    // We only overwrite ambulances/nurses/history if they exist in Supabase or if not initialized
     if (ambRes.data && ambRes.data.length > 0) {
       localStorage.setItem('admin_ambulances', JSON.stringify(ambRes.data));
     }
     if (nurRes.data && nurRes.data.length > 0) {
       localStorage.setItem('admin_nurses', JSON.stringify(nurRes.data));
+    }
+    if (phoneRes.data) {
+      localStorage.setItem('admin_phone_history', JSON.stringify(phoneRes.data));
     }
 
     window.dispatchEvent(new Event('admin_store_update'));
@@ -86,6 +99,15 @@ export function getBookingRequests(): BookingRequest[] {
 export async function addBookingRequest(request: Omit<BookingRequest, 'id' | 'createdAt' | 'status'>) {
   if (typeof window === 'undefined') return;
   
+  // Check if phone is blocked
+  const isBlocked = await checkPhoneBlock(request.phone);
+  if (isBlocked) {
+    throw new Error('BLOCKED_PHONE');
+  }
+
+  // Khởi tạo lịch sử khách hàng với giá trị 0 nếu chưa có
+  await initializePhoneHistory(request.phone);
+
   // Create object (without ID, Supabase will generate UUID)
   const newRequest = {
     ...request,
@@ -120,7 +142,10 @@ export async function updateBookingStatus(id: string, status: BookingRequest['st
   // Optimistic
   const requests = getBookingRequests();
   const index = requests.findIndex((r) => r.id === id);
+  let targetPhone = '';
+  
   if (index !== -1) {
+    targetPhone = requests[index].phone;
     requests[index].status = status;
     if (price !== undefined) {
       requests[index].price = price;
@@ -134,6 +159,11 @@ export async function updateBookingStatus(id: string, status: BookingRequest['st
     const updateData: any = { status };
     if (price !== undefined) updateData.price = price;
     await supabase.from('booking_requests').update(updateData).eq('id', id);
+    
+    // Update phone history based on status
+    if (targetPhone && (status === 'completed' || status === 'cancelled' || status === 'fake')) {
+      await updatePhoneHistoryRecord(targetPhone, status);
+    }
   }
 }
 
@@ -279,4 +309,117 @@ export async function deleteNurse(id: string) {
 
   // Supabase
   await supabase.from('nurses').delete().eq('id', id);
+}
+
+// --- PHONE HISTORY ---
+
+export function getPhoneHistory(): PhoneHistory[] {
+  if (typeof window === 'undefined') return [];
+  const data = localStorage.getItem('admin_phone_history');
+  if (data) {
+    try {
+      return JSON.parse(data) as PhoneHistory[];
+    } catch (e) {
+      return [];
+    }
+  }
+  return [];
+}
+
+export async function checkPhoneBlock(phone: string): Promise<boolean> {
+  const history = getPhoneHistory();
+  const record = history.find(h => h.phone === phone);
+  return record ? record.isBlocked : false;
+}
+
+export async function initializePhoneHistory(phone: string) {
+  let historyList = getPhoneHistory();
+  let record = historyList.find(h => h.phone === phone);
+  
+  if (!record) {
+    record = {
+      phone,
+      totalBookings: 0,
+      cancellations: 0,
+      fakeReports: 0,
+      isBlocked: false,
+      lastUpdated: new Date().toISOString()
+    };
+    historyList.push(record);
+    localStorage.setItem('admin_phone_history', JSON.stringify(historyList));
+    window.dispatchEvent(new Event('admin_store_update'));
+
+    const { error } = await supabase.from('phone_history').upsert({
+      phone: record.phone,
+      totalBookings: record.totalBookings,
+      cancellations: record.cancellations,
+      fakeReports: record.fakeReports,
+      isBlocked: record.isBlocked,
+      lastUpdated: record.lastUpdated
+    });
+    if (error) console.error("Error initializing phone history", error);
+  }
+}
+
+export async function updatePhoneHistoryRecord(phone: string, action: 'completed' | 'cancelled' | 'fake') {
+  let historyList = getPhoneHistory();
+  let record = historyList.find(h => h.phone === phone);
+  
+  if (!record) {
+    record = {
+      phone,
+      totalBookings: 0,
+      cancellations: 0,
+      fakeReports: 0,
+      isBlocked: false
+    };
+    historyList.push(record);
+  }
+
+  if (action === 'completed') record.totalBookings += 1;
+  if (action === 'cancelled') record.cancellations += 1;
+  if (action === 'fake') {
+    record.fakeReports += 1;
+    // Tự động chặn nếu >= 3 lần báo giả
+    if (record.fakeReports >= 3) {
+      record.isBlocked = true;
+    }
+  }
+
+  record.lastUpdated = new Date().toISOString();
+  localStorage.setItem('admin_phone_history', JSON.stringify(historyList));
+  window.dispatchEvent(new Event('admin_store_update'));
+
+  // Sync with Supabase (Upsert logic)
+  const { error } = await supabase.from('phone_history').upsert({
+    phone: record.phone,
+    totalBookings: record.totalBookings,
+    cancellations: record.cancellations,
+    fakeReports: record.fakeReports,
+    isBlocked: record.isBlocked,
+    lastUpdated: record.lastUpdated
+  });
+  if (error) console.error("Error upserting phone history", error);
+}
+
+export async function togglePhoneBlock(phone: string, isBlocked: boolean) {
+  let historyList = getPhoneHistory();
+  let record = historyList.find(h => h.phone === phone);
+  if (!record) {
+    record = { phone, totalBookings: 0, cancellations: 0, fakeReports: 0, isBlocked };
+    historyList.push(record);
+  } else {
+    record.isBlocked = isBlocked;
+  }
+  
+  record.lastUpdated = new Date().toISOString();
+  localStorage.setItem('admin_phone_history', JSON.stringify(historyList));
+  window.dispatchEvent(new Event('admin_store_update'));
+
+  const { error } = await supabase.from('phone_history').upsert({
+    phone: record.phone,
+    isBlocked: record.isBlocked,
+    lastUpdated: record.lastUpdated
+  });
+  if (error) console.error("Error toggling phone block", error);
 }

@@ -7,6 +7,7 @@ import { FloatingActions } from '@/components/common/FloatingActions';
 import { BackToTop } from '@/components/common/BackToTop';
 import { SectionHeading } from '@/components/common/SectionHeading';
 import { Ambulance, CheckCircle2 } from 'lucide-react';
+import imgService from '@/assets/service-intercity.jpg';
 
 export const Route = createFileRoute('/van-chuyen-y-te')({
   head: () => ({
@@ -57,8 +58,8 @@ function PageComponent() {
                 Đặt lịch dịch vụ ngay
               </button>
             </div>
-            <div className="bg-secondary/30 rounded-3xl p-10 flex items-center justify-center min-h-[400px] border border-border">
-              <Ambulance className="w-48 h-48 text-primary/20" />
+            <div className="bg-secondary/30 rounded-3xl flex items-center justify-center h-[400px] border border-border overflow-hidden">
+              <img src={imgService} alt="Vận chuyển y tế" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>

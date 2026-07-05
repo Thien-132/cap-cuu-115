@@ -14,6 +14,7 @@ export function BookingModal({
   initialService?: string | null;
 }) {
   const [sent, setSent] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -38,9 +39,18 @@ export function BookingModal({
       serviceType: formData.get("Loai_Dich_Vu") as string || initialService || 'Chưa rõ',
     };
 
-    // Save to local store for Admin Dashboard
-    addBookingRequest(data);
-    console.log('Saved request to adminStore', data);
+    setErrorMsg(null);
+    
+    try {
+      // Save to local store for Admin Dashboard
+      await addBookingRequest(data);
+      console.log('Saved request to adminStore', data);
+    } catch (e: any) {
+      if (e.message === 'BLOCKED_PHONE') {
+        setErrorMsg("Số điện thoại của bạn đã bị hạn chế do có nhiều báo cáo ảo. Vui lòng liên hệ Hotline 0915 205 115 để được hỗ trợ.");
+        return;
+      }
+    }
 
     try {
       await sendEmailAction({
@@ -104,6 +114,12 @@ export function BookingModal({
             </div>
           ) : (
             <form onSubmit={onSubmit} className="space-y-4">
+              {errorMsg && (
+                <div className="rounded-xl bg-destructive/10 p-4 text-sm text-destructive border border-destructive/20 flex gap-2 items-start">
+                  <X className="h-5 w-5 shrink-0 mt-0.5" />
+                  <span>{errorMsg}</span>
+                </div>
+              )}
               <Field label="Họ và Tên" name="Ho_Ten" placeholder="Nguyễn Văn A" required />
               <Field label="Số điện thoại" name="So_Dien_Thoai" type="tel" placeholder="090 123 4567" required />
               <Field label="Địa chỉ" name="Dia_Chi" placeholder="123 Đường ABC, Quận X" required enableLocation />

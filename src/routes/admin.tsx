@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, Link, useLocation } from '@tanstack/react-router';
-import { LayoutDashboard, Inbox, Ambulance, Users, BadgeDollarSign, LogOut } from 'lucide-react';
+import { LayoutDashboard, Inbox, Ambulance, Users, BadgeDollarSign, LogOut, Phone } from 'lucide-react';
+import { NotificationBell } from '@/components/admin/NotificationBell';
 
 export const Route = createFileRoute('/admin')({
   component: AdminLayout,
@@ -8,6 +9,7 @@ export const Route = createFileRoute('/admin')({
 const MENU = [
   { label: 'Tổng quan', href: '/admin', icon: LayoutDashboard },
   { label: 'Yêu cầu', href: '/admin/yeu-cau', icon: Inbox },
+  { label: 'Khách hàng', href: '/admin/khach-hang', icon: Phone },
   { label: 'Quản lý xe', href: '/admin/quan-ly-xe', icon: Ambulance },
   { label: 'Điều dưỡng', href: '/admin/dieu-duong', icon: Users },
   { label: 'Doanh thu', href: '/admin/doanh-thu', icon: BadgeDollarSign },
@@ -55,11 +57,23 @@ function AdminLayout() {
 
       {/* Main Content */}
       <main className="flex-1 md:ml-64 bg-secondary/40 min-h-screen">
+        {/* Desktop Header */}
+        <header className="hidden md:flex bg-card border-b border-border p-4 items-center justify-between sticky top-0 z-20 shadow-sm">
+          <h2 className="text-lg font-semibold text-foreground">Dashboard</h2>
+          <div className="flex items-center gap-4">
+            <NotificationBell />
+          </div>
+        </header>
+
+        {/* Mobile Header */}
         <div className="md:hidden bg-slate-950 text-white p-4 flex items-center justify-between border-b border-white/10 shadow-md sticky top-0 z-20">
           <div className="font-bold font-display flex items-center gap-2 text-primary">
             <Ambulance className="h-5 w-5" /> Admin Panel
           </div>
-          <Link to="/" className="text-sm text-white/60 hover:text-white">Về trang chủ</Link>
+          <div className="flex items-center gap-4">
+            <NotificationBell />
+            <Link to="/" className="text-sm text-white/60 hover:text-white">Về trang chủ</Link>
+          </div>
         </div>
         
         {/* Mobile Navigation */}

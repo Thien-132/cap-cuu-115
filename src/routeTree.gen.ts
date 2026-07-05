@@ -23,6 +23,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminYeuCauRouteImport } from './routes/admin/yeu-cau'
 import { Route as AdminQuanLyXeRouteImport } from './routes/admin/quan-ly-xe'
+import { Route as AdminKhachHangRouteImport } from './routes/admin/khach-hang'
 import { Route as AdminDoanhThuRouteImport } from './routes/admin/doanh-thu'
 import { Route as AdminDieuDuongRouteImport } from './routes/admin/dieu-duong'
 
@@ -96,6 +97,11 @@ const AdminQuanLyXeRoute = AdminQuanLyXeRouteImport.update({
   path: '/quan-ly-xe',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminKhachHangRoute = AdminKhachHangRouteImport.update({
+  id: '/khach-hang',
+  path: '/khach-hang',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDoanhThuRoute = AdminDoanhThuRouteImport.update({
   id: '/doanh-thu',
   path: '/doanh-thu',
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/ve-chung-toi': typeof VeChungToiRoute
   '/admin/dieu-duong': typeof AdminDieuDuongRoute
   '/admin/doanh-thu': typeof AdminDoanhThuRoute
+  '/admin/khach-hang': typeof AdminKhachHangRoute
   '/admin/quan-ly-xe': typeof AdminQuanLyXeRoute
   '/admin/yeu-cau': typeof AdminYeuCauRoute
   '/admin/': typeof AdminIndexRoute
@@ -138,6 +145,7 @@ export interface FileRoutesByTo {
   '/ve-chung-toi': typeof VeChungToiRoute
   '/admin/dieu-duong': typeof AdminDieuDuongRoute
   '/admin/doanh-thu': typeof AdminDoanhThuRoute
+  '/admin/khach-hang': typeof AdminKhachHangRoute
   '/admin/quan-ly-xe': typeof AdminQuanLyXeRoute
   '/admin/yeu-cau': typeof AdminYeuCauRoute
   '/admin': typeof AdminIndexRoute
@@ -157,6 +165,7 @@ export interface FileRoutesById {
   '/ve-chung-toi': typeof VeChungToiRoute
   '/admin/dieu-duong': typeof AdminDieuDuongRoute
   '/admin/doanh-thu': typeof AdminDoanhThuRoute
+  '/admin/khach-hang': typeof AdminKhachHangRoute
   '/admin/quan-ly-xe': typeof AdminQuanLyXeRoute
   '/admin/yeu-cau': typeof AdminYeuCauRoute
   '/admin/': typeof AdminIndexRoute
@@ -177,6 +186,7 @@ export interface FileRouteTypes {
     | '/ve-chung-toi'
     | '/admin/dieu-duong'
     | '/admin/doanh-thu'
+    | '/admin/khach-hang'
     | '/admin/quan-ly-xe'
     | '/admin/yeu-cau'
     | '/admin/'
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
     | '/ve-chung-toi'
     | '/admin/dieu-duong'
     | '/admin/doanh-thu'
+    | '/admin/khach-hang'
     | '/admin/quan-ly-xe'
     | '/admin/yeu-cau'
     | '/admin'
@@ -212,6 +223,7 @@ export interface FileRouteTypes {
     | '/ve-chung-toi'
     | '/admin/dieu-duong'
     | '/admin/doanh-thu'
+    | '/admin/khach-hang'
     | '/admin/quan-ly-xe'
     | '/admin/yeu-cau'
     | '/admin/'
@@ -331,6 +343,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminQuanLyXeRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/khach-hang': {
+      id: '/admin/khach-hang'
+      path: '/khach-hang'
+      fullPath: '/admin/khach-hang'
+      preLoaderRoute: typeof AdminKhachHangRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/doanh-thu': {
       id: '/admin/doanh-thu'
       path: '/doanh-thu'
@@ -351,6 +370,7 @@ declare module '@tanstack/react-router' {
 interface AdminRouteChildren {
   AdminDieuDuongRoute: typeof AdminDieuDuongRoute
   AdminDoanhThuRoute: typeof AdminDoanhThuRoute
+  AdminKhachHangRoute: typeof AdminKhachHangRoute
   AdminQuanLyXeRoute: typeof AdminQuanLyXeRoute
   AdminYeuCauRoute: typeof AdminYeuCauRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -359,6 +379,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminDieuDuongRoute: AdminDieuDuongRoute,
   AdminDoanhThuRoute: AdminDoanhThuRoute,
+  AdminKhachHangRoute: AdminKhachHangRoute,
   AdminQuanLyXeRoute: AdminQuanLyXeRoute,
   AdminYeuCauRoute: AdminYeuCauRoute,
   AdminIndexRoute: AdminIndexRoute,

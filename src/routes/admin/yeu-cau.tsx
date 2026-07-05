@@ -11,7 +11,8 @@ const STATUS_COLORS = {
   new: 'bg-emergency/10 text-emergency border-emergency/20',
   processing: 'bg-blue-50 text-blue-600 border-blue-200',
   completed: 'bg-emerald-50 text-emerald-600 border-emerald-200',
-  cancelled: 'bg-slate-100 text-slate-600 border-slate-200'
+  cancelled: 'bg-slate-100 text-slate-600 border-slate-200',
+  fake: 'bg-red-50 text-red-600 border-red-200'
 };
 
 function RequestsPage() {
@@ -90,6 +91,7 @@ function RequestsPage() {
                       <option value="processing">Đang xử lý</option>
                       <option value="completed">Hoàn thành</option>
                       <option value="cancelled">Hủy</option>
+                      <option value="fake">Báo giả</option>
                     </select>
                   </td>
                   <td className="px-6 py-4 text-right space-x-2">

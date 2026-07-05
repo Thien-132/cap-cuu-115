@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useRef } from "react";
 import { sendEmailAction } from "@/lib/actions";
 import { addBookingRequest } from "@/lib/adminStore";
+import { Navbar } from "@/components/common/Navbar";
 import {
   PhoneCall,
   Mail,
@@ -60,7 +61,7 @@ function HomeNursing() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar onOpenBooking={openBooking} />
+      <Navbar onOpenBooking={() => openBooking("homecare")} subtitle="Điều dưỡng tại nhà" navItems={NAV} />
       <main>
         <Hero onOpenBooking={openBooking} />
         <WhyUs />
@@ -81,71 +82,6 @@ function HomeNursing() {
   );
 }
 
-function Navbar({ onOpenBooking }: { onOpenBooking: (service?: string) => void }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/85 backdrop-blur-md shadow-[0_2px_20px_-10px_rgba(14,165,233,0.3)]" : "bg-transparent"}`}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <a href="/" className="flex items-center gap-2 group">
-            <div className="grid h-10 w-10 place-items-center rounded-xl gradient-sky text-primary-foreground shadow-soft transition-transform group-hover:scale-105">
-              <HeartPulse className="h-5 w-5" />
-            </div>
-            <div className="leading-tight">
-              <div className="font-display text-base sm:text-lg font-bold">Cấp cứu 115 <span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
-              <div className="text-[10px] text-muted-foreground -mt-0.5">Điều dưỡng tại nhà</div>
-            </div>
-          </a>
-          
-          <nav className="hidden md:flex items-center gap-1">
-            {NAV.map((n) => (
-              <a key={n.href} href={n.href} className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary rounded-lg transition-colors">{n.label}</a>
-            ))}
-          </nav>
-          
-          <div className="hidden md:flex items-center gap-3">
-            <a href="tel:0915205115" className="inline-flex items-center gap-2 rounded-full bg-emergency px-4 py-2 text-sm font-semibold text-emergency-foreground shadow-soft hover:opacity-90 transition">
-              <PhoneCall className="h-4 w-4 animate-pulse" />
-              0915205115
-            </a>
-            <button onClick={() => onOpenBooking("homecare")} className="inline-flex items-center gap-2 rounded-full gradient-sky px-4 py-2 text-sm font-semibold text-primary-foreground shadow-soft hover:opacity-95 transition">
-              Đặt lịch ngay
-            </button>
-          </div>
-          
-          <button onClick={() => setOpen(!open)} className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background" aria-label="Toggle menu">
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-      </div>
-      
-      {open && (
-        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-md animate-fade-in">
-          <div className="px-4 py-4 flex flex-col gap-2">
-            {NAV.map((n) => (
-              <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="px-3 py-2 rounded-lg text-sm font-medium hover:bg-secondary">{n.label}</a>
-            ))}
-            <a href="tel:0915205115" className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-emergency px-4 py-3 text-sm font-semibold text-emergency-foreground">
-              <PhoneCall className="h-4 w-4" /> Gọi ngay
-            </a>
-            <button onClick={() => { setOpen(false); onOpenBooking("homecare"); }} className="mt-2 inline-flex items-center justify-center gap-2 rounded-full gradient-sky px-4 py-3 text-sm font-semibold text-primary-foreground">
-              Đặt lịch
-            </button>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
 
 function Hero({ onOpenBooking }: { onOpenBooking: (service?: string) => void }) {
   return (

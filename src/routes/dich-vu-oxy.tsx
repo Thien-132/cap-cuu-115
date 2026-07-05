@@ -7,6 +7,7 @@ import { FloatingActions } from '@/components/common/FloatingActions';
 import { BackToTop } from '@/components/common/BackToTop';
 import { SectionHeading } from '@/components/common/SectionHeading';
 import { Wind, CheckCircle2 } from 'lucide-react';
+import imgService from '@/assets/dich-vu-oxy.jpg';
 
 export const Route = createFileRoute('/dich-vu-oxy')({
   head: () => ({
@@ -57,8 +58,8 @@ function PageComponent() {
                 Đặt lịch dịch vụ ngay
               </button>
             </div>
-            <div className="bg-secondary/30 rounded-3xl p-10 flex items-center justify-center min-h-[400px] border border-border">
-              <Wind className="w-48 h-48 text-primary/20" />
+            <div className="bg-secondary/30 rounded-3xl flex items-center justify-center h-[400px] border border-border overflow-hidden">
+              <img src={imgService} alt="Oxy tận nhà" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
