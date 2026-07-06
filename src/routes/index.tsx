@@ -50,6 +50,7 @@ import sHospital from "@/assets/service-hospital.jpg";
 import sIcu from "@/assets/service-icu.jpg";
 import sIntercity from "@/assets/service-intercity.jpg";
 import sHomeCare from "@/assets/hinh dieu duong.jpg";
+import sOxygen from "@/assets/dich-vu-oxy.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -416,7 +417,7 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
     {
       id: "oxygen",
       href: "/dich-vu-oxy",
-      img: sHospital,
+      img: sOxygen,
       icon: Wind,
       title: "Dịch vụ oxy tận nhà",
       desc: "Cung cấp, cho thuê bình oxy, máy tạo oxy tận nhà nhanh chóng và an toàn.",
@@ -1125,7 +1126,7 @@ function OxygenService() {
 
           <div className="order-2 lg:order-1 relative rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 group">
             <img
-              src={sHospital}
+              src={sOxygen}
               alt="Dịch vụ oxy tận nhà"
               loading="lazy"
               className="w-full aspect-[4/3] object-cover transition-transform duration-1000 group-hover:scale-105"
