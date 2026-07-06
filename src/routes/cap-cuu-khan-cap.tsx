@@ -67,7 +67,7 @@ function PageComponent() {
       <Footer navItems={NAV} />
       <FloatingActions />
       <BackToTop />
-      <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} />
+      <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} initialService="emergency" />
     </div>
   );
 }

@@ -127,28 +127,36 @@ export function BookingModal({
 
               <div className="pt-2">
                 <label className="block text-sm font-medium mb-3">Loại dịch vụ</label>
-                <div className="grid grid-cols-3 gap-3">
-                  {["Khẩn cấp", "Chuyển viện", "Điều dưỡng"].map((type) => (
-                    <label
-                      key={type}
-                      className="flex cursor-pointer items-center justify-center text-center rounded-xl border border-border bg-secondary/50 px-2 py-2.5 text-sm font-medium hover:bg-secondary transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:text-primary"
-                    >
-                      <input
-                        type="radio"
-                        name="Loai_Dich_Vu"
-                        value={type}
-                        className="sr-only"
-                        defaultChecked={
-                          (!initialService && type === "Khẩn cấp") ||
-                          (initialService === "emergency" && type === "Khẩn cấp") ||
-                          (initialService === "transport" && type === "Chuyển viện") ||
-                          (initialService === "homecare" && type === "Điều dưỡng") ||
-                          (initialService === "icu" && type === "Khẩn cấp")
-                        }
-                      />
-                      {type}
-                    </label>
-                  ))}
+                <div className="flex flex-wrap gap-3">
+                  {(() => {
+                    const allServices = ["Khẩn cấp", "Chuyển viện", "Điều dưỡng", "ICU Hồi sức", "Oxy tận nhà"];
+                    const serviceMap: Record<string, string> = {
+                      emergency: "Khẩn cấp",
+                      transport: "Chuyển viện",
+                      homecare: "Điều dưỡng",
+                      icu: "ICU Hồi sức",
+                      oxygen: "Oxy tận nhà",
+                    };
+                    const displayServices = initialService && serviceMap[initialService]
+                      ? [serviceMap[initialService]]
+                      : allServices;
+
+                    return displayServices.map((type) => (
+                      <label
+                        key={type}
+                        className="flex-1 min-w-[100px] cursor-pointer items-center justify-center text-center rounded-xl border border-border bg-secondary/50 px-2 py-2.5 text-sm font-medium hover:bg-secondary transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:text-primary"
+                      >
+                        <input
+                          type="radio"
+                          name="Loai_Dich_Vu"
+                          value={type}
+                          className="sr-only"
+                          defaultChecked={displayServices.length === 1 || type === "Khẩn cấp"}
+                        />
+                        {type}
+                      </label>
+                    ));
+                  })()}
                 </div>
               </div>
 
