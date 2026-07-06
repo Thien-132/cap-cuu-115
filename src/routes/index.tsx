@@ -999,8 +999,8 @@ function Contact() {
           </form>
 
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <InfoCard icon={PhoneCall} title="Đường dây nóng" lines={["115 (Khẩn cấp)", "090 123 4567"]} />
-            <InfoCard icon={Mail} title="Email" lines={["dispatch@rescue115.com", "info@rescue115.com"]} />
+            <InfoCard icon={PhoneCall} title="Đường dây nóng" lines={["115 (Khẩn cấp)", "0915 205 115"]} />
+            <InfoCard icon={Mail} title="Email" lines={["Hoangphihai1984bp@gmail.com"]} />
             <InfoCard icon={MapPin} title="Địa chỉ" lines={["11 Hẻm 922", "Đồng Xoài", "Đồng Nai"]} />
             <div className="rounded-2xl overflow-hidden border border-border shadow-card aspect-[4/3] bg-secondary">
               <iframe
