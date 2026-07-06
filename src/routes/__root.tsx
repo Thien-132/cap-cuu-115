@@ -76,7 +76,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=1280" },
+      { name: "viewport", content: "width=1024, initial-scale=0.1" },
       { title: "Emergency Ambulance Service 115 — Fast, Safe & Professional" },
       { name: "description", content: "24/7 Emergency Ambulance Service. Quick response, professional medical staff, modern fleet. Call 115 or book online." },
       { property: "og:title", content: "Emergency Ambulance Service 115 — Fast, Safe & Professional" },
