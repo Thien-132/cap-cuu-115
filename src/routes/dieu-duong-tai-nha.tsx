@@ -61,7 +61,7 @@ function HomeNursing() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar onOpenBooking={() => openBooking("homecare")} subtitle="Điều dưỡng tại nhà" navItems={NAV} />
+      <Navbar alwaysDark onOpenBooking={() => openBooking("homecare")} subtitle="Điều dưỡng tại nhà" navItems={NAV} />
       <main>
         <Hero onOpenBooking={openBooking} />
         <WhyUs />

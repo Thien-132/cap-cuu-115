@@ -32,7 +32,7 @@ function PageComponent() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar onOpenBooking={() => setBookingOpen(true)} subtitle="Xe Cứu Thương ICU" navItems={NAV} />
+      <Navbar alwaysDark onOpenBooking={() => setBookingOpen(true)} subtitle="Xe Cứu Thương ICU" navItems={NAV} />
       <main className="pt-32 pb-16 min-h-[80vh]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
