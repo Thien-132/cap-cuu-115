@@ -931,6 +931,7 @@ function Contact() {
           address: (formData.get("Dia_Chi_Don") as string) || "",
           hospital: (formData.get("Benh_Vien_Den") as string) || "",
           note: formData.get("Ghi_Chu") as string,
+          serviceType: (formData.get("Loai_Dich_Vu") as string) || "Chưa rõ",
           type: "contact",
         }
       });
@@ -966,6 +967,26 @@ function Contact() {
               <Field label="Địa chỉ đón" name="Dia_Chi_Don" placeholder="123 Đường Lê Lợi" required enableLocation />
               <div className="sm:col-span-2">
                 <Field label="Bệnh viện đến" name="Benh_Vien_Den" placeholder="Bệnh viện Chợ Rẫy" />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-sm font-medium mb-3">Loại dịch vụ</label>
+                <div className="flex flex-wrap gap-3">
+                  {["Khẩn cấp", "Chuyển viện", "Điều dưỡng", "ICU Hồi sức", "Oxy tận nhà"].map((type) => (
+                    <label
+                      key={type}
+                      className="flex-1 min-w-[100px] cursor-pointer items-center justify-center text-center rounded-xl border border-border bg-secondary/50 px-2 py-2.5 text-sm font-medium hover:bg-secondary transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:text-primary"
+                    >
+                      <input
+                        type="radio"
+                        name="Loai_Dich_Vu"
+                        value={type}
+                        className="sr-only"
+                        defaultChecked={type === "Khẩn cấp"}
+                      />
+                      {type}
+                    </label>
+                  ))}
+                </div>
               </div>
               <div className="sm:col-span-2">
                 <label className="block text-sm font-medium mb-1.5">Tin nhắn</label>
