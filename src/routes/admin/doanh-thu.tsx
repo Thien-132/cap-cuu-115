@@ -124,7 +124,7 @@ function RevenuePage() {
           </div>
           <div>
             <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Hoàn Thành</p>
-            <h2 className="text-3xl font-bold font-display text-foreground mt-1">{completedCount} <span className="text-lg font-medium text-muted-foreground lowercase tracking-normal">Chuyến xe</span></h2>
+            <h2 className="text-3xl font-bold font-display text-foreground mt-1">{completedCount} <span className="whitespace-nowrap text-lg font-medium text-muted-foreground lowercase tracking-normal">Chuyến xe</span></h2>
           </div>
         </div>
       </div>

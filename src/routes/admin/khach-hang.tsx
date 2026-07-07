@@ -52,12 +52,12 @@ function CustomersPage() {
                     {record.phone}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-center">
-                    <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 font-medium text-xs">
+                    <span className="whitespace-nowrap px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 font-medium text-xs">
                       {record.totalBookings}
                     </span>
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-center">
-                    <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 font-medium text-xs">
+                    <span className="whitespace-nowrap px-3 py-1 rounded-full bg-slate-100 text-slate-600 font-medium text-xs">
                       {record.cancellations}
                     </span>
                   </td>
@@ -68,9 +68,9 @@ function CustomersPage() {
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-center">
                     {record.isBlocked ? (
-                      <span className="px-3 py-1 rounded-full bg-red-100 text-red-700 font-bold text-xs">Đang bị chặn</span>
+                      <span className="whitespace-nowrap px-3 py-1 rounded-full bg-red-100 text-red-700 font-bold text-xs">Đang bị chặn</span>
                     ) : (
-                      <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs">Bình thường</span>
+                      <span className="whitespace-nowrap px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs">Bình thường</span>
                     )}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-right">

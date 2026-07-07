@@ -40,7 +40,7 @@ function VehiclesPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h1 className="text-3xl font-bold font-display tracking-tight">Quản lý Xe cấp cứu</h1>
-        <button onClick={openNew} className="gradient-sky text-primary-foreground px-5 py-2.5 rounded-2xl font-semibold shadow-soft hover:opacity-90 flex items-center gap-2">
+        <button onClick={openNew} className="whitespace-nowrap flex-shrink-0 gradient-sky text-primary-foreground px-5 py-2.5 rounded-2xl font-semibold shadow-soft hover:opacity-90 flex items-center gap-2">
           <Plus className="h-5 w-5" /> Thêm xe
         </button>
       </div>
@@ -66,14 +66,13 @@ function VehiclesPage() {
                       {v.status === 'available' ? 'Sẵn sàng' : v.status === 'in_use' ? 'Đang trực' : 'Bảo trì'}
                     </span>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-right space-x-2">
-                    <button onClick={() => { setEditItem(v); setModalOpen(true); }} className="p-2 rounded-xl hover:bg-secondary text-primary transition-colors">
+                  <td className="whitespace-nowrap px-6 py-4 text-right"><div className="flex items-center justify-end gap-2"><button onClick={() => { setEditItem(v); setModalOpen(true); }} className="p-2 rounded-xl hover:bg-secondary text-primary transition-colors">
                       <Edit2 className="h-4 w-4" />
                     </button>
                     <button onClick={() => handleDelete(v.id)} className="p-2 rounded-xl hover:bg-emergency/10 text-emergency transition-colors">
                       <Trash2 className="h-4 w-4" />
                     </button>
-                  </td>
+                  </div></td>
                 </tr>
               ))}
             </tbody>
@@ -111,7 +110,7 @@ function VehiclesPage() {
                   <option value="maintenance">Bảo trì</option>
                 </select>
               </div>
-              <button type="submit" className="w-full mt-4 gradient-sky text-primary-foreground rounded-2xl py-3 font-bold hover:opacity-90">Lưu lại</button>
+              <button type="submit" className="whitespace-nowrap flex-shrink-0 w-full mt-4 gradient-sky text-primary-foreground rounded-2xl py-3 font-bold hover:opacity-90">Lưu lại</button>
             </div>
           </form>
         </div>

@@ -40,7 +40,7 @@ function NursesPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h1 className="text-3xl font-bold font-display tracking-tight">Nhân sự Y tế</h1>
-        <button onClick={openNew} className="gradient-sky text-primary-foreground px-5 py-2.5 rounded-2xl font-semibold shadow-soft hover:opacity-90 flex items-center gap-2">
+        <button onClick={openNew} className="whitespace-nowrap flex-shrink-0 gradient-sky text-primary-foreground px-5 py-2.5 rounded-2xl font-semibold shadow-soft hover:opacity-90 flex items-center gap-2">
           <Plus className="h-5 w-5" /> Thêm nhân sự
         </button>
       </div>
@@ -99,7 +99,7 @@ function NursesPage() {
                   <option value="inactive">Nghỉ phép/Nghỉ việc</option>
                 </select>
               </div>
-              <button type="submit" className="w-full mt-4 gradient-sky text-primary-foreground rounded-2xl py-3 font-bold hover:opacity-90">Lưu lại</button>
+              <button type="submit" className="whitespace-nowrap flex-shrink-0 w-full mt-4 gradient-sky text-primary-foreground rounded-2xl py-3 font-bold hover:opacity-90">Lưu lại</button>
             </div>
           </form>
         </div>
