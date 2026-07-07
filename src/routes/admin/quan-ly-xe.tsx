@@ -50,23 +50,23 @@ function VehiclesPage() {
           <table className="w-full text-sm text-left">
             <thead className="bg-secondary/40 text-muted-foreground border-b border-border">
               <tr>
-                <th className="px-6 py-4 font-semibold">Biển số xe</th>
-                <th className="px-6 py-4 font-semibold">Loại xe</th>
-                <th className="px-6 py-4 font-semibold">Trạng thái</th>
-                <th className="px-6 py-4 font-semibold text-right">Thao tác</th>
+                <th className="whitespace-nowrap px-6 py-4 font-semibold">Biển số xe</th>
+                <th className="whitespace-nowrap px-6 py-4 font-semibold">Loại xe</th>
+                <th className="whitespace-nowrap px-6 py-4 font-semibold">Trạng thái</th>
+                <th className="whitespace-nowrap px-6 py-4 font-semibold text-right">Thao tác</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {vehicles.map((v) => (
                 <tr key={v.id} className="hover:bg-secondary/20 transition-colors">
-                  <td className="px-6 py-4 font-bold text-foreground text-base tracking-wider">{v.licensePlate}</td>
-                  <td className="px-6 py-4 font-medium">{v.type}</td>
-                  <td className="px-6 py-4">
+                  <td className="whitespace-nowrap px-6 py-4 font-bold text-foreground text-base tracking-wider">{v.licensePlate}</td>
+                  <td className="whitespace-nowrap px-6 py-4 font-medium">{v.type}</td>
+                  <td className="whitespace-nowrap px-6 py-4">
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${v.status === 'available' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : v.status === 'in_use' ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-red-50 text-red-600 border-red-200'}`}>
                       {v.status === 'available' ? 'Sẵn sàng' : v.status === 'in_use' ? 'Đang trực' : 'Bảo trì'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right space-x-2">
+                  <td className="whitespace-nowrap px-6 py-4 text-right space-x-2">
                     <button onClick={() => { setEditItem(v); setModalOpen(true); }} className="p-2 rounded-xl hover:bg-secondary text-primary transition-colors">
                       <Edit2 className="h-4 w-4" />
                     </button>
