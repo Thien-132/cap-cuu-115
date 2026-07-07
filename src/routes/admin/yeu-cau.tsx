@@ -56,11 +56,11 @@ function RequestsPage() {
           <table className="w-full text-sm text-left">
             <thead className="bg-secondary/40 text-muted-foreground border-b border-border">
               <tr>
-                <th className="px-6 py-4 font-semibold">Khách hàng</th>
-                <th className="px-6 py-4 font-semibold">Dịch vụ</th>
-                <th className="px-6 py-4 font-semibold">Ngày tạo</th>
-                <th className="px-6 py-4 font-semibold">Trạng thái</th>
-                <th className="px-6 py-4 font-semibold text-right">Thao tác</th>
+                <th className="px-6 py-4 font-semibold whitespace-nowrap">Khách hàng</th>
+                <th className="px-6 py-4 font-semibold whitespace-nowrap">Dịch vụ</th>
+                <th className="px-6 py-4 font-semibold whitespace-nowrap">Ngày tạo</th>
+                <th className="px-6 py-4 font-semibold whitespace-nowrap">Trạng thái</th>
+                <th className="px-6 py-4 font-semibold whitespace-nowrap text-right">Thao tác</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -68,19 +68,19 @@ function RequestsPage() {
                 <tr><td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">Chưa có yêu cầu nào.</td></tr>
               ) : requests.map((req) => (
                 <tr key={req.id} className="hover:bg-secondary/20 transition-colors">
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-semibold text-foreground">{req.name}</div>
                     <div className="text-muted-foreground">{req.phone}</div>
                   </td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-xs border border-primary/20">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="inline-block whitespace-nowrap px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-xs border border-primary/20">
                       {req.serviceType}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-muted-foreground">
+                  <td className="px-6 py-4 text-muted-foreground whitespace-nowrap">
                     {new Date(req.createdAt).toLocaleString('vi-VN')}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <select
                       className={`border rounded-xl text-xs px-3 py-1.5 outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-medium ${STATUS_COLORS[req.status as keyof typeof STATUS_COLORS]} ${req.status === 'completed' ? 'opacity-90 cursor-not-allowed appearance-none pr-4' : ''}`}
                       value={req.status}
