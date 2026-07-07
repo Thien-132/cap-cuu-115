@@ -94,13 +94,15 @@ function RequestsPage() {
                       <option value="fake">Báo giả</option>
                     </select>
                   </td>
-                  <td className="px-6 py-4 text-right space-x-2">
-                    <button onClick={() => setViewReq(req)} className="p-2 rounded-xl hover:bg-secondary text-primary transition-colors" title="Xem chi tiết">
-                      <Eye className="h-4 w-4" />
-                    </button>
-                    <button onClick={() => handleDelete(req.id)} className="p-2 rounded-xl hover:bg-emergency/10 text-emergency transition-colors" title="Xóa">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center justify-end gap-2">
+                      <button onClick={() => setViewReq(req)} className="p-2 rounded-xl hover:bg-secondary text-primary transition-colors" title="Xem chi tiết">
+                        <Eye className="h-4 w-4" />
+                      </button>
+                      <button onClick={() => handleDelete(req.id)} className="p-2 rounded-xl hover:bg-emergency/10 text-emergency transition-colors" title="Xóa">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
