@@ -56,11 +56,10 @@ export async function syncWithSupabase() {
       localStorage.setItem("admin_booking_requests", JSON.stringify(reqsRes.data));
     }
 
-    // We only overwrite ambulances/nurses/history if they exist in Supabase or if not initialized
-    if (ambRes.data && ambRes.data.length > 0) {
+    if (ambRes.data) {
       localStorage.setItem("admin_ambulances", JSON.stringify(ambRes.data));
     }
-    if (nurRes.data && nurRes.data.length > 0) {
+    if (nurRes.data) {
       localStorage.setItem("admin_nurses", JSON.stringify(nurRes.data));
     }
     if (phoneRes.data) {
