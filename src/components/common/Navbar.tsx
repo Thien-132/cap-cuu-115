@@ -1,8 +1,18 @@
-import { useState, useEffect } from 'react';
-import { Menu, X, PhoneCall, CalendarDays, Ambulance } from 'lucide-react';
-import { Link } from '@tanstack/react-router';
+import { useState, useEffect } from "react";
+import { Menu, X, PhoneCall, CalendarDays, Ambulance } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
-export function Navbar({ alwaysDark = false, onOpenBooking, subtitle, navItems }: { alwaysDark?: boolean; onOpenBooking?: () => void; subtitle?: string; navItems: { label: string, href: string }[] }) {
+export function Navbar({
+  alwaysDark = false,
+  onOpenBooking,
+  subtitle,
+  navItems,
+}: {
+  alwaysDark?: boolean;
+  onOpenBooking?: () => void;
+  subtitle?: string;
+  navItems: { label: string; href: string }[];
+}) {
   const [scrolled, setScrolled] = useState(alwaysDark || false);
   const [open, setOpen] = useState(false);
 
@@ -25,8 +35,12 @@ export function Navbar({ alwaysDark = false, onOpenBooking, subtitle, navItems }
               <Ambulance className="h-6 w-6" />
             </div>
             <div className="leading-tight">
-              <div className="font-display text-lg sm:text-xl font-bold text-white">Cấp cứu 115 <span className="text-primary whitespace-nowrap">Hồng Hải</span></div>
-              <div className="text-[11px] sm:text-xs text-white/60 -mt-0.5">{subtitle || 'Dịch vụ cấp cứu chuyên nghiệp 24/7'}</div>
+              <div className="font-display text-lg sm:text-xl font-bold text-white">
+                Cấp cứu 115 <span className="text-primary whitespace-nowrap">Hồng Hải</span>
+              </div>
+              <div className="text-[11px] sm:text-xs text-white/60 -mt-0.5">
+                {subtitle || "Dịch vụ cấp cứu chuyên nghiệp 24/7"}
+              </div>
             </div>
           </Link>
 

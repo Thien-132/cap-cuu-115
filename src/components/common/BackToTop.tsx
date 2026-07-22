@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { ArrowUp } from "lucide-react";
 
 export function BackToTop() {
   const [show, setShow] = useState(false);

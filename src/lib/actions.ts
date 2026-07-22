@@ -1,29 +1,33 @@
-import { createServerFn } from '@tanstack/react-start';
-import { sendZaloMessage } from './zalo';
+import { createServerFn } from "@tanstack/react-start";
+import { sendZaloMessage } from "./zalo";
 
-export const sendEmailAction = createServerFn({ method: 'POST' })
-  .validator((data: {
-    name: string;
-    phone: string;
-    address: string;
-    condition?: string;
-    serviceType?: string;
-    hospital?: string;
-    note?: string;
-    rating?: string;
-    type: 'booking' | 'contact' | 'review';
-  }) => data)
+export const sendEmailAction = createServerFn({ method: "POST" })
+  .validator(
+    (data: {
+      name: string;
+      phone: string;
+      address: string;
+      condition?: string;
+      serviceType?: string;
+      hospital?: string;
+      note?: string;
+      rating?: string;
+      type: "booking" | "contact" | "review";
+    }) => data,
+  )
   .handler(async ({ data }) => {
     const resendApiKey = process.env.RESEND_API_KEY || "re_DYLa5dkT_4YdRVwaNkRtuETzRF1KrMhvq";
     if (!resendApiKey) {
-      throw new Error('Missing RESEND_API_KEY environment variable. Vui lòng thêm RESEND_API_KEY vào file .env');
+      throw new Error(
+        "Missing RESEND_API_KEY environment variable. Vui lòng thêm RESEND_API_KEY vào file .env",
+      );
     }
 
     const { name, phone, address, condition, serviceType, hospital, note, rating, type } = data;
-    
-    let htmlContent = '';
-    
-    if (type === 'booking') {
+
+    let htmlContent = "";
+
+    if (type === "booking") {
       htmlContent = `
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f5f7; padding: 40px 0;">
           <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
@@ -44,8 +48,8 @@ export const sendEmailAction = createServerFn({ method: 'POST' })
                   <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px; width: 40%;">👤 Họ và tên</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${name}</td></tr>
                   <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">📞 Số điện thoại</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${phone}</td></tr>
                   <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">📍 Địa chỉ</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${address}</td></tr>
-                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">🚑 Loại dịch vụ</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0284c7; font-size: 15px; font-weight: 700; text-align: right;">${serviceType || 'Không xác định'}</td></tr>
-                  <tr><td style="padding: 10px 0; color: #64748b; font-size: 14px;">❤️ Tình trạng bệnh</td><td style="padding: 10px 0; color: #ef4444; font-size: 15px; font-weight: 600; text-align: right;">${condition || 'Không ghi rõ'}</td></tr>
+                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">🚑 Loại dịch vụ</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0284c7; font-size: 15px; font-weight: 700; text-align: right;">${serviceType || "Không xác định"}</td></tr>
+                  <tr><td style="padding: 10px 0; color: #64748b; font-size: 14px;">❤️ Tình trạng bệnh</td><td style="padding: 10px 0; color: #ef4444; font-size: 15px; font-weight: 600; text-align: right;">${condition || "Không ghi rõ"}</td></tr>
                 </table>
               </div>
 
@@ -57,12 +61,12 @@ export const sendEmailAction = createServerFn({ method: 'POST' })
             <!-- Footer -->
             <div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 24px; text-align: center;">
               <p style="color: #64748b; font-size: 13px; margin: 0 0 8px 0;">Dịch vụ Cấp cứu 115 Hồng Hải - Trực ban 24/7</p>
-              <p style="color: #94a3b8; font-size: 12px; margin: 0;">Email gửi tự động từ hệ thống website. Thời gian: ${new Date().toLocaleString('vi-VN')}</p>
+              <p style="color: #94a3b8; font-size: 12px; margin: 0;">Email gửi tự động từ hệ thống website. Thời gian: ${new Date().toLocaleString("vi-VN")}</p>
             </div>
           </div>
         </div>
       `;
-    } else if (type === 'contact') {
+    } else if (type === "contact") {
       htmlContent = `
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f5f7; padding: 40px 0;">
           <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
@@ -78,9 +82,9 @@ export const sendEmailAction = createServerFn({ method: 'POST' })
                 <table style="width: 100%; border-collapse: collapse;">
                   <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px; width: 40%;">👤 Họ và tên</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${name}</td></tr>
                   <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">📞 Số điện thoại</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${phone}</td></tr>
-                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">📍 Địa chỉ đón</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${address || 'Không ghi rõ'}</td></tr>
-                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">🏥 Bệnh viện đến</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${hospital || 'Không ghi rõ'}</td></tr>
-                  <tr><td style="padding: 10px 0; color: #64748b; font-size: 14px;">📝 Lời nhắn</td><td style="padding: 10px 0; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${note || 'Không có'}</td></tr>
+                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">📍 Địa chỉ đón</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${address || "Không ghi rõ"}</td></tr>
+                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">🏥 Bệnh viện đến</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${hospital || "Không ghi rõ"}</td></tr>
+                  <tr><td style="padding: 10px 0; color: #64748b; font-size: 14px;">📝 Lời nhắn</td><td style="padding: 10px 0; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${note || "Không có"}</td></tr>
                 </table>
               </div>
               <div style="text-align: center;">
@@ -90,7 +94,7 @@ export const sendEmailAction = createServerFn({ method: 'POST' })
             
             <div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 24px; text-align: center;">
               <p style="color: #64748b; font-size: 13px; margin: 0 0 8px 0;">Dịch vụ Cấp cứu 115 Hồng Hải - Trực ban 24/7</p>
-              <p style="color: #94a3b8; font-size: 12px; margin: 0;">Thời gian nhận tin: ${new Date().toLocaleString('vi-VN')}</p>
+              <p style="color: #94a3b8; font-size: 12px; margin: 0;">Thời gian nhận tin: ${new Date().toLocaleString("vi-VN")}</p>
             </div>
           </div>
         </div>
@@ -107,17 +111,17 @@ export const sendEmailAction = createServerFn({ method: 'POST' })
             <div style="padding: 30px 40px;">
               <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 24px; margin-bottom: 30px;">
                 <table style="width: 100%; border-collapse: collapse;">
-                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px; width: 40%;">👤 Họ và tên</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${name || 'Khách ẩn danh'}</td></tr>
-                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">📞 Số điện thoại</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${phone || 'Không cung cấp'}</td></tr>
+                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px; width: 40%;">👤 Họ và tên</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${name || "Khách ẩn danh"}</td></tr>
+                  <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">📞 Số điện thoại</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${phone || "Không cung cấp"}</td></tr>
                   <tr><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #64748b; font-size: 14px;">⭐ Đánh giá</td><td style="padding: 10px 0; border-bottom: 1px dashed #cbd5e1; color: #eab308; font-size: 18px; font-weight: 700; text-align: right;">${rating} Sao</td></tr>
-                  <tr><td style="padding: 10px 0; color: #64748b; font-size: 14px;">💬 Bình luận</td><td style="padding: 10px 0; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${note || 'Không có bình luận'}</td></tr>
+                  <tr><td style="padding: 10px 0; color: #64748b; font-size: 14px;">💬 Bình luận</td><td style="padding: 10px 0; color: #0f172a; font-size: 15px; font-weight: 600; text-align: right;">${note || "Không có bình luận"}</td></tr>
                 </table>
               </div>
             </div>
             
             <div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 24px; text-align: center;">
               <p style="color: #64748b; font-size: 13px; margin: 0 0 8px 0;">Dịch vụ Cấp cứu 115 Hồng Hải - Trực ban 24/7</p>
-              <p style="color: #94a3b8; font-size: 12px; margin: 0;">Thời gian nhận tin: ${new Date().toLocaleString('vi-VN')}</p>
+              <p style="color: #94a3b8; font-size: 12px; margin: 0;">Thời gian nhận tin: ${new Date().toLocaleString("vi-VN")}</p>
             </div>
           </div>
         </div>
@@ -125,32 +129,42 @@ export const sendEmailAction = createServerFn({ method: 'POST' })
     }
 
     try {
-      const response = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
+      // Gửi email qua Resend và tin nhắn qua Zalo song song để tối ưu tốc độ và tránh bị freeze trên serverless
+      const emailPromise = fetch("https://api.resend.com/emails", {
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${resendApiKey}`,
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: 'Cấp Cứu 115 Hồng Hải <onboarding@resend.dev>',
-          to: process.env.RESEND_TO_EMAIL || 'hoangphihai1984bp@gmail.com',
-          subject: type === 'booking' ? '🚑 YÊU CẦU DỊCH VỤ MỚI - Cấp cứu 115' : type === 'review' ? '⭐ ĐÁNH GIÁ MỚI - Cấp cứu 115' : '📧 YÊU CẦU LIÊN HỆ - Cấp cứu 115',
-          html: htmlContent
-        })
+          from: "Cấp Cứu 115 Hồng Hải <onboarding@resend.dev>",
+          to: process.env.RESEND_TO_EMAIL || "hoangphihai1984bp@gmail.com",
+          subject:
+            type === "booking"
+              ? "🚑 YÊU CẦU DỊCH VỤ MỚI - Cấp cứu 115"
+              : type === "review"
+                ? "⭐ ĐÁNH GIÁ MỚI - Cấp cứu 115"
+                : "📧 YÊU CẦU LIÊN HỆ - Cấp cứu 115",
+          html: htmlContent,
+        }),
+      }).then(async (response) => {
+        if (!response.ok) {
+          const errorData = await response.text();
+          console.error("Failed to send email via Resend:", errorData);
+          throw new Error("API Resend trả về lỗi");
+        }
+        return response;
       });
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error('Failed to send email via Resend:', errorData);
-        throw new Error('API Resend trả về lỗi');
-      }
+      const zaloPromise = sendZaloMessage(data).catch((err) => {
+        console.error("Lỗi gửi Zalo background:", err);
+      });
 
-      // Gửi thông báo Zalo song song
-      sendZaloMessage(data).catch(err => console.error("Lỗi gửi Zalo background:", err));
+      await Promise.all([emailPromise, zaloPromise]);
 
       return { success: true };
     } catch (error) {
       console.error(error);
-      throw new Error('Lỗi khi kết nối đến dịch vụ gửi email');
+      throw new Error("Lỗi khi kết nối đến dịch vụ gửi email");
     }
   });

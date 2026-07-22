@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { sendEmailAction } from "@/lib/actions";
-import { Ambulance, X, CheckCircle2, ArrowRight } from 'lucide-react';
-import { Field } from './Field';
-import { addBookingRequest } from '@/lib/adminStore';
+import { Ambulance, X, CheckCircle2, ArrowRight, Loader2 } from "lucide-react";
+import { Field } from "./Field";
+import { addBookingRequest } from "@/lib/adminStore";
 
 export function BookingModal({
   isOpen,
@@ -15,6 +15,7 @@ export function BookingModal({
 }) {
   const [sent, setSent] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -28,6 +29,7 @@ export function BookingModal({
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const form = e.currentTarget;
     const formData = new FormData(form);
 
@@ -36,18 +38,21 @@ export function BookingModal({
       phone: formData.get("So_Dien_Thoai") as string,
       address: formData.get("Dia_Chi") as string,
       details: formData.get("Tinh_Trang_Benh") as string,
-      serviceType: formData.get("Loai_Dich_Vu") as string || initialService || 'Chưa rõ',
+      serviceType: (formData.get("Loai_Dich_Vu") as string) || initialService || "Chưa rõ",
     };
 
     setErrorMsg(null);
-    
+
     try {
       // Save to local store for Admin Dashboard
       await addBookingRequest(data);
-      console.log('Saved request to adminStore', data);
+      console.log("Saved request to adminStore", data);
     } catch (e: any) {
-      if (e.message === 'BLOCKED_PHONE') {
-        setErrorMsg("Số điện thoại của bạn đã bị hạn chế do có nhiều báo cáo ảo. Vui lòng liên hệ Hotline 0915 205 115 để được hỗ trợ.");
+      if (e.message === "BLOCKED_PHONE") {
+        setErrorMsg(
+          "Số điện thoại của bạn đã bị hạn chế do có nhiều báo cáo ảo. Vui lòng liên hệ Hotline 0915 205 115 để được hỗ trợ.",
+        );
+        setIsSubmitting(false);
         return;
       }
     }
@@ -61,7 +66,7 @@ export function BookingModal({
           condition: data.details || "",
           serviceType: data.serviceType,
           type: "booking",
-        }
+        },
       });
 
       setSent(true);
@@ -77,6 +82,8 @@ export function BookingModal({
         setSent(false);
         onClose();
       }, 3000);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -121,15 +128,37 @@ export function BookingModal({
                 </div>
               )}
               <Field label="Họ và Tên" name="Ho_Ten" placeholder="Nguyễn Văn A" required />
-              <Field label="Số điện thoại" name="So_Dien_Thoai" type="tel" placeholder="090 123 4567" required />
-              <Field label="Địa chỉ" name="Dia_Chi" placeholder="123 Đường ABC, Quận X" required enableLocation />
-              <Field label="Tình trạng bệnh" name="Tinh_Trang_Benh" placeholder="Mô tả ngắn gọn tình trạng bệnh nhân..." />
+              <Field
+                label="Số điện thoại"
+                name="So_Dien_Thoai"
+                type="tel"
+                placeholder="090 123 4567"
+                required
+              />
+              <Field
+                label="Địa chỉ"
+                name="Dia_Chi"
+                placeholder="123 Đường ABC, Quận X"
+                required
+                enableLocation
+              />
+              <Field
+                label="Tình trạng bệnh"
+                name="Tinh_Trang_Benh"
+                placeholder="Mô tả ngắn gọn tình trạng bệnh nhân..."
+              />
 
               <div className="pt-2">
                 <label className="block text-sm font-medium mb-3">Loại dịch vụ</label>
                 <div className="flex flex-wrap gap-3">
                   {(() => {
-                    const allServices = ["Khẩn cấp", "Chuyển viện", "Điều dưỡng", "ICU Hồi sức", "Oxy tận nhà"];
+                    const allServices = [
+                      "Khẩn cấp",
+                      "Chuyển viện",
+                      "Điều dưỡng",
+                      "ICU Hồi sức",
+                      "Oxy tận nhà",
+                    ];
                     const serviceMap: Record<string, string> = {
                       emergency: "Khẩn cấp",
                       transport: "Chuyển viện",
@@ -137,9 +166,10 @@ export function BookingModal({
                       icu: "ICU Hồi sức",
                       oxygen: "Oxy tận nhà",
                     };
-                    const displayServices = initialService && serviceMap[initialService]
-                      ? [serviceMap[initialService]]
-                      : allServices;
+                    const displayServices =
+                      initialService && serviceMap[initialService]
+                        ? [serviceMap[initialService]]
+                        : allServices;
 
                     return displayServices.map((type) => (
                       <label
@@ -163,9 +193,18 @@ export function BookingModal({
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl gradient-sky px-6 py-3.5 text-base font-bold text-primary-foreground shadow-soft hover:opacity-95 transition-all duration-300"
+                  disabled={isSubmitting}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl gradient-sky px-6 py-3.5 text-base font-bold text-primary-foreground shadow-soft hover:opacity-95 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  Gửi yêu cầu <ArrowRight className="h-5 w-5" />
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" /> Đang gửi...
+                    </>
+                  ) : (
+                    <>
+                      Gửi yêu cầu <ArrowRight className="h-5 w-5" />
+                    </>
+                  )}
                 </button>
               </div>
             </form>

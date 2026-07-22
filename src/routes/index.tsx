@@ -33,14 +33,14 @@ import {
   Wind,
 } from "lucide-react";
 
-import { Navbar } from '@/components/common/Navbar';
-import { Footer } from '@/components/common/Footer';
-import { BookingModal } from '@/components/common/BookingModal';
-import { FloatingActions } from '@/components/common/FloatingActions';
-import { BackToTop } from '@/components/common/BackToTop';
-import { SectionHeading } from '@/components/common/SectionHeading';
-import { Field } from '@/components/common/Field';
-import { InfoCard } from '@/components/common/InfoCard';
+import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
+import { BookingModal } from "@/components/common/BookingModal";
+import { FloatingActions } from "@/components/common/FloatingActions";
+import { BackToTop } from "@/components/common/BackToTop";
+import { SectionHeading } from "@/components/common/SectionHeading";
+import { Field } from "@/components/common/Field";
+import { InfoCard } from "@/components/common/InfoCard";
 
 import { getAmbulances, getNurses } from "@/lib/adminStore";
 
@@ -56,9 +56,16 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Dịch vụ Xe cấp cứu Hồng Hải 115 — Nhanh chóng, An toàn & Chuyên nghiệp" },
-      { name: "description", content: "Dịch vụ xe cấp cứu 24/7 phản hồi nhanh, đội ngũ y tế chuyên nghiệp và xe đời mới. Gọi 115 hoặc đặt trực tuyến." },
+      {
+        name: "description",
+        content:
+          "Dịch vụ xe cấp cứu 24/7 phản hồi nhanh, đội ngũ y tế chuyên nghiệp và xe đời mới. Gọi 115 hoặc đặt trực tuyến.",
+      },
       { property: "og:title", content: "Dịch vụ Xe cấp cứu 115" },
-      { property: "og:description", content: "Hoạt động 24/7. Phản hồi nhanh. Đội ngũ y tế chuyên nghiệp." },
+      {
+        property: "og:description",
+        content: "Hoạt động 24/7. Phản hồi nhanh. Đội ngũ y tế chuyên nghiệp.",
+      },
     ],
   }),
   component: Index,
@@ -86,7 +93,7 @@ function Index() {
       <Loader />
       <Navbar navItems={NAV} onOpenBooking={() => openBooking()} />
       <main>
-        <Hero onOpenBooking={() => openBooking("emergency")} />
+        <Hero onOpenBooking={() => openBooking("")} />
         <WhyUs />
         <Services onOpenBooking={openBooking} />
         <HomeCare />
@@ -149,12 +156,15 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
     };
 
     updateStats();
-    window.addEventListener('admin_store_update', updateStats);
-    return () => window.removeEventListener('admin_store_update', updateStats);
+    window.addEventListener("admin_store_update", updateStats);
+    return () => window.removeEventListener("admin_store_update", updateStats);
   }, []);
 
   return (
-    <section id="home" className="relative isolate overflow-hidden pt-32 pb-8 sm:pt-40 sm:pb-12 bg-slate-950">
+    <section
+      id="home"
+      className="relative isolate overflow-hidden pt-32 pb-8 sm:pt-40 sm:pb-12 bg-slate-950"
+    >
       <div className="absolute inset-0 -z-10">
         <img
           src={heroImg}
@@ -179,14 +189,13 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
 
           <h1 className="mt-6 sm:mt-8 font-bold leading-[1.1] tracking-tight text-white text-5xl sm:text-6xl lg:text-[72px]">
             <span className="block">Dịch vụ</span>
-            <span className="block text-gradient-sky drop-shadow-lg">
-              Cấp cứu Hồng Hải
-            </span>
+            <span className="block text-gradient-sky drop-shadow-lg">Cấp cứu Hồng Hải</span>
             <span className="block">nhanh chóng, an toàn</span>
             <span className="block">và chuyên nghiệp</span>
           </h1>
           <p className="mt-6 text-base sm:text-lg text-white/70 max-w-2xl leading-relaxed">
-            Đội ngũ bác sĩ, điều dưỡng giàu kinh nghiệm cùng hệ thống xe cấp cứu hiện đại, sẵn sàng phục vụ mọi lúc – mọi nơi.
+            Đội ngũ bác sĩ, điều dưỡng giàu kinh nghiệm cùng hệ thống xe cấp cứu hiện đại, sẵn sàng
+            phục vụ mọi lúc – mọi nơi.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
@@ -225,7 +234,10 @@ function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
               { icon: Zap, title: "Phản hồi nhanh", desc: "Phản hồi tới 8 phút" },
               { icon: CheckCircle2, title: "An toàn tuyệt đối", desc: "Quy trình chuẩn - an toàn" },
             ].map((f) => (
-              <div key={f.title} className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3">
+              <div
+                key={f.title}
+                className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3"
+              >
                 <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/20 text-primary">
                   <f.icon className="h-5 w-5" />
                 </div>
@@ -270,37 +282,43 @@ function WhyUs() {
       icon: Clock,
       title: "Trực cấp cứu 24/7",
       desc: "Tiếp nhận cuộc gọi và điều phối xe cấp cứu nhanh chóng mọi lúc, mọi nơi.",
-      details: "Đường dây nóng của chúng tôi luôn có tổng đài viên túc trực 24 giờ mỗi ngày, 7 ngày một tuần, kể cả ngày lễ Tết. Hệ thống luân phiên trực ban đảm bảo không có cuộc gọi nào bị bỏ lỡ, giúp bệnh nhân nhận được sự hỗ trợ y tế khẩn cấp vào bất kỳ thời điểm nào trong ngày."
+      details:
+        "Đường dây nóng của chúng tôi luôn có tổng đài viên túc trực 24 giờ mỗi ngày, 7 ngày một tuần, kể cả ngày lễ Tết. Hệ thống luân phiên trực ban đảm bảo không có cuộc gọi nào bị bỏ lỡ, giúp bệnh nhân nhận được sự hỗ trợ y tế khẩn cấp vào bất kỳ thời điểm nào trong ngày.",
     },
     {
       icon: Stethoscope,
       title: "Đội ngũ y bác sĩ & điều dưỡng",
       desc: "Nhân viên y tế nhiều kinh nghiệm, hỗ trợ sơ cứu và chăm sóc bệnh nhân trên xe.",
-      details: "Đội ngũ chuyên môn gồm các bác sĩ chuyên khoa cấp cứu và điều dưỡng viên được đào tạo bài bản, có chứng chỉ hành nghề và nhiều năm kinh nghiệm lâm sàng. Chúng tôi có khả năng xử lý các tình huống nguy kịch, hồi sức tim phổi và duy trì sinh tồn cho bệnh nhân ngay trên đường chuyển viện."
+      details:
+        "Đội ngũ chuyên môn gồm các bác sĩ chuyên khoa cấp cứu và điều dưỡng viên được đào tạo bài bản, có chứng chỉ hành nghề và nhiều năm kinh nghiệm lâm sàng. Chúng tôi có khả năng xử lý các tình huống nguy kịch, hồi sức tim phổi và duy trì sinh tồn cho bệnh nhân ngay trên đường chuyển viện.",
     },
     {
       icon: Truck,
       title: "Xe cấp cứu đời mới",
       desc: "Trang bị đầy đủ máy thở, monitor, bình oxy và các thiết bị cấp cứu cần thiết.",
-      details: "100% xe vận chuyển là các dòng xe đời mới, được thiết kế chống xóc ưu việt. Không gian xe rộng rãi, tiệt trùng định kỳ, được trang bị như một phòng ICU thu nhỏ với máy thở xách tay, máy sốc tim, monitor theo dõi sinh tồn, bơm tiêm điện và hệ thống oxy trung tâm."
+      details:
+        "100% xe vận chuyển là các dòng xe đời mới, được thiết kế chống xóc ưu việt. Không gian xe rộng rãi, tiệt trùng định kỳ, được trang bị như một phòng ICU thu nhỏ với máy thở xách tay, máy sốc tim, monitor theo dõi sinh tồn, bơm tiêm điện và hệ thống oxy trung tâm.",
     },
     {
       icon: MapPin,
       title: "Điều phối thông minh",
       desc: "Lựa chọn xe gần nhất để rút ngắn thời gian tiếp cận bệnh nhân.",
-      details: "Ứng dụng hệ thống định vị GPS và phần mềm quản lý đội xe hiện đại, tổng đài luôn biết chính xác vị trí của từng xe cứu thương. Ngay khi có cuộc gọi, hệ thống sẽ tự động tính toán và điều động chiếc xe có khoảng cách gần nhất, tránh kẹt xe để đến hiện trường trong thời gian vàng."
+      details:
+        "Ứng dụng hệ thống định vị GPS và phần mềm quản lý đội xe hiện đại, tổng đài luôn biết chính xác vị trí của từng xe cứu thương. Ngay khi có cuộc gọi, hệ thống sẽ tự động tính toán và điều động chiếc xe có khoảng cách gần nhất, tránh kẹt xe để đến hiện trường trong thời gian vàng.",
     },
     {
       icon: Zap,
       title: "Có mặt nhanh chóng",
       desc: "Ưu tiên điều xe ngay sau khi tiếp nhận yêu cầu cấp cứu.",
-      details: "Với mạng lưới xe cứu thương phủ rộng khắp các quận huyện và các tỉnh lân cận, kết hợp với đội ngũ tài xế thông thuộc đường xá, chúng tôi cam kết thời gian tiếp cận bệnh nhân luôn ở mức thấp nhất. Quy trình xuất phát khẩn cấp được tính bằng giây ngay khi chốt thông tin."
+      details:
+        "Với mạng lưới xe cứu thương phủ rộng khắp các quận huyện và các tỉnh lân cận, kết hợp với đội ngũ tài xế thông thuộc đường xá, chúng tôi cam kết thời gian tiếp cận bệnh nhân luôn ở mức thấp nhất. Quy trình xuất phát khẩn cấp được tính bằng giây ngay khi chốt thông tin.",
     },
     {
       icon: ShieldCheck,
       title: "An toàn - Uy tín",
       desc: "Đảm bảo an toàn tuyệt đối trong suốt quá trình vận chuyển bệnh nhân.",
-      details: "Sự an toàn của người bệnh là ưu tiên tối thượng. Chúng tôi tuân thủ nghiêm ngặt các quy trình kiểm soát nhiễm khuẩn, lái xe an toàn và phác đồ cấp cứu của Bộ Y tế. Mức chi phí luôn được thông báo minh bạch, rõ ràng ngay từ đầu, tuyệt đối không có phụ phí phát sinh ẩn."
+      details:
+        "Sự an toàn của người bệnh là ưu tiên tối thượng. Chúng tôi tuân thủ nghiêm ngặt các quy trình kiểm soát nhiễm khuẩn, lái xe an toàn và phác đồ cấp cứu của Bộ Y tế. Mức chi phí luôn được thông báo minh bạch, rõ ràng ngay từ đầu, tuyệt đối không có phụ phí phát sinh ẩn.",
     },
   ];
 
@@ -319,25 +337,29 @@ function WhyUs() {
               <div
                 key={it.title}
                 onClick={() => setExpandedIndex(isExpanded ? null : i)}
-                className={`group rounded-2xl border ${isExpanded ? 'border-primary ring-1 ring-primary/20 bg-card/80' : 'border-border bg-card'} p-6 shadow-card hover:shadow-soft transition-all duration-300 cursor-pointer`}
+                className={`group rounded-2xl border ${isExpanded ? "border-primary ring-1 ring-primary/20 bg-card/80" : "border-border bg-card"} p-6 shadow-card hover:shadow-soft transition-all duration-300 cursor-pointer`}
               >
                 <div className="flex justify-between items-start">
                   <div className="grid h-12 w-12 place-items-center rounded-xl gradient-sky text-primary-foreground shadow-soft group-hover:scale-110 transition-transform">
                     <it.icon className="h-6 w-6" />
                   </div>
-                  <div className={`shrink-0 rounded-full p-1 transition-colors ${isExpanded ? 'bg-primary/10 text-primary' : 'bg-secondary text-muted-foreground'}`}>
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                  <div
+                    className={`shrink-0 rounded-full p-1 transition-colors ${isExpanded ? "bg-primary/10 text-primary" : "bg-secondary text-muted-foreground"}`}
+                  >
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
+                    />
                   </div>
                 </div>
                 <h3 className="mt-5 text-lg font-semibold">{it.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground font-medium">{it.desc}</p>
 
-                <div className={`grid transition-all duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 mt-0'}`}>
+                <div
+                  className={`grid transition-all duration-300 ease-in-out ${isExpanded ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0 mt-0"}`}
+                >
                   <div className="overflow-hidden">
                     <div className="pt-4 border-t border-border">
-                      <p className="text-sm text-foreground/80 leading-relaxed">
-                        {it.details}
-                      </p>
+                      <p className="text-sm text-foreground/80 leading-relaxed">{it.details}</p>
                     </div>
                   </div>
                 </div>
@@ -405,14 +427,7 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
       icon: HeartPulse,
       title: "ICU - Hồi sức",
       desc: "Trang thiết bị hiện đại, đáp ứng yêu cầu hồi sức tích cực cao nhất.",
-      features: [
-        "Xe ICU",
-        "Monitor",
-        "Máy thở",
-        "Bơm tiêm điện",
-        "Máy hút đàm",
-        "Bác sĩ hồi sức",
-      ],
+      features: ["Xe ICU", "Monitor", "Máy thở", "Bơm tiêm điện", "Máy hút đàm", "Bác sĩ hồi sức"],
     },
     {
       id: "oxygen",
@@ -442,71 +457,67 @@ function Services({ onOpenBooking }: { onOpenBooking?: (id: string) => void }) {
         <div className="mt-12 flex flex-wrap justify-center -mx-3 lg:-mx-4 gap-y-6 lg:gap-y-8">
           {serviceGroups.map((s, i) => (
             <div key={i} className="w-full sm:w-1/2 lg:w-1/3 px-3 lg:px-4 flex">
-              <article
-                className="w-full group relative flex flex-col rounded-[2rem] overflow-hidden border border-border/60 bg-card shadow-lg hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-500"
-              >
-              <a href={s.href} className="block relative aspect-[4/3] overflow-hidden shrink-0">
-                <img
-                  src={s.img}
-                  alt={s.title}
-                  loading="lazy"
-                  width={800}
-                  height={600}
-                  className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+              <article className="w-full group relative flex flex-col rounded-[2rem] overflow-hidden border border-border/60 bg-card shadow-lg hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-500">
+                <a href={s.href} className="block relative aspect-[4/3] overflow-hidden shrink-0">
+                  <img
+                    src={s.img}
+                    alt={s.title}
+                    loading="lazy"
+                    width={800}
+                    height={600}
+                    className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
 
-                <div className="absolute top-5 left-5 grid h-14 w-14 place-items-center rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 text-white shadow-xl transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
-                  <s.icon className="h-7 w-7 drop-shadow-md" />
+                  <div className="absolute top-5 left-5 grid h-14 w-14 place-items-center rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 text-white shadow-xl transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
+                    <s.icon className="h-7 w-7 drop-shadow-md" />
+                  </div>
+
+                  <div className="absolute bottom-5 left-6 right-6">
+                    <h3 className="text-2xl font-bold text-white leading-tight drop-shadow-lg transform transition-transform duration-500 group-hover:translate-x-1">
+                      {s.title}
+                    </h3>
+                    <div className="mt-3 h-1 w-12 rounded-full bg-primary transition-all duration-500 group-hover:w-20" />
+                  </div>
+                </a>
+
+                <div className="flex flex-col flex-1 p-6 sm:p-8">
+                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+
+                  <div className="mt-6 pt-6 border-t border-border/40 flex-1">
+                    <ul className="space-y-3.5">
+                      {s.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-3 group/item">
+                          <div className="mt-0.5 rounded-full bg-primary/10 p-1 group-hover/item:bg-primary/20 transition-colors">
+                            <CheckCircle2 className="h-4 w-4 text-primary" />
+                          </div>
+                          <span className="text-sm font-medium text-foreground/80 group-hover/item:text-foreground transition-colors leading-tight pt-0.5">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-8 flex gap-3">
+                    <a
+                      href={s.href}
+                      className="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary/50 px-2 py-4 text-sm font-bold text-foreground hover:bg-secondary transition-colors"
+                    >
+                      Chi tiết
+                    </a>
+                    <button
+                      onClick={() => onOpenBooking?.(s.id)}
+                      className="flex-[2] relative inline-flex items-center justify-center gap-2 rounded-2xl overflow-hidden bg-primary/10 border border-primary/20 px-4 py-4 text-sm font-bold text-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:border-transparent group/btn"
+                    >
+                      <span className="absolute inset-0 gradient-sky opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                      <span className="relative z-10 flex items-center gap-2 group-hover/btn:text-primary-foreground transition-colors duration-300">
+                        Yêu cầu ngay
+                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                      </span>
+                    </button>
+                  </div>
                 </div>
-
-                <div className="absolute bottom-5 left-6 right-6">
-                  <h3 className="text-2xl font-bold text-white leading-tight drop-shadow-lg transform transition-transform duration-500 group-hover:translate-x-1">
-                    {s.title}
-                  </h3>
-                  <div className="mt-3 h-1 w-12 rounded-full bg-primary transition-all duration-500 group-hover:w-20" />
-                </div>
-              </a>
-
-              <div className="flex flex-col flex-1 p-6 sm:p-8">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {s.desc}
-                </p>
-
-                <div className="mt-6 pt-6 border-t border-border/40 flex-1">
-                  <ul className="space-y-3.5">
-                    {s.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-3 group/item">
-                        <div className="mt-0.5 rounded-full bg-primary/10 p-1 group-hover/item:bg-primary/20 transition-colors">
-                          <CheckCircle2 className="h-4 w-4 text-primary" />
-                        </div>
-                        <span className="text-sm font-medium text-foreground/80 group-hover/item:text-foreground transition-colors leading-tight pt-0.5">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-8 flex gap-3">
-                  <a
-                    href={s.href}
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary/50 px-2 py-4 text-sm font-bold text-foreground hover:bg-secondary transition-colors"
-                  >
-                    Chi tiết
-                  </a>
-                  <button
-                    onClick={() => onOpenBooking?.(s.id)}
-                    className="flex-[2] relative inline-flex items-center justify-center gap-2 rounded-2xl overflow-hidden bg-primary/10 border border-primary/20 px-4 py-4 text-sm font-bold text-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:border-transparent group/btn"
-                  >
-                    <span className="absolute inset-0 gradient-sky opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                    <span className="relative z-10 flex items-center gap-2 group-hover/btn:text-primary-foreground transition-colors duration-300">
-                      Yêu cầu ngay
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
-                    </span>
-                  </button>
-                </div>
-              </div>
               </article>
             </div>
           ))}
@@ -525,25 +536,29 @@ function HowItWorks() {
       icon: PhoneCall,
       title: "Liên hệ",
       desc: "Gọi 115 hoặc đặt xe qua biểu mẫu trực tuyến của chúng tôi bất cứ lúc nào.",
-      details: "Hệ thống tổng đài 24/7 luôn sẵn sàng tiếp nhận cuộc gọi. Tổng đài viên sẽ nhanh chóng ghi nhận thông tin cơ bản về người bệnh, tình trạng sơ bộ và địa chỉ đón để xác định mức độ ưu tiên."
+      details:
+        "Hệ thống tổng đài 24/7 luôn sẵn sàng tiếp nhận cuộc gọi. Tổng đài viên sẽ nhanh chóng ghi nhận thông tin cơ bản về người bệnh, tình trạng sơ bộ và địa chỉ đón để xác định mức độ ưu tiên.",
     },
     {
       icon: CheckCircle2,
       title: "Xác nhận thông tin",
       desc: "Cung cấp thông tin bệnh nhân, tình trạng và địa điểm đón cho tổng đài viên.",
-      details: "Sau khi nắm thông tin, chúng tôi sẽ tư vấn phương án vận chuyển phù hợp nhất (loại xe, thiết bị y tế đi kèm như máy thở, máy sốc tim...). Bạn sẽ được thông báo ngay lập tức về chi phí và thời gian xe đến."
+      details:
+        "Sau khi nắm thông tin, chúng tôi sẽ tư vấn phương án vận chuyển phù hợp nhất (loại xe, thiết bị y tế đi kèm như máy thở, máy sốc tim...). Bạn sẽ được thông báo ngay lập tức về chi phí và thời gian xe đến.",
     },
     {
       icon: Ambulance,
       title: "Điều phối xe",
       desc: "Xe cấp cứu gần nhất sẽ được điều động trong vài giây.",
-      details: "Hệ thống định vị GPS thông minh sẽ xác định và điều động ngay chiếc xe cấp cứu gần vị trí của bạn nhất. Đội ngũ y bác sĩ và tài xế nhận lệnh xuất phát chỉ trong chưa tới 3 phút."
+      details:
+        "Hệ thống định vị GPS thông minh sẽ xác định và điều động ngay chiếc xe cấp cứu gần vị trí của bạn nhất. Đội ngũ y bác sĩ và tài xế nhận lệnh xuất phát chỉ trong chưa tới 3 phút.",
     },
     {
       icon: ShieldCheck,
       title: "Vận chuyển an toàn",
       desc: "Đội ngũ y tế chuyên nghiệp đưa bệnh nhân đến nơi an toàn.",
-      details: "Bệnh nhân được theo dõi liên tục các chỉ số sinh tồn trong suốt hành trình. Bác sĩ/điều dưỡng sẽ can thiệp y tế kịp thời nếu có bất thường, đảm bảo an toàn tuyệt đối cho đến khi nhập viện."
+      details:
+        "Bệnh nhân được theo dõi liên tục các chỉ số sinh tồn trong suốt hành trình. Bác sĩ/điều dưỡng sẽ can thiệp y tế kịp thời nếu có bất thường, đảm bảo an toàn tuyệt đối cho đến khi nhập viện.",
     },
   ];
 
@@ -562,7 +577,7 @@ function HowItWorks() {
               <div
                 key={i}
                 onClick={() => setExpandedStep(isExpanded ? null : i)}
-                className={`relative rounded-2xl border ${isExpanded ? 'border-primary ring-1 ring-primary/20 bg-card/80' : 'border-border bg-card'} p-6 shadow-card hover:shadow-soft transition-all duration-300 cursor-pointer group`}
+                className={`relative rounded-2xl border ${isExpanded ? "border-primary ring-1 ring-primary/20 bg-card/80" : "border-border bg-card"} p-6 shadow-card hover:shadow-soft transition-all duration-300 cursor-pointer group`}
               >
                 <div className="absolute -top-3 -right-3 grid h-9 w-9 place-items-center rounded-full bg-emergency text-emergency-foreground text-sm font-bold shadow-soft">
                   {i + 1}
@@ -572,20 +587,24 @@ function HowItWorks() {
                 </div>
                 <h3 className="mt-5 text-xl font-bold flex justify-between items-start gap-2">
                   {s.title}
-                  <div className={`shrink-0 mt-1 rounded-full p-1 transition-colors ${isExpanded ? 'bg-primary/10 text-primary' : 'bg-secondary text-muted-foreground'}`}>
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                  <div
+                    className={`shrink-0 mt-1 rounded-full p-1 transition-colors ${isExpanded ? "bg-primary/10 text-primary" : "bg-secondary text-muted-foreground"}`}
+                  >
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
+                    />
                   </div>
                 </h3>
-                <p className="mt-2 text-sm text-foreground/85 leading-relaxed font-medium">{s.desc}</p>
+                <p className="mt-2 text-sm text-foreground/85 leading-relaxed font-medium">
+                  {s.desc}
+                </p>
 
                 <div
-                  className={`grid transition-all duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 mt-0'}`}
+                  className={`grid transition-all duration-300 ease-in-out ${isExpanded ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0 mt-0"}`}
                 >
                   <div className="overflow-hidden">
                     <div className="pt-4 border-t border-border">
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {s.details}
-                      </p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{s.details}</p>
                     </div>
                   </div>
                 </div>
@@ -620,7 +639,7 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
           requestAnimationFrame(tick);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -685,7 +704,7 @@ function Reviews() {
 
   const handleDelete = (reviewToDelete: any) => {
     if (window.confirm("Bạn có chắc muốn xóa đánh giá này không?")) {
-      setReviews(reviews.filter(r => r !== reviewToDelete));
+      setReviews(reviews.filter((r) => r !== reviewToDelete));
     }
   };
 
@@ -724,7 +743,10 @@ function Reviews() {
               )}
               <div className="flex gap-1 text-yellow-500">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className={`h-4 w-4 ${i < (r.rating || 5) ? 'fill-current' : 'text-gray-300'}`} />
+                  <Star
+                    key={i}
+                    className={`h-4 w-4 ${i < (r.rating || 5) ? "fill-current" : "text-gray-300"}`}
+                  />
                 ))}
               </div>
               <p className="mt-4 text-sm text-foreground/85 leading-relaxed">"{r.text}"</p>
@@ -760,7 +782,7 @@ function Reviews() {
 function ReviewModal({
   isOpen,
   onClose,
-  onReviewAdded
+  onReviewAdded,
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -796,11 +818,8 @@ function ReviewModal({
           note: formData.get("Binh_Luan") as string,
           rating: String(rating),
           type: "review",
-        }
+        },
       });
-
-
-
 
       const newReview = {
         name: formData.get("Ho_Ten") as string,
@@ -856,13 +875,16 @@ function ReviewModal({
               </div>
               <h3 className="text-xl font-bold">Cảm ơn bạn!</h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                Đánh giá của bạn đã được ghi nhận. Ý kiến của bạn giúp chúng tôi cải thiện dịch vụ tốt hơn mỗi ngày.
+                Đánh giá của bạn đã được ghi nhận. Ý kiến của bạn giúp chúng tôi cải thiện dịch vụ
+                tốt hơn mỗi ngày.
               </p>
             </div>
           ) : (
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="flex flex-col items-center justify-center py-4">
-                <span className="text-sm font-medium mb-3">Bạn đánh giá dịch vụ bao nhiêu sao?</span>
+                <span className="text-sm font-medium mb-3">
+                  Bạn đánh giá dịch vụ bao nhiêu sao?
+                </span>
                 <div className="flex gap-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -874,10 +896,11 @@ function ReviewModal({
                       onClick={() => setRating(star)}
                     >
                       <Star
-                        className={`h-10 w-10 transition-colors duration-200 ${star <= (hoverRating || rating)
-                          ? "text-yellow-500 fill-current"
-                          : "text-muted-foreground/30"
-                          }`}
+                        className={`h-10 w-10 transition-colors duration-200 ${
+                          star <= (hoverRating || rating)
+                            ? "text-yellow-500 fill-current"
+                            : "text-muted-foreground/30"
+                        }`}
                       />
                     </button>
                   ))}
@@ -885,7 +908,13 @@ function ReviewModal({
               </div>
 
               <Field label="Họ và Tên" name="Ho_Ten" placeholder="Nhập tên của bạn" required />
-              <Field label="Số điện thoại" name="So_Dien_Thoai" type="tel" placeholder="090 123 4567" required />
+              <Field
+                label="Số điện thoại"
+                name="So_Dien_Thoai"
+                type="tel"
+                placeholder="090 123 4567"
+                required
+              />
 
               <div>
                 <label className="block text-sm font-medium mb-1.5">Bình luận của bạn</label>
@@ -918,8 +947,10 @@ function ReviewModal({
 /* ---------- Contact ---------- */
 function Contact() {
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const form = e.currentTarget;
     const formData = new FormData(form);
 
@@ -933,11 +964,8 @@ function Contact() {
           note: formData.get("Ghi_Chu") as string,
           serviceType: (formData.get("Loai_Dich_Vu") as string) || "Chưa rõ",
           type: "contact",
-        }
+        },
       });
-
-
-
 
       setSent(true);
       setTimeout(() => setSent(false), 4000);
@@ -945,6 +973,8 @@ function Contact() {
     } catch (error) {
       console.error(error);
       alert("Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại sau.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return (
@@ -962,30 +992,49 @@ function Contact() {
           >
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Họ và Tên" name="Ho_Ten" placeholder="Nguyễn Văn A" required />
-              <Field label="Số điện thoại" name="So_Dien_Thoai" type="tel" placeholder="090 123 4567" required />
-              <Field label="Email (Không bắt buộc)" name="Email" type="email" placeholder="nguyenvana@example.com" />
-              <Field label="Địa chỉ đón" name="Dia_Chi_Don" placeholder="123 Đường Lê Lợi" required enableLocation />
+              <Field
+                label="Số điện thoại"
+                name="So_Dien_Thoai"
+                type="tel"
+                placeholder="090 123 4567"
+                required
+              />
+              <Field
+                label="Email (Không bắt buộc)"
+                name="Email"
+                type="email"
+                placeholder="nguyenvana@example.com"
+              />
+              <Field
+                label="Địa chỉ đón"
+                name="Dia_Chi_Don"
+                placeholder="123 Đường Lê Lợi"
+                required
+                enableLocation
+              />
               <div className="sm:col-span-2">
                 <Field label="Bệnh viện đến" name="Benh_Vien_Den" placeholder="Bệnh viện Chợ Rẫy" />
               </div>
               <div className="sm:col-span-2">
                 <label className="block text-sm font-medium mb-3">Loại dịch vụ</label>
                 <div className="flex flex-wrap gap-3">
-                  {["Khẩn cấp", "Chuyển viện", "Điều dưỡng", "ICU Hồi sức", "Oxy tận nhà"].map((type) => (
-                    <label
-                      key={type}
-                      className="flex-1 min-w-[100px] cursor-pointer items-center justify-center text-center rounded-xl border border-border bg-secondary/50 px-2 py-2.5 text-sm font-medium hover:bg-secondary transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:text-primary"
-                    >
-                      <input
-                        type="radio"
-                        name="Loai_Dich_Vu"
-                        value={type}
-                        className="sr-only"
-                        defaultChecked={type === "Khẩn cấp"}
-                      />
-                      {type}
-                    </label>
-                  ))}
+                  {["Khẩn cấp", "Chuyển viện", "Điều dưỡng", "ICU Hồi sức", "Oxy tận nhà"].map(
+                    (type) => (
+                      <label
+                        key={type}
+                        className="flex-1 min-w-[100px] cursor-pointer items-center justify-center text-center rounded-xl border border-border bg-secondary/50 px-2 py-2.5 text-sm font-medium hover:bg-secondary transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:text-primary"
+                      >
+                        <input
+                          type="radio"
+                          name="Loai_Dich_Vu"
+                          value={type}
+                          className="sr-only"
+                          defaultChecked={type === "Khẩn cấp"}
+                        />
+                        {type}
+                      </label>
+                    ),
+                  )}
                 </div>
               </div>
               <div className="sm:col-span-2">
@@ -1001,9 +1050,18 @@ function Contact() {
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 rounded-full gradient-sky px-6 py-3 text-sm font-semibold text-primary-foreground shadow-soft hover:scale-[1.02] transition-transform"
+                disabled={isSubmitting}
+                className="inline-flex items-center justify-center gap-2 rounded-full gradient-sky px-6 py-3 text-sm font-semibold text-primary-foreground shadow-soft hover:scale-[1.02] transition-all disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                Gửi yêu cầu <ArrowRight className="h-4 w-4" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Đang gửi...
+                  </>
+                ) : (
+                  <>
+                    Gửi yêu cầu <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
               </button>
               <a
                 href="tel:0915205115"
@@ -1014,15 +1072,24 @@ function Contact() {
             </div>
             {sent && (
               <div className="mt-4 flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-3 text-sm text-primary animate-fade-in">
-                <CheckCircle2 className="h-4 w-4" /> Đã gửi yêu cầu. Tổng đài viên của chúng tôi sẽ sớm liên hệ với bạn.
+                <CheckCircle2 className="h-4 w-4" /> Đã gửi yêu cầu. Tổng đài viên của chúng tôi sẽ
+                sớm liên hệ với bạn.
               </div>
             )}
           </form>
 
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <InfoCard icon={PhoneCall} title="Đường dây nóng" lines={["115 (Khẩn cấp)", "0915 205 115"]} />
+            <InfoCard
+              icon={PhoneCall}
+              title="Đường dây nóng"
+              lines={["115 (Khẩn cấp)", "0915 205 115"]}
+            />
             <InfoCard icon={Mail} title="Email" lines={["Hoangphihai1984bp@gmail.com"]} />
-            <InfoCard icon={MapPin} title="Địa chỉ" lines={["11 Hẻm 922", "Đồng Xoài", "Đồng Nai"]} />
+            <InfoCard
+              icon={MapPin}
+              title="Địa chỉ"
+              lines={["11 Hẻm 922", "Đồng Xoài", "Đồng Nai"]}
+            />
             <div className="rounded-2xl overflow-hidden border border-border shadow-card aspect-[4/3] bg-secondary">
               <iframe
                 title="map"
@@ -1052,7 +1119,6 @@ function HomeCare() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
           <div className="hidden lg:block order-2 lg:order-1 relative rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 group">
             <img
               src={sHomeCare}
@@ -1094,18 +1160,34 @@ function HomeCare() {
 
             <div className="mt-8 space-y-6">
               {[
-                { title: "Chăm sóc toàn diện", desc: "Thay băng, cắt chỉ, rửa vết thương, chăm sóc vết loét, ống thông." },
-                { title: "Thực hiện y lệnh", desc: "Tiêm truyền dịch, tiêm thuốc tĩnh mạch/bắp/dưới da an toàn, chính xác." },
-                { title: "Kiểm tra sinh tồn", desc: "Đo huyết áp, đường huyết, SpO2, theo dõi nhịp tim và nhịp thở." },
-                { title: "Lấy mẫu xét nghiệm", desc: "Lấy máu, nước tiểu tại nhà và trả kết quả nhanh chóng, chuẩn xác." },
+                {
+                  title: "Chăm sóc toàn diện",
+                  desc: "Thay băng, cắt chỉ, rửa vết thương, chăm sóc vết loét, ống thông.",
+                },
+                {
+                  title: "Thực hiện y lệnh",
+                  desc: "Tiêm truyền dịch, tiêm thuốc tĩnh mạch/bắp/dưới da an toàn, chính xác.",
+                },
+                {
+                  title: "Kiểm tra sinh tồn",
+                  desc: "Đo huyết áp, đường huyết, SpO2, theo dõi nhịp tim và nhịp thở.",
+                },
+                {
+                  title: "Lấy mẫu xét nghiệm",
+                  desc: "Lấy máu, nước tiểu tại nhà và trả kết quả nhanh chóng, chuẩn xác.",
+                },
               ].map((item, idx) => (
                 <div key={idx} className="flex gap-4 group/item">
                   <div className="mt-1 grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors duration-300 shadow-sm">
                     <CheckCircle2 className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-foreground text-lg group-hover/item:text-primary transition-colors">{item.title}</h4>
-                    <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <h4 className="font-bold text-foreground text-lg group-hover/item:text-primary transition-colors">
+                      {item.title}
+                    </h4>
+                    <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -1127,7 +1209,6 @@ function HomeCare() {
               </a>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -1144,7 +1225,6 @@ function OxygenService() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
           <div className="order-2 lg:order-1 relative rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 group">
             <img
               src={sOxygen}
@@ -1170,18 +1250,34 @@ function OxygenService() {
 
             <div className="mt-8 space-y-6">
               {[
-                { title: "Bình oxy tiêu chuẩn y tế", desc: "Đầy đủ các loại bình từ nhỏ đến lớn, được kiểm định an toàn nghiêm ngặt." },
-                { title: "Máy tạo oxy hiện đại", desc: "Cung cấp các dòng máy tạo oxy tiên tiến, hoạt động êm ái và ổn định." },
-                { title: "Giao hàng và lắp đặt tận nơi", desc: "Phục vụ 24/7, có mặt nhanh chóng để lắp đặt và hướng dẫn sử dụng chi tiết." },
-                { title: "Hỗ trợ kỹ thuật 24/24", desc: "Đội ngũ chuyên môn luôn sẵn sàng giải đáp và xử lý mọi vấn đề ngay lập tức." },
+                {
+                  title: "Bình oxy tiêu chuẩn y tế",
+                  desc: "Đầy đủ các loại bình từ nhỏ đến lớn, được kiểm định an toàn nghiêm ngặt.",
+                },
+                {
+                  title: "Máy tạo oxy hiện đại",
+                  desc: "Cung cấp các dòng máy tạo oxy tiên tiến, hoạt động êm ái và ổn định.",
+                },
+                {
+                  title: "Giao hàng và lắp đặt tận nơi",
+                  desc: "Phục vụ 24/7, có mặt nhanh chóng để lắp đặt và hướng dẫn sử dụng chi tiết.",
+                },
+                {
+                  title: "Hỗ trợ kỹ thuật 24/24",
+                  desc: "Đội ngũ chuyên môn luôn sẵn sàng giải đáp và xử lý mọi vấn đề ngay lập tức.",
+                },
               ].map((item, idx) => (
                 <div key={idx} className="flex gap-4 group/item">
                   <div className="mt-1 grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors duration-300 shadow-sm">
                     <CheckCircle2 className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-foreground text-lg group-hover/item:text-primary transition-colors">{item.title}</h4>
-                    <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <h4 className="font-bold text-foreground text-lg group-hover/item:text-primary transition-colors">
+                      {item.title}
+                    </h4>
+                    <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -1203,7 +1299,6 @@ function OxygenService() {
               </a>
             </div>
           </div>
-
         </div>
       </div>
     </section>

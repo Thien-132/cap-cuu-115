@@ -78,24 +78,53 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5" },
       { title: "Emergency Ambulance Service 115 — Fast, Safe & Professional" },
-      { name: "description", content: "24/7 Emergency Ambulance Service. Quick response, professional medical staff, modern fleet. Call 115 or book online." },
-      { property: "og:title", content: "Emergency Ambulance Service 115 — Fast, Safe & Professional" },
-      { property: "og:description", content: "24/7 Emergency Ambulance Service. Quick response, professional medical staff, modern fleet. Call 115 or book online." },
+      {
+        name: "description",
+        content:
+          "24/7 Emergency Ambulance Service. Quick response, professional medical staff, modern fleet. Call 115 or book online.",
+      },
+      {
+        property: "og:title",
+        content: "Emergency Ambulance Service 115 — Fast, Safe & Professional",
+      },
+      {
+        property: "og:description",
+        content:
+          "24/7 Emergency Ambulance Service. Quick response, professional medical staff, modern fleet. Call 115 or book online.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Emergency Ambulance Service 115 — Fast, Safe & Professional" },
-      { name: "twitter:description", content: "24/7 Emergency Ambulance Service. Quick response, professional medical staff, modern fleet. Call 115 or book online." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/60077307-4ab7-4014-8274-2be00c2501be/id-preview-9ebfbd10--c7cc1205-e12c-4fe9-8f16-306da55ecd73.lovable.app-1782545553187.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/60077307-4ab7-4014-8274-2be00c2501be/id-preview-9ebfbd10--c7cc1205-e12c-4fe9-8f16-306da55ecd73.lovable.app-1782545553187.png" },
+      {
+        name: "twitter:title",
+        content: "Emergency Ambulance Service 115 — Fast, Safe & Professional",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "24/7 Emergency Ambulance Service. Quick response, professional medical staff, modern fleet. Call 115 or book online.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/60077307-4ab7-4014-8274-2be00c2501be/id-preview-9ebfbd10--c7cc1205-e12c-4fe9-8f16-306da55ecd73.lovable.app-1782545553187.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/60077307-4ab7-4014-8274-2be00c2501be/id-preview-9ebfbd10--c7cc1205-e12c-4fe9-8f16-306da55ecd73.lovable.app-1782545553187.png",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap",
+      },
       { rel: "manifest", href: "/manifest.json" },
       { rel: "apple-touch-icon", href: "/icon-192x192.png" },
-      { name: "theme-color", content: "#0284c7" }
+      { name: "theme-color", content: "#0284c7" },
     ],
   }),
   shellComponent: RootShell,

@@ -1,30 +1,34 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
-import { Navbar } from '@/components/common/Navbar';
-import { Footer } from '@/components/common/Footer';
-import { BookingModal } from '@/components/common/BookingModal';
-import { FloatingActions } from '@/components/common/FloatingActions';
-import { BackToTop } from '@/components/common/BackToTop';
-import { SectionHeading } from '@/components/common/SectionHeading';
-import { Wind, CheckCircle2 } from 'lucide-react';
-import imgService from '@/assets/dich-vu-oxy.jpg';
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
+import { BookingModal } from "@/components/common/BookingModal";
+import { FloatingActions } from "@/components/common/FloatingActions";
+import { BackToTop } from "@/components/common/BackToTop";
+import { SectionHeading } from "@/components/common/SectionHeading";
+import { Wind, CheckCircle2 } from "lucide-react";
+import imgService from "@/assets/dich-vu-oxy.jpg";
 
-export const Route = createFileRoute('/dich-vu-oxy')({
+export const Route = createFileRoute("/dich-vu-oxy")({
   head: () => ({
     meta: [
-      { title: 'Dịch vụ Oxy tận nhà — Cấp cứu 115 Hồng Hải' },
-      { name: 'description', content: 'Cung cấp, cho thuê bình oxy, máy tạo oxy tận nhà nhanh chóng, an toàn, phục vụ 24/7.' },
+      { title: "Dịch vụ Oxy tận nhà — Cấp cứu 115 Hồng Hải" },
+      {
+        name: "description",
+        content:
+          "Cung cấp, cho thuê bình oxy, máy tạo oxy tận nhà nhanh chóng, an toàn, phục vụ 24/7.",
+      },
     ],
   }),
   component: PageComponent,
 });
 
 const NAV = [
-  { label: 'Trang chủ', href: '/' },
-  { label: 'Dịch vụ', href: '/#services' },
-  { label: 'Về chúng tôi', href: '/ve-chung-toi' },
-  { label: 'Bảng giá', href: '/bang-gia' },
-  { label: 'Liên hệ', href: '/#contact' },
+  { label: "Trang chủ", href: "/" },
+  { label: "Dịch vụ", href: "/#services" },
+  { label: "Về chúng tôi", href: "/ve-chung-toi" },
+  { label: "Bảng giá", href: "/bang-gia" },
+  { label: "Liên hệ", href: "/#contact" },
 ];
 
 function PageComponent() {
@@ -32,18 +36,27 @@ function PageComponent() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar alwaysDark onOpenBooking={() => setBookingOpen(true)} subtitle="Dịch vụ Oxy tận nhà" navItems={NAV} />
+      <Navbar
+        alwaysDark
+        onOpenBooking={() => setBookingOpen(true)}
+        subtitle="Dịch vụ Oxy tận nhà"
+        navItems={NAV}
+      />
       <main className="pt-32 pb-16 min-h-[80vh]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <SectionHeading eyebrow="Dịch vụ" title="Oxy tận nhà 24/7" subtitle="Cung cấp, cho thuê bình oxy, máy tạo oxy tận nhà nhanh chóng, an toàn." />
+              <SectionHeading
+                eyebrow="Dịch vụ"
+                title="Oxy tận nhà 24/7"
+                subtitle="Cung cấp, cho thuê bình oxy, máy tạo oxy tận nhà nhanh chóng, an toàn."
+              />
               <ul className="mt-8 space-y-4">
                 {[
-                  'Bình oxy sạch, kiểm định an toàn nghiêm ngặt',
-                  'Đa dạng thể tích bình và máy tạo oxy',
-                  'Giao hàng và lắp đặt tận nhà nhanh chóng',
-                  'Hỗ trợ kỹ thuật và y tế 24/7'
+                  "Bình oxy sạch, kiểm định an toàn nghiêm ngặt",
+                  "Đa dạng thể tích bình và máy tạo oxy",
+                  "Giao hàng và lắp đặt tận nhà nhanh chóng",
+                  "Hỗ trợ kỹ thuật và y tế 24/7",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mt-0.5" />
@@ -67,7 +80,11 @@ function PageComponent() {
       <Footer navItems={NAV} />
       <FloatingActions />
       <BackToTop />
-      <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} initialService="oxygen" />
+      <BookingModal
+        isOpen={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        initialService="oxygen"
+      />
     </div>
   );
 }

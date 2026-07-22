@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import * as turf from '@turf/turf';
+import { z } from "zod";
+import * as turf from "@turf/turf";
 
 // ==========================================
 // 1. CONFIGURATION & LAYERS
@@ -9,21 +9,23 @@ import * as turf from '@turf/turf';
 export const DISPATCH_CENTER: [number, number] = [106.6297, 10.8231]; // [Longitude, Latitude]
 
 // Geofencing Polygon (Example: Bounding Box for Southern Vietnam Operations)
-export const ALLOWED_REGION_POLYGON = turf.polygon([[
-  [105.0, 8.5],
-  [108.0, 8.5],
-  [108.0, 12.0],
-  [105.0, 12.0],
-  [105.0, 8.5]
-]]);
+export const ALLOWED_REGION_POLYGON = turf.polygon([
+  [
+    [105.0, 8.5],
+    [108.0, 8.5],
+    [108.0, 12.0],
+    [105.0, 12.0],
+    [105.0, 8.5],
+  ],
+]);
 
-export type ServiceType = 'emergency' | 'homecare' | 'transfer';
+export type ServiceType = "emergency" | "homecare" | "transfer";
 
 // Multi-layer Distance Limits (in Kilometers)
 export const SERVICE_LIMITS_KM: Record<ServiceType, number> = {
   emergency: 30, // Khẩn cấp
   homecare: 200, // Điều dưỡng
-  transfer: 1000 // Chuyển viện
+  transfer: 1000, // Chuyển viện
 };
 
 // Safety buffer to handle GPS signal fluctuation jitter (50 meters)
@@ -36,13 +38,19 @@ export const GPS_JITTER_BUFFER_KM = 0.05;
 export const GpsRequestSchema = z.object({
   lng: z.number().min(-180).max(180),
   lat: z.number().min(-90).max(90),
-  serviceType: z.enum(['emergency', 'homecare', 'transfer']),
+  serviceType: z.enum(["emergency", "homecare", "transfer"]),
 });
 
-export type GpsValidationResult = 
+export type GpsValidationResult =
   | { success: true; distance: number; message: string }
-  | { success: false; code: 'VALIDATION_ERROR' | 'VIOLATION_GEOFENCE' | 'DISTANCE_EXCEEDED_LIMIT'; distance?: number; limit?: number; message: string; details?: any };
-
+  | {
+      success: false;
+      code: "VALIDATION_ERROR" | "VIOLATION_GEOFENCE" | "DISTANCE_EXCEEDED_LIMIT";
+      distance?: number;
+      limit?: number;
+      message: string;
+      details?: any;
+    };
 
 // ==========================================
 // 3. ROBUST VALIDATION PIPELINE
@@ -53,29 +61,28 @@ export type GpsValidationResult =
  * Executes immediately to guard the dispatch logic.
  */
 export function validateGpsRequest(
-  userLng: number, 
-  userLat: number, 
-  serviceType: ServiceType
+  userLng: number,
+  userLat: number,
+  serviceType: ServiceType,
 ): GpsValidationResult {
-  
   // STEP 1: Geofencing
   const userPoint = turf.point([userLng, userLat]);
   const isInside = turf.booleanPointInPolygon(userPoint, ALLOWED_REGION_POLYGON);
-  
+
   if (!isInside) {
     return {
       success: false,
-      code: 'VIOLATION_GEOFENCE',
-      message: 'Vị trí của bạn nằm ngoài khu vực phục vụ của chúng tôi.'
+      code: "VIOLATION_GEOFENCE",
+      message: "Vị trí của bạn nằm ngoài khu vực phục vụ của chúng tôi.",
     };
   }
 
   // STEP 2 & 3: Multi-layer Distance Calculation & Immediate Restriction Guard
   const centerPoint = turf.point(DISPATCH_CENTER);
-  
+
   // Calculate distance using precise Haversine algorithm provided by Turf
-  const distanceKm = turf.distance(centerPoint, userPoint, { units: 'kilometers' });
-  
+  const distanceKm = turf.distance(centerPoint, userPoint, { units: "kilometers" });
+
   const limitKm = SERVICE_LIMITS_KM[serviceType];
   const allowedDistanceKm = limitKm + GPS_JITTER_BUFFER_KM;
 
@@ -83,20 +90,19 @@ export function validateGpsRequest(
   if (distanceKm >= allowedDistanceKm) {
     return {
       success: false,
-      code: 'DISTANCE_EXCEEDED_LIMIT',
+      code: "DISTANCE_EXCEEDED_LIMIT",
       distance: Number(distanceKm.toFixed(3)),
       limit: limitKm,
-      message: 'Khoảng cách vượt quá giới hạn quy định của dịch vụ.'
+      message: "Khoảng cách vượt quá giới hạn quy định của dịch vụ.",
     };
   }
 
   return {
     success: true,
     distance: Number(distanceKm.toFixed(3)),
-    message: 'Vị trí hợp lệ, sẵn sàng phục vụ.'
+    message: "Vị trí hợp lệ, sẵn sàng phục vụ.",
   };
 }
-
 
 // ==========================================
 // 4. INTEGRATION EXAMPLE (EXPRESS MIDDLEWARE)
@@ -105,7 +111,7 @@ export function validateGpsRequest(
 /**
  * Sample Express middleware to immediately intercept and validate GPS coordinates
  * before passing the request to booking controllers.
- * 
+ *
  * Usage in Route:
  *   import { validateGpsMiddleware } from './gpsValidation';
  *   router.post('/api/booking', validateGpsMiddleware, bookingController);
@@ -114,13 +120,13 @@ export function validateGpsMiddleware(req: any, res: any, next: any) {
   try {
     // 1. Schema Validation
     const parsed = GpsRequestSchema.safeParse(req.body);
-    
+
     if (!parsed.success) {
       return res.status(400).json({
         success: false,
-        code: 'VALIDATION_ERROR',
-        message: 'Dữ liệu tọa độ hoặc loại dịch vụ không hợp lệ.',
-        details: parsed.error.issues
+        code: "VALIDATION_ERROR",
+        message: "Dữ liệu tọa độ hoặc loại dịch vụ không hợp lệ.",
+        details: parsed.error.issues,
       });
     }
 
@@ -136,13 +142,13 @@ export function validateGpsMiddleware(req: any, res: any, next: any) {
 
     // 3. Attach calculated distance to request for downstream handlers
     req.validatedDistanceKm = validationResult.distance;
-    
+
     // Move to actual booking logic
     next();
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: 'Lỗi hệ thống khi xác thực tọa độ GPS.'
+      message: "Lỗi hệ thống khi xác thực tọa độ GPS.",
     });
   }
 }

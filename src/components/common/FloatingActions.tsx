@@ -1,4 +1,4 @@
-import { Phone, MessageCircle, MapPin } from 'lucide-react';
+import { Phone, MessageCircle, MapPin } from "lucide-react";
 
 export function FloatingActions() {
   return (
