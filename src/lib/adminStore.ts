@@ -191,11 +191,7 @@ export async function deleteBookingRequest(id: string) {
 
 // --- AMBULANCES ---
 
-const INITIAL_AMBULANCES: Ambulance[] = [
-  { id: "1", licensePlate: "51F-123.45", type: "Xe cấp cứu tiêu chuẩn", status: "available" },
-  { id: "2", licensePlate: "51F-678.90", type: "Xe cứu thương ICU", status: "in_use" },
-  { id: "3", licensePlate: "51F-111.22", type: "Xe chuyển viện", status: "maintenance" },
-];
+const INITIAL_AMBULANCES: Ambulance[] = [];
 
 export function getAmbulances(): Ambulance[] {
   if (typeof window === "undefined") return [];
@@ -258,17 +254,7 @@ export async function deleteAmbulance(id: string) {
 
 // --- NURSES ---
 
-const INITIAL_NURSES: Nurse[] = [
-  {
-    id: "1",
-    name: "Nguyễn Thị A",
-    role: "Điều dưỡng trưởng",
-    phone: "0901234567",
-    status: "active",
-  },
-  { id: "2", name: "Trần Văn B", role: "Điều dưỡng viên", phone: "0902345678", status: "active" },
-  { id: "3", name: "Lê Thị C", role: "Hộ sinh", phone: "0903456789", status: "inactive" },
-];
+const INITIAL_NURSES: Nurse[] = [];
 
 export function getNurses(): Nurse[] {
   if (typeof window === "undefined") return [];
