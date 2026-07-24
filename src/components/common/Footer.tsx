@@ -81,9 +81,7 @@ export function Footer({ navItems }: { navItems: { label: string; href: string }
                 </Link>
               </li>
               <li>
-                <Link to="/tin-tuc" className="hover:text-primary transition">
-                  Tin tức y khoa
-                </Link>
+                <span className="text-muted-foreground">Tư vấn sức khỏe 24/7</span>
               </li>
             </ul>
           </div>

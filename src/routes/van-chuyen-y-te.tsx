@@ -25,7 +25,6 @@ export const Route = createFileRoute("/van-chuyen-y-te")({
 const NAV = [
   { label: "Trang chủ", href: "/" },
   { label: "Dịch vụ", href: "/#services" },
-  { label: "Về chúng tôi", href: "/ve-chung-toi" },
   { label: "Bảng giá", href: "/bang-gia" },
   { label: "Liên hệ", href: "/#contact" },
 ];
