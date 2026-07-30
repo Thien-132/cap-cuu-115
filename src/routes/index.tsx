@@ -47,7 +47,7 @@ import { Field } from "@/components/common/Field";
 import { InfoCard } from "@/components/common/InfoCard";
 import { CoverageRadiusChecker } from "@/components/common/CoverageRadiusChecker";
 
-import { getAmbulances, getNurses } from "@/lib/adminStore";
+import { getAmbulances, getNurses, addBookingRequest } from "@/lib/adminStore";
 
 import heroImg from "@/assets/hero-ambulance.jpg";
 import sEmergency from "@/assets/service-emergency.jpg";
@@ -447,22 +447,44 @@ function WhyUs() {
       return;
     }
     setIsSubmitting(true);
+
+    const requestData = {
+      name: name.trim() || "Khách hàng gọi lại nhanh",
+      phone: phone.trim(),
+      address: "Yêu cầu qua Form gọi lại nhanh (60s)",
+      details: `Khách hàng yêu cầu tư vấn nhanh dịch vụ: ${service}`,
+      serviceType: service,
+    };
+
+    try {
+      await addBookingRequest(requestData);
+    } catch (err: any) {
+      if (err.message === "BLOCKED_PHONE") {
+        toast.error("Số điện thoại của bạn đã bị hạn chế do có nhiều báo cáo ảo. Vui lòng liên hệ Hotline 0915 205 115.");
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
     try {
       await sendEmailAction({
         data: {
-          name: name.trim() || "Khách hàng đăng ký nhanh",
-          phone: phone.trim(),
-          address: "Yêu cầu qua Form gọi lại nhanh",
-          serviceType: service,
-          type: "contact",
-          note: `Khách hàng yêu cầu tư vấn nhanh dịch vụ: ${service}`,
+          name: requestData.name,
+          phone: requestData.phone,
+          address: requestData.address,
+          serviceType: requestData.serviceType,
+          condition: requestData.details,
+          type: "booking",
         },
       });
       toast.success("Đã nhận yêu cầu! Tổng đài 115 Hồng Hải sẽ gọi lại cho bạn trong 60 giây.");
       setPhone("");
       setName("");
     } catch (err) {
-      toast.error("Không thể gửi thông tin. Vui lòng gọi trực tiếp hotline 0915 205 115!");
+      console.error(err);
+      toast.success("Đã nhận yêu cầu! Tổng đài 115 Hồng Hải sẽ gọi lại cho bạn trong 60 giây.");
+      setPhone("");
+      setName("");
     } finally {
       setIsSubmitting(false);
     }
@@ -1452,16 +1474,36 @@ function Contact() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
+    const requestData = {
+      name: (formData.get("Ho_Ten") as string) || "Khách hàng",
+      phone: (formData.get("So_Dien_Thoai") as string) || "",
+      address: (formData.get("Dia_Chi_Don") as string) || "Chưa cung cấp",
+      details: [
+        formData.get("Benh_Vien_Den") ? `Bệnh viện: ${formData.get("Benh_Vien_Den")}` : "",
+        formData.get("Ghi_Chu") ? `Ghi chú: ${formData.get("Ghi_Chu")}` : "",
+      ].filter(Boolean).join(" - ") || "Yêu cầu qua Form liên hệ",
+      serviceType: (formData.get("Loai_Dich_Vu") as string) || "Chưa rõ",
+    };
+
     try {
-      const response: any = await sendEmailAction({
+      await addBookingRequest(requestData);
+    } catch (err: any) {
+      if (err.message === "BLOCKED_PHONE") {
+        toast.error("Số điện thoại của bạn đã bị hạn chế do có nhiều báo cáo ảo.");
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
+    try {
+      await sendEmailAction({
         data: {
-          name: (formData.get("Ho_Ten") as string) || "",
-          phone: (formData.get("So_Dien_Thoai") as string) || "",
-          address: (formData.get("Dia_Chi_Don") as string) || "",
-          hospital: (formData.get("Benh_Vien_Den") as string) || "",
-          note: formData.get("Ghi_Chu") as string,
-          serviceType: (formData.get("Loai_Dich_Vu") as string) || "Chưa rõ",
-          type: "contact",
+          name: requestData.name,
+          phone: requestData.phone,
+          address: requestData.address,
+          condition: requestData.details,
+          serviceType: requestData.serviceType,
+          type: "booking",
         },
       });
 
@@ -1470,7 +1512,7 @@ function Contact() {
       form.reset();
     } catch (error) {
       console.error(error);
-      alert("Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại sau.");
+      toast.error("Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại sau.");
     } finally {
       setIsSubmitting(false);
     }
