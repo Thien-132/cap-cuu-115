@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { sendEmailAction } from "@/lib/actions";
-import { Ambulance, X, CheckCircle2, ArrowRight, Loader2 } from "lucide-react";
+import { Ambulance, X, CheckCircle2, ArrowRight, Loader2, MapPin, Compass } from "lucide-react";
 import { Field } from "./Field";
 import { addBookingRequest } from "@/lib/adminStore";
+import { validateGpsRequest, ServiceType } from "@/lib/gpsValidation";
 
 export function BookingModal({
   isOpen,
@@ -16,6 +17,11 @@ export function BookingModal({
   const [sent, setSent] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [gpsBadge, setGpsBadge] = useState<{
+    distance: number;
+    success: boolean;
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -141,7 +147,43 @@ export function BookingModal({
                 placeholder="123 Đường ABC, Quận X"
                 required
                 enableLocation
+                onLocationSelect={(lat, lng, address) => {
+                  const sType: ServiceType =
+                    initialService === "homecare"
+                      ? "homecare"
+                      : initialService === "transport" || initialService === "transfer"
+                      ? "transfer"
+                      : "emergency";
+                  const res = validateGpsRequest(lng, lat, sType);
+                  if (res.success) {
+                    setGpsBadge({
+                      distance: res.distance,
+                      success: true,
+                      message: res.isFreePickup
+                        ? `🎁 Miễn phí 100% cước đón bệnh nhân (Cách trung tâm ${res.distance} km <= 6 km)`
+                        : `Cách trung tâm ${res.distance} km - Trong bán kính phục vụ`,
+                    });
+                  } else {
+                    setGpsBadge({
+                      distance: res.distance || 0,
+                      success: false,
+                      message: res.message,
+                    });
+                  }
+                }}
               />
+              {gpsBadge && (
+                <div
+                  className={`text-xs px-3 py-2 rounded-xl flex items-center gap-2 border font-medium ${
+                    gpsBadge.success
+                      ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400"
+                      : "bg-destructive/10 border-destructive/30 text-destructive"
+                  }`}
+                >
+                  <Compass className="h-4 w-4 shrink-0 animate-spin-slow" />
+                  <span>{gpsBadge.message}</span>
+                </div>
+              )}
               <Field
                 label="Tình trạng bệnh"
                 name="Tinh_Trang_Benh"

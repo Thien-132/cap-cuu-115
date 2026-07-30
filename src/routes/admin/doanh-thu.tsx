@@ -73,27 +73,9 @@ function RevenuePage() {
         total: dailyMap[k],
       }));
 
-    // Fill dummy data if empty for demo, but only if we haven't filtered to a specific time that intentionally has no data
-    if (cData.length === 0 && timeFilter === "all" && requests.length === 0) {
-      cData.push(
-        { name: "10/10", total: 1500000 },
-        { name: "11/10", total: 3200000 },
-        { name: "12/10", total: 2000000 },
-        { name: "13/10", total: 4500000 },
-      );
-    }
-
     return {
-      totalRevenue:
-        rev ||
-        ((timeFilter === "all" || (timeFilter === "custom" && !customDate)) && requests.length === 0
-          ? 11200000
-          : 0),
-      completedCount:
-        completed ||
-        ((timeFilter === "all" || (timeFilter === "custom" && !customDate)) && requests.length === 0
-          ? 4
-          : 0),
+      totalRevenue: rev,
+      completedCount: completed,
       chartData: cData,
     };
   }, [requests, timeFilter, customDate]);
@@ -158,39 +140,47 @@ function RevenuePage() {
         </div>
       </div>
 
-      <div className="bg-card rounded-[2rem] border border-border shadow-card p-6 mt-8 h-96">
+      <div className="bg-card rounded-[2rem] border border-border shadow-card p-6 mt-8 min-h-[320px]">
         <h3 className="text-lg font-bold font-display flex items-center gap-2 mb-6">
           <TrendingUp className="h-5 w-5 text-primary" /> Biểu đồ Doanh thu (Theo ngày)
         </h3>
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData} margin={{ top: 10, right: 10, left: 20, bottom: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-            <XAxis
-              dataKey="name"
-              tickLine={false}
-              axisLine={false}
-              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-              dy={10}
-            />
-            <YAxis
-              tickFormatter={(value) => `${value / 1000000}M`}
-              tickLine={false}
-              axisLine={false}
-              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-              dx={-10}
-            />
-            <Tooltip
-              cursor={{ fill: "hsl(var(--secondary))" }}
-              contentStyle={{
-                borderRadius: "1rem",
-                border: "1px solid hsl(var(--border))",
-                boxShadow: "var(--shadow-card)",
-              }}
-              formatter={(value: number) => [`${value.toLocaleString("vi-VN")} VNĐ`, "Doanh thu"]}
-            />
-            <Bar dataKey="total" fill="hsl(var(--primary))" radius={[8, 8, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+        {chartData.length > 0 ? (
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 10, right: 10, left: 20, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                <XAxis
+                  dataKey="name"
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                  dy={10}
+                />
+                <YAxis
+                  tickFormatter={(value) => `${value / 1000000}M`}
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                  dx={-10}
+                />
+                <Tooltip
+                  cursor={{ fill: "hsl(var(--secondary))" }}
+                  contentStyle={{
+                    borderRadius: "1rem",
+                    border: "1px solid hsl(var(--border))",
+                    boxShadow: "var(--shadow-card)",
+                  }}
+                  formatter={(value: number) => [`${value.toLocaleString("vi-VN")} VNĐ`, "Doanh thu"]}
+                />
+                <Bar dataKey="total" fill="hsl(var(--primary))" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center h-56 text-muted-foreground text-sm font-medium border border-dashed border-border rounded-2xl">
+            Chưa có dữ liệu doanh thu phát sinh
+          </div>
+        )}
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ export function Field({
   placeholder,
   required,
   enableLocation,
+  onLocationSelect,
 }: {
   label: string;
   name: string;
@@ -15,6 +16,7 @@ export function Field({
   placeholder?: string;
   required?: boolean;
   enableLocation?: boolean;
+  onLocationSelect?: (lat: number, lng: number, address: string) => void;
 }) {
   const [loadingLoc, setLoadingLoc] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,22 +29,27 @@ export function Field({
     setLoadingLoc(true);
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
+        let addr = `${pos.coords.latitude}, ${pos.coords.longitude}`;
         try {
           const res = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&zoom=18&addressdetails=1`,
           );
           const data = await res.json();
           if (data && data.display_name && inputRef.current) {
-            inputRef.current.value = data.display_name;
+            addr = data.display_name;
+            inputRef.current.value = addr;
           } else if (inputRef.current) {
-            inputRef.current.value = `${pos.coords.latitude}, ${pos.coords.longitude}`;
+            inputRef.current.value = addr;
           }
         } catch (e) {
           if (inputRef.current) {
-            inputRef.current.value = `${pos.coords.latitude}, ${pos.coords.longitude}`;
+            inputRef.current.value = addr;
           }
         } finally {
           setLoadingLoc(false);
+          if (onLocationSelect) {
+            onLocationSelect(pos.coords.latitude, pos.coords.longitude, addr);
+          }
         }
       },
       (err) => {
